@@ -1,3 +1,4 @@
+import SellingCategory from "@/components/sellingCategory/SellingCategory";
 import BestSell from "../components/bestSell/BestSell";
 import HeaderBanner from "../components/headerBanner/page";
 import ServiceMoto from "../components/serviceMoto/page";
@@ -9,6 +10,7 @@ export default function Home() {
     <main className="">
       <HeaderBanner />
       <ServiceMoto />
+      <SellingCategory/>
       <BestSell />
       <Subscription/>
     </main>
