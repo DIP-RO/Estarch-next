@@ -5,13 +5,13 @@ import Slider from "react-slick";
 import img from '../../public/images/product_img.jpeg'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import './BestSell-theme.css'
+import '../bestSell/BestSell-theme.css'
 import Image from 'next/image';
-export default function BestSell() {
+export default function NewArrival() {
   var settings = {
     dots: false,
     infinite: true,
-    speed: 500,
+    speed: 600,
     slidesToShow: 4,
     slidesToScroll: 1,
     initialSlide: 0,
@@ -47,7 +47,7 @@ export default function BestSell() {
   return (
     <div>
       <div className="slider-container mx-0 lg:mx-20">
-        <h1 className='text-center mt-12 font-bold md:text-2xl text-xl'>BEST SELLING PRODUCTS</h1>
+        <h1 className='text-center mt-12 font-bold md:text-2xl text-xl'>NEW ARRIVAL PRODUCTS</h1>
         <Slider {...settings}>
           <div className="card card-compact bg-base-100 w-96 shadow-xl">
             <figure>
