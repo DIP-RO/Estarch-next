@@ -97,7 +97,7 @@ export default function Footer() {
             <p className="text-white"> Worktime: SAT - FRI, 10AM - 11PM</p>
             <div className="flex flex-row gap-3">
               <div
-                className="border rounded-full h-10 w-10 px-2 py-1"
+                className="border rounded-full h-10 w-10 px-2 py-1 flex justify-center items-center"
                 style={{ borderColor: "rgb(184, 149, 121)" }}
               >
                 <FontAwesomeIcon
@@ -110,7 +110,7 @@ export default function Footer() {
                 />
               </div>
               <div
-                className="border rounded-full h-10 w-10 px-2 py-1"
+                className="border rounded-full h-10 w-10 px-2 py-1 flex justify-center items-center"
                 style={{ borderColor: "rgb(184, 149, 121)" }}
               >
                 <FontAwesomeIcon
@@ -123,12 +123,10 @@ export default function Footer() {
                 />
               </div>
               <div
-                className="border rounded-full h-10 w-10 py-1"
+                className="border rounded-full h-10 w-10 py-1 p-2 flex justify-center items-center"
                 style={{ borderColor: "rgb(184, 149, 121)" }}
               >
                 <FontAwesomeIcon
-                  size="2x"
-                  className="ml-[6px] text-center"
                   style={{
                     color: "rgb(184, 149, 121)",
                     "--tw-text-opacity": "1",
@@ -137,7 +135,7 @@ export default function Footer() {
                 />
               </div>
               <div
-                className="border rounded-full h-10 w-10 px-2 py-1"
+                className="border rounded-full h-10 w-10 px-2 py-1 flex justify-center items-center"
                 style={{ borderColor: "rgb(184, 149, 121)" }}
               >
                 <FontAwesomeIcon
