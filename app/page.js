@@ -1,3 +1,4 @@
+import Products from "@/components/products/page";
 import BestSell from "../components/bestSell/BestSell";
 import HeaderBanner from "../components/headerBanner/page";
 import ServiceMoto from "../components/serviceMoto/page";
@@ -10,7 +11,8 @@ export default function Home() {
       <HeaderBanner />
       <ServiceMoto />
       <BestSell />
-      <Subscription/>
+      <Subscription />
+      <Products/>
     </main>
   );
 }

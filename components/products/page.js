@@ -1,8 +1,9 @@
 "use client";
 
+import { fetchProducts } from "@/lib/slices/productsSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../lib/slices/productsSlice";
+
 
 export default function Products() {
   const { products, isLoading, isError, error } = useSelector(state => state.products);
