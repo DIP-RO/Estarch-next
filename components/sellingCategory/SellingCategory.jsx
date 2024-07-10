@@ -15,7 +15,7 @@ import boxer from '../../public/images/c_boxer.jpeg'
 const SellingCategory = () => {
     return (
         <div className='mx-6 md:mx-12 lg:mx-20'>
-            <h1 className='text-center mt-8 font-bold md:text-2xl text-xl pb-5'>BROWSE OUR CATEGORY</h1>
+            <h1 className='text-center mt-12 font-bold md:text-2xl text-xl pb-5'>BROWSE OUR CATEGORY</h1>
             <Swiper
                 slidesPerView={4}
                 navigation={true}
@@ -64,12 +64,6 @@ const SellingCategory = () => {
                     <div className='relative'>
                         <Image className='rounded-md' width={500} src={panjabi} alt="" />
                         <button className='btn btn-xs md:btn-sm lg:px-8 absolute bottom-1 md:bottom-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>PANJABI</button>
-                    </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <div className='relative'>
-                        <Image className='rounded-md' width={500} src={pajama} alt="" />
-                        <button className='btn btn-xs md:btn-sm lg:px-8 absolute bottom-1 md:bottom-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>PAJAMA</button>
                     </div>
                 </SwiperSlide>
                 <SwiperSlide>
