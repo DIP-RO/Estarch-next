@@ -12,8 +12,8 @@ export default function Home() {
       <HeaderBanner />
       <ServiceMoto />
       <SellingCategory/>
-      <BestSell />
       <NewArrival/>
+      <BestSell />
       <Subscription />
     
     </main>
