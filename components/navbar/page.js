@@ -53,7 +53,7 @@ export default function NavBar() {
 
         </div>
       </div>
-      <div className="flex justify-between px-10 mt-10">
+      <div className="flex bg-base-100 justify-between px-10 mt-10">
         <div className="flex w-fit items-center justify-center">
           <CiSearch className="text-2xl" />
           <input type="text" placeholder="search product" />
