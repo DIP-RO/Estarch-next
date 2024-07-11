@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 import img from "../../../public/images/product_img.jpeg";
 import img1 from "../../../public/images/1716831105150-manfarebd-id-13.jpeg";
+import RelatedProducts from "@/components/relatedproduct/page";
 
 
 export default function ProductDetails({ params }) {
@@ -110,6 +111,7 @@ export default function ProductDetails({ params }) {
           </div>
         </div>
       </div>
+      <RelatedProducts/>
     </div>
   );
 }
