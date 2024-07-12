@@ -43,7 +43,7 @@ export default function NavBar() {
             </a>
             <div className="absolute z-10  bg-white right-1  hidden w-52 rounded-md h-28  p-2 text-black group-hover:block ">
               <ul className=" bg-white w-52  p-5 ">
-                <li className="text-base hover:bg-base-100 "><a>Login</a></li>
+                <li className="text-base hover:bg-base-100 "><Link href="/login">Login</Link></li>
                 <div className="divider h-1"></div>
                 <li className="text-base  hover:bg-base-100 "><a>Register</a></li>
                 <div className="divider h-1"></div>
