@@ -9,6 +9,7 @@ import '../bestSell/BestSell-theme.css'
 import Image from 'next/image';
 export default function NewArrival() {
   var settings = {
+   
     dots: false,
     infinite: true,
     speed: 600,
@@ -38,8 +39,12 @@ export default function NewArrival() {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          className: "center",
+          centerMode: true,
+          centerPadding: "35px",
+
         }
       }
     ]

@@ -15,7 +15,7 @@ import boxer from '../../public/images/c_boxer.jpeg'
 const SellingCategory = () => {
 
     return (
-        <div className='mx-6 md:mx-12 lg:mx-20'>
+        <div className='mx-0 md:mx-12 lg:mx-20'>
             <h1 className='text-center mt-12 font-bold md:text-2xl text-xl pb-5'>BROWSE OUR CATEGORY</h1>
             <Swiper
                 slidesPerView={4}
