@@ -6,6 +6,7 @@ import { CgProfile } from "react-icons/cg";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { CiSearch } from "react-icons/ci";
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function NavBar() {
   return (
@@ -24,7 +25,7 @@ export default function NavBar() {
           </div>
         </div>
         <div className="navbar-center">
-          <Image width={150} height={20} className="h-8" src="https://estarch.com.bd/image/LOGO%201.png" alt="logo" />
+         <Link href="/"> <Image width={150} height={20} className="h-8" src="https://estarch.com.bd/image/LOGO%201.png" alt="logo" /></Link>
         </div>
         <div className="navbar-end">
           <div className="group relative cursor-pointer  bg-white hover:bg-white">
@@ -42,7 +43,7 @@ export default function NavBar() {
             </a>
             <div className="absolute z-10  bg-white right-1  hidden w-52 rounded-md h-28  p-2 text-black group-hover:block ">
               <ul className=" bg-white w-52  p-5 ">
-                <li className="text-base hover:bg-base-100 "><a>Login</a></li>
+                <li className="text-base hover:bg-base-100 "><Link href="/login">Login</Link></li>
                 <div className="divider h-1"></div>
                 <li className="text-base  hover:bg-base-100 "><a>Register</a></li>
                 <div className="divider h-1"></div>

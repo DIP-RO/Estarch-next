@@ -1,4 +1,3 @@
-'use client'
 import React from 'react';
 import img from '../../../public/images/product_img.jpeg'
 import Link from 'next/link';
