@@ -6,6 +6,7 @@ import { CgProfile } from "react-icons/cg";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { CiSearch } from "react-icons/ci";
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function NavBar() {
   return (
@@ -24,7 +25,7 @@ export default function NavBar() {
           </div>
         </div>
         <div className="navbar-center">
-          <Image width={150} height={20} className="h-8" src="https://estarch.com.bd/image/LOGO%201.png" alt="logo" />
+         <Link href="/"> <Image width={150} height={20} className="h-8" src="https://estarch.com.bd/image/LOGO%201.png" alt="logo" /></Link>
         </div>
         <div className="navbar-end">
           <div className="group relative cursor-pointer  bg-white hover:bg-white">
