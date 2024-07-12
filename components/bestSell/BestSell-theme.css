@@ -10,21 +10,23 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.slick-prev {
-    top: 250px;
-}
+
 
 .slick-prev:before {
     content: '\276E';
 
 }
 
-.slick-next {
-    top: 250px;
-}
 
 .slick-next:before {
     content: '\276F';
+}
+.slick-prev {
+    left: -4%;
+}
+
+.slick-next {
+    right: -4%;
 }
 
 .slick-slide {
@@ -38,22 +40,22 @@
 @media (max-width: 480px) {
     .slick-prev {
         left: 8%;
-        top: -20px;
+        top: -37px;
     }
 
     .slick-next {
         right: 8%;
-        top: -20px;
+        top: -37px;
     }
 }
 
 @media (min-width: 481px) and (max-width: 768px) {
     .slick-prev {
         left: 25%;
-        top: -20px;
+        top: -38px;
     }
     .slick-next {
         right: 25%;
-        top: -20px;
+        top: -38px;
     }
 }
