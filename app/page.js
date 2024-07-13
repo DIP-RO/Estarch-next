@@ -15,8 +15,7 @@ export default function Home() {
       <SellingCategory/>
       <NewArrival/>
       <BestSell />
-      <Subscription />
-    
+      <Subscription />    
     </main>
   );
 }

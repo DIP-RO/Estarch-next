@@ -3,7 +3,7 @@ import img from '../../../public/images/product_img.jpeg'
 import Link from 'next/link';
 import Image from 'next/image';
 import { CiFilter } from "react-icons/ci";
-
+import { MdArrowDropDown } from "react-icons/md";
 const page = () => {
 
 
@@ -34,8 +34,8 @@ const page = () => {
                     </ul>
                 </div>
 
+                
                 <label className="form-control w-full max-w-[30%] md:max-w-[10%] flex">
-
                     <select className="select select-bordered select-sm">
                         <option disabled selected>Sort By</option>
                         <option>Star Wars</option>
