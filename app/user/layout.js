@@ -11,18 +11,18 @@ export const metadata = {
 
 export default function DashboardLayout({ children }) {
   return (
-    <div className="grid grid-cols-12 md:mx-12 my-4 ">
-      <div className="breadcrumbs text-sm col-span-2">
+    <div className="grid md:grid-cols-12 md:mx-12 my-4 ">
+      <div className="breadcrumbs text-sm lg:col-span-2 md:col-span-4 hidden md:block">
         <ul>
           <li><a>Home</a></li>
           <li><a>My Account</a> </li>
         </ul>
       </div>
-      <div className="col-span-10">
-        <h1 className="flex items-center gap-4 text-2xl font-bold"><span className="text-4xl"><FaRegUserCircle /></span>Hello, USER</h1>
+      <div className="lg:col-span-10 md:col-span-8 mx-4">
+        <h1 className="md:flex items-center gap-4 text-2xl font-bold hidden "><span className="text-2xl"><FaRegUserCircle /></span>Hello, USER</h1>
       </div>
-      <div className="col-span-2 mt-6 mr-4"><Sidebar /></div>
-      <div className="col-span-10 mt-6">{children}</div>
+      <div className="lg:col-span-2 md:col-span-4 mt-6 md:mr-4"><Sidebar /></div>
+      <div className="lg:col-span-10 md:col-span-8 mt-6 mx-4">{children}</div>
     </div>
   );
 }
