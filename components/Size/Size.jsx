@@ -2,18 +2,22 @@
 
 import { RxCross1 } from "react-icons/rx";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { closeSlide } from "@/lib/slices/sliderSlice";
+import { closeSize } from "@/lib/slices/sizeSlice";
 function Size() {
-    const [sizeShow , setSizeShow] = useState(true)
+    const isOpen = useSelector((state) => state.size.isOpen);
+    const dispatch = useDispatch();
     return (
-        <div>  <div className={`container mx-auto px-4 py-8 h-full  z-[1000] bg-white w-full lg:w-[30%] md:w-[30%] ${sizeShow ? 'fixed right-0 top-0':'hidden' }`}>
-            <h1 onClick={()=>{setSizeShow(false)}} className="flex justify-end text-2xl cursor-pointer"><RxCross1/> </h1>
+        <div>  <div className={`container mx-auto px-4 py-8 h-full  z-[1000] bg-white w-full lg:w-[30%] md:w-[30%] ${isOpen ? 'fixed right-0 top-0 ' : 'hidden'}`}>
+            <h1 onClick={() => dispatch(closeSize())}  className="flex justify-end text-2xl cursor-pointer"><RxCross1 /> </h1>
             <h2 className="text-2xl font-bold text-center mb-4 mt-3">FIND YOUR FIT</h2>
             <h1 className=" font-semibold  mt-3">SIZE GUIDE</h1>
             <h1 className=" px-5 py-2 border border-black rounded-md w-fit mt-3">SIZE</h1>
             <table className="table-auto w-full border border-collapse mt-3">
                 <thead>
                     <tr className="text-center border-b">
-                        
+
                         <th className="p-2">CUP</th>
                         <th className="p-2">30</th>
                         <th className="p-2">32</th>
@@ -95,7 +99,7 @@ function Size() {
                         <td className="p-2">M</td>
                         <td className="p-2">M</td>
                     </tr>
-                   
+
                 </tbody>
             </table>
         </div></div>

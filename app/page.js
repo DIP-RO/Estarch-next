@@ -6,16 +6,16 @@ import Subscription from "../components/subscription/page";
 import NewArrival from "@/components/newArrival/NewArrival";
 
 
+
 export default function Home() {
   return (
     <main className="">
       <HeaderBanner />
       <ServiceMoto />
       <SellingCategory/>
-      <BestSell />
       <NewArrival/>
-      <Subscription />
-    
+      <BestSell />
+      <Subscription />    
     </main>
   );
 }

@@ -56,7 +56,7 @@ export default function BestSell() {
   return (
     <div>
     <div className="slider-container mx-0 lg:mx-20">
-      <h1 className='text-center mt-8 font-bold md:text-2xl text-xl'>BEST SELLING PRODUCTS</h1>
+      <h1 className='text-center mb-4 mt-8 font-bold md:text-2xl text-xl'>BEST SELLING PRODUCTS</h1>
       <Slider {...settings}>
         {products.map(product => (
           <div key={product.id} className="card card-compact bg-base-100 w-96 shadow-xl">
@@ -68,7 +68,7 @@ export default function BestSell() {
               <p className='md:text-[20px] text-gray-500'>{product.price} <span className='md:text-[17px] line-through'>{product.oldPrice}</span></p>
               <div className="card-actions justify-center">
                 <Link href={`/product/${product.id}`}>
-                  <button className="btn btn-sm mt-4 px-12 shadow-md">Buy Now</button>
+                  <button className="btn btn-sm mt-4 md:px-12 shadow-md">Buy Now</button>
                 </Link>
               </div>
             </div>

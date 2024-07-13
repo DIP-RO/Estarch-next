@@ -2,29 +2,17 @@
 
 import React from 'react'
 import Slider from "react-slick";
-import img from '../../public/images/product_img1.jpeg'
+import img from '../../public/images/product_img.jpeg'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import '../bestSell/BestSell-theme.css'
+import './relatedProduct.css'
 import Image from 'next/image';
-export default function NewArrival() {
-
-
-  const products = [
-    { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-    { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-    { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-    { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-    // Add more product objects as needed
-  ];
-
+import Link from 'next/link';
+export default function RelatedProducts() {
   var settings = {
-    className: "center",
-    centerMode: true,
     dots: false,
     infinite: true,
-    navigator:false,
-    speed: 600,
+    speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
     initialSlide: 0,
@@ -34,7 +22,7 @@ export default function NewArrival() {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
 
@@ -51,23 +39,27 @@ export default function NewArrival() {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          className: "center",
-          centerMode: true,
-          centerPadding: "35px",
-
+          slidesToShow: 2,
+          slidesToScroll: 1
         }
       }
     ]
   };
+  const products = [
+    { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+    { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+    { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+    { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+    // Add more product objects as needed
+  ];
+
   return (
     <div>
-      <div className="slider-container mx-0 lg:mx-20">
-        <h1 className='text-center mb-4  mt-12 font-bold md:text-2xl text-xl'>NEW ARRIVAL PRODUCTS</h1>
-        <Slider {...settings}>
+    <div className="slider-container mx-0 lg:mx-20">
+      <h1 className='text-center mt-8 font-bold md:text-2xl text-xl'>Related Product</h1>
+      <Slider {...settings}>
         {products.map(product => (
-          <div key={product.id} className="card card-compact bg-base-100 w-96 shadow-sm rounded-none">
+          <div key={product.id} className="card card-compact bg-base-100 w-96 shadow-xl">
             <figure>
               <Image src={product.image} alt={product.title} />
             </figure>
@@ -75,13 +67,17 @@ export default function NewArrival() {
               <h2 className="md:card-title">{product.title}</h2>
               <p className='md:text-[20px] text-gray-500'>{product.price} <span className='md:text-[17px] line-through'>{product.oldPrice}</span></p>
               <div className="card-actions justify-center">
+                <Link href={`/product/${product.id}`}>
+                  <button className="btn btn-sm mt-4 px-12 shadow-md">Buy Now</button>
+                </Link>
               </div>
             </div>
           </div>
         ))}
-
-        </Slider>
-      </div>
+      </Slider>
     </div>
+  </div>
   )
 }
+
+

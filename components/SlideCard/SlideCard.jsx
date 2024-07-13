@@ -4,11 +4,14 @@ import { IoMdClose } from "react-icons/io";
 import { HiOutlineMinus } from "react-icons/hi";
 import { BsPlusLg } from "react-icons/bs";
 import { SlHandbag } from "react-icons/sl";
+import { useDispatch, useSelector } from "react-redux";
+import { closeCardSlide } from "@/lib/slices/cardSlideSlice";
 
 const SlideCard = () => {
     const [slideCard, setSlideCard] = useState(false); 
     const [cartItems, setCartItems] = useState([]);
-
+    const isOpen = useSelector((state) => state.cardSlide.isOpen);
+    const dispatch = useDispatch();
     useEffect(() => {
         const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
         setCartItems(storedCartItems);
@@ -43,8 +46,8 @@ const SlideCard = () => {
     };
 
     return (
-        <div className={`w-[80%] md:w-[30%] bg-base-100 shadow-2xl h-full z-[999] p-6 fixed top-0 ${slideCard ? "right-0 transition-all duration-500" : "hidden right-[-620px] transition-all duration-500"}`}>
-            <p onClick={handleSlideCard} className="absolute right-5 text-2xl cursor-pointer"><IoMdClose /></p>
+        <div className={`w-[80%] md:w-[30%] bg-base-100 shadow-2xl h-full z-[999] p-6 fixed top-0 ${isOpen ? "right-0 transition-all duration-500" : "hidden right-[-620px] transition-all duration-500"}`}>
+            <p onClick={() => dispatch(closeCardSlide())} className="absolute right-5 text-2xl cursor-pointer"><IoMdClose /></p>
             {
                 cartItems?.length > 0 ? <div><h1 className="font-bold text-3xl mb-6">Shopping bag({cartItems.length})</h1>
                     <div className="h-[70%] overflow-y-auto">
