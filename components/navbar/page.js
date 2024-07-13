@@ -56,7 +56,7 @@ export default function NavBar() {
       <div className="flex bg-base-100 justify-between px-10 mt-10">
         <div className="flex w-fit items-center justify-center">
           <CiSearch className="text-2xl" />
-          <input type="text" placeholder="search product" />
+          <input type="text" className='w-full max-w-xs h-8' placeholder="search product" />
         </div>
         <div className="flex gap-4 justify-center items-center">
           <p> SUMMER</p>

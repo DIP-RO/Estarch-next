@@ -5,6 +5,8 @@ import "./globals.css";
 import NavBar from "../components/navbar/page";
 import Footer from "../components/footer/page";
 import Providers from "./providers";
+import SlideCard from "@/components/SlideCard/SlideCard";
+import Size from "@/components/Size/Size";
 
 
 
@@ -21,6 +23,8 @@ export default function RootLayout({ children }) {
       <body className={`${inter.className} bg-base-100`}>
         <Providers>
           <NavBar />
+          <SlideCard/>
+          <Size/>
           {children}
           <Footer />
         </Providers>
