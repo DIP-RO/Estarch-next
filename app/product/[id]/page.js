@@ -62,16 +62,11 @@ export default function ProductDetails({ params }) {
             <h1 className="text-2xl font-bold mb-2">BIG STAR JEANS</h1>
             <p className="text-sm text-gray-600 mb-2">SKU: 00042</p>
             <div className="flex  gap-1 items-center">
-            <p className="text-lg">Jeans Size </p>
-            <div  className='w-48 h-[40px]  rounded-md flex justify-between '>
-      
-                  
-
+              <p className="text-lg">Jeans Size </p>
+              <div className='w-48 h-[40px]  rounded-md flex justify-between '>
                 <p className="flex gap-2 items-center " onClick={() => dispatch(openSize())}>(<PiCoatHanger /> Size guide )</p>
-    
-        
+              </div>
             </div>
-           </div>
             <div className="flex mb-4">
               <button className="border px-4 py-2 mr-2">30</button>
               <button className="border px-4 py-2 mr-2">32</button>
@@ -99,12 +94,9 @@ export default function ProductDetails({ params }) {
               </button>
             </div>
             <div className="flex items-center  justify-start ml-12">
-
-  
-                <button className="flex w-48  text-white px-4 py-2" style={{ backgroundColor: 'rgb(30, 170, 72)' }}>
-                  <span><FaWhatsapp size={25} /></span> Whatsapp Order
-                </button>
-      
+              <button className="flex w-48  text-white px-4 py-2" style={{ backgroundColor: 'rgb(30, 170, 72)' }}>
+                <span><FaWhatsapp size={25} /></span> Whatsapp Order
+              </button>
             </div>
             <div className="grid grid-cols-3 mt-5 mb-4">
               <button className="bg-green-500 text-white px-4 py-2 mr-2">
@@ -113,9 +105,7 @@ export default function ProductDetails({ params }) {
               <button className="bg-black text-white px-4 py-2 mr-2">
                 Order now
               </button>
-
             </div>
-
           </div>
         </div>
         <div className="border-t pt-4 bg-gray-200 rounded-lg">
