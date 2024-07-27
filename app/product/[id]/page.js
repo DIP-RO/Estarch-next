@@ -8,6 +8,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { PiCoatHanger } from 'react-icons/pi';
 import { useDispatch } from "react-redux";
 import { openSize } from "@/lib/slices/sizeSlice";
+import Link from "next/link";
 export default function ProductDetails({ params }) {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
@@ -93,19 +94,21 @@ export default function ProductDetails({ params }) {
                 +
               </button>
             </div>
-            <div className="flex items-center  justify-start ml-12">
+           
+            <div className="flex mt-5 mb-4">
+             <Link href='/product/order'> <button className="bg-green-500 text-white px-4 py-2 mr-2">
+                Add to cart
+              </button></Link>
+              <Link href='/product/order'><button className="bg-black text-white px-4 py-2 mr-2">
+                Order now
+              </button></Link>
+            </div>
+            <div className="flex items-center  justify-start ml-5">
               <button className="flex w-48  text-white px-4 py-2" style={{ backgroundColor: 'rgb(30, 170, 72)' }}>
                 <span><FaWhatsapp size={25} /></span> Whatsapp Order
               </button>
             </div>
-            <div className="grid grid-cols-3 mt-5 mb-4">
-              <button className="bg-green-500 text-white px-4 py-2 mr-2">
-                Add to cart
-              </button>
-              <button className="bg-black text-white px-4 py-2 mr-2">
-                Order now
-              </button>
-            </div>
+            
           </div>
         </div>
         <div className="border-t pt-4 bg-gray-200 rounded-lg">
