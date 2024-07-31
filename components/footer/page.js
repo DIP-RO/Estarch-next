@@ -10,7 +10,6 @@ import Image from 'next/image';
 import bank_payment_logo from "../../public/images/payment-gateway.eb02d190.png";
 import pic from '../../public/images/1707379719303-manfare_bd-id-13.jpeg';
 import logo from '../../public/images/LOGO 1.png';
-
 export default function Footer() {
   return (
     <div
