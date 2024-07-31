@@ -1,5 +1,5 @@
 import React from 'react';
-import img from '../../../public/images/product_img.jpeg'
+import img from '../../../public/images/c_boxer.jpeg'
 import Link from 'next/link';
 import Image from 'next/image';
 import { CiFilter } from "react-icons/ci";
@@ -8,10 +8,10 @@ const page = () => {
 
 
     const products = [
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+        { id: 1, title: "Premium Solid T Shirt for Men I MF-432",category:"men", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+        { id: 1, title: "Premium Solid T Shirt for Men I MF-432",category:"men", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+        { id: 1, title: "Premium Solid T Shirt for Men I MF-432",category:"women", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+        { id: 1, title: "Premium Solid T Shirt for Men I MF-432",category:"kids", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
         { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
         { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
         { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
@@ -179,31 +179,31 @@ const page = () => {
                                     <div className="form-control">
                                         <label className="label cursor-pointer flex justify-start gap-4">
                                             <input type="checkbox" className="checkbox checkbox-sm" />
-                                            <span className="label-text">Panjabi</span>
+                                            <span className="label-text">Shari</span>
                                         </label>
                                     </div>
                                     <div className="form-control">
                                         <label className="label cursor-pointer flex justify-start gap-4">
                                             <input type="checkbox" className="checkbox checkbox-sm" />
-                                            <span className="label-text">Pant</span>
+                                            <span className="label-text"> 3 Piece</span>
                                         </label>
                                     </div>
                                     <div className="form-control">
                                         <label className="label cursor-pointer flex justify-start gap-4">
                                             <input type="checkbox" className="checkbox checkbox-sm" />
-                                            <span className="label-text">Pajama</span>
+                                            <span className="label-text">Top</span>
                                         </label>
                                     </div>
                                     <div className="form-control">
                                         <label className="label cursor-pointer flex justify-start gap-4">
                                             <input type="checkbox" className="checkbox checkbox-sm" />
-                                            <span className="label-text">Boxer</span>
+                                            <span className="label-text">T-shirt</span>
                                         </label>
                                     </div>
                                     <div className="form-control">
                                         <label className="label cursor-pointer flex justify-start gap-4">
                                             <input type="checkbox" className="checkbox checkbox-sm" />
-                                            <span className="label-text">Polo</span>
+                                            <span className="label-text"></span>
                                         </label>
                                     </div>
                                 </div>

@@ -1,4 +1,5 @@
 "use client";
+import { addToCart } from "@/lib/slices/cartSlice";
 import Image from "next/image";
 import { useState } from "react";
 import img from "../../../public/images/product_img.jpeg";
@@ -13,7 +14,20 @@ export default function ProductDetails({ params }) {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
   const [mainImage, setMainImage] = useState(img);
-
+  const handleAddToCart = () => {
+    dispatch(addToCart({
+      id: params.id, // Assuming params.id is the product ID
+      product: {
+        title: "BIG STAR JEANS",
+        price: 1350,
+        colors: [{ images: [{ url: img.src }] }],
+        stock: { quantity: 10 }, // Adjust based on actual product details
+      },
+      quantity,
+      color: 'Blue', // Add actual color if available
+      size: '32', // Add actual size if available
+    }));
+  };
   const incrementQuantity = () => {
     setQuantity(quantity + 1);
   };
@@ -94,11 +108,13 @@ export default function ProductDetails({ params }) {
                 +
               </button>
             </div>
-           
+
             <div className="flex mt-5 mb-4">
-             <Link href='/product/order'> <button className="bg-green-500 text-white px-4 py-2 mr-2">
-                Add to cart
-              </button></Link>
+              <Link href=''>
+                <button className="bg-green-500 text-white px-4 py-2 mr-2" onClick={handleAddToCart}>
+                  Add to cart
+                </button>
+              </Link>
               <Link href='/product/order'><button className="bg-black text-white px-4 py-2 mr-2">
                 Order now
               </button></Link>
@@ -108,7 +124,7 @@ export default function ProductDetails({ params }) {
                 <span><FaWhatsapp size={25} /></span> Whatsapp Order
               </button>
             </div>
-            
+
           </div>
         </div>
         <div className="border-t pt-4 bg-gray-200 rounded-lg">
