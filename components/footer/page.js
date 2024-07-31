@@ -142,6 +142,7 @@ export default function Footer() {
                 <Image
                   src={pic}
                   alt="Logo"
+                  layout="responsive"
                   width={48}
                   height={48}
                   className="rounded-full"
