@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import { useState, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
 import { HiOutlineMinus } from "react-icons/hi";
