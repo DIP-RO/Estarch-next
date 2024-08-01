@@ -9,7 +9,7 @@ import NewArrival from "@/components/newArrival/NewArrival";
 
 export default function Home() {
   return (
-    <main className="">
+    <main className="overflow-x-hidden">
       <HeaderBanner />
       <ServiceMoto />
       <SellingCategory/>

@@ -38,16 +38,16 @@
     height: 100%;
     object-fit: cover;
   }
-  .swiper-button-next,
-  .swiper-button-prev
+  div.swiper-button-next,
+  div.swiper-button-prev
   {
     color: white;
-    
   }
   .swiper-button-next::after,
   .swiper-button-prev::after
   {
-    font-size: 18px;
+    font-size: 18px !important;
     font-weight: bold;
+
   }
   
