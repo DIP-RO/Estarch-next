@@ -1,5 +1,5 @@
 import React from 'react';
-import img from '../../../public/images/women.jpg'
+import img from '../../../public/images/bata.jpeg'
 import Link from 'next/link';
 import Image from 'next/image';
 import { CiFilter } from "react-icons/ci";

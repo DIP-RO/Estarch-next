@@ -106,13 +106,11 @@ export default function NavBar() {
           </div>
           <div className="flex gap-4 justify-center items-center">
 
-            <Link href=''><button >SUMMER</button></Link>
-            <Link href='/category/women'> <button >WOMEN</button></Link>
-            <Link href='/category/men'><button>MEN</button></Link>
-            <Link href=''><button >TEEN</button></Link>
-            <Link href='/category/kids'> <button >KIDS</button></Link>
-            <Link href=''><button >NARGISUS</button></Link>
-            <Link href=''> <button>HOME DECOR</button></Link>
+            <Link href='/'><button >HOME</button></Link>
+            <Link href='/man'><button>MEN</button></Link>
+            <Link href='/women'> <button >WOMEN</button></Link>
+            <Link href='/kids'> <button >KIDS</button></Link>
+            <Link href='/shoes'><button >SHOES</button></Link>
             {/* <button onClick={() => setSelectedCategory('')}>ALL</button>
             <button onClick={() => setSelectedCategory('summer')}>SUMMER</button>
             <button onClick={() => setSelectedCategory('women')}>WOMEN</button>
