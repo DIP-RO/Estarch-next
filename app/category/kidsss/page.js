@@ -56,8 +56,8 @@ const page = () => {
                 <div className="drawer-content flex flex-col items-start justify-start">
                     {/* Products */}
                     <div className='col-span-10 gap-6 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4'>
-                        {products.map(product => (
-                            <div key={product.id} className="card card-compact bg-base-100 shadow-xl h-[350px] lg:h-[500px] ">
+                        {products?.map(product => (
+                            <div key={product?.id} className="card card-compact bg-base-100 shadow-xl h-[350px] lg:h-[500px] ">
                                 <figure>
                                     <Image src={product.image} alt={product.title} />
                                 </figure>
