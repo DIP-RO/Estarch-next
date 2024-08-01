@@ -1,12 +1,11 @@
-"use client";
-import { useState, useEffect } from "react";
+'use client'
 import { IoMdClose } from "react-icons/io";
 import { HiOutlineMinus } from "react-icons/hi";
 import { BsPlusLg } from "react-icons/bs";
 import { SlHandbag } from "react-icons/sl";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCardSlide } from "@/lib/slices/cardSlideSlice";
-import { removeItem, increaseQuantity, decreaseQuantity } from "@/lib/slices/cartSlice";
+
 import Image from "next/image";
 import Link from "next/link";
 
