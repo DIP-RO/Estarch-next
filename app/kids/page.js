@@ -18,9 +18,9 @@ export default function Kid() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-3 justify-center items-center px-5 py-5 gap-5">
+            <div className="grid sm:grid-cols-1 lg:grid-cols-3 justify-center items-center px-5 py-5 gap-5">
                 
-                <div className="relative w-[540px] h-96">
+                <div className="relative w-[470px] h-96">
                 <Link href='/category/kidsss'>
                     <Image
                         src={img1}
@@ -38,7 +38,7 @@ export default function Kid() {
                     </Link>
                     
                 </div>
-                <div className="relative w-[540px] h-96">
+                <div className="relative w-[470px] h-96">
                 <Link href='/category/kidsss'>
                     <Image
                         src={img1}
@@ -54,7 +54,7 @@ export default function Kid() {
                         </button>
                     </div>
                 </div>
-                <div className="relative w-[540px] h-96">
+                <div className="relative w-[470px] h-96">
                     <Image
                         src={img1}
                         alt="SS 24"
@@ -69,7 +69,7 @@ export default function Kid() {
                         </button>
                     </div>
                 </div>
-                <div className="relative w-[540px] h-96">
+                <div className="relative w-[470px] h-96">
                     <Image
                         src={img1}
                         alt="SS 24"
@@ -84,7 +84,7 @@ export default function Kid() {
                         </button>
                     </div>
                 </div>
-                <div className="relative w-[540px] h-96">
+                <div className="relative w-[470px] h-96">
                     <Image
                         src={img1}
                         alt="SS 24"
@@ -99,7 +99,7 @@ export default function Kid() {
                         </button>
                     </div>
                 </div>
-                <div className="relative w-[540px] h-96">
+                <div className="relative w-[470px] h-96">
                     <Image
                         src={img1}
                         alt="SS 24"
@@ -116,7 +116,7 @@ export default function Kid() {
                 </div>
             </div>
 
-            <div className="relative w-[1655px] h-80 mx-5">
+            <div className="relative sm:w-[470px] lg:w-[1470px] h-80 mx-5">
                     <Image
                         src={img1}
                         alt="SS 24"
@@ -132,7 +132,7 @@ export default function Kid() {
                     </div>
             </div>
             <div className="grid grid-cols-3 justify-center items-center px-5 py-5 gap-5">
-                <div className="relative w-[540px] h-96">
+                <div className="relative w-[470px] h-96">
                     <Image
                         src={img1}
                         alt="SS 24"
@@ -147,7 +147,7 @@ export default function Kid() {
                         </button>
                     </div>
                 </div>
-                <div className="relative w-[540px] h-96">
+                <div className="relative w-[470px] h-96">
                     <Image
                         src={img1}
                         alt="SS 24"
@@ -162,7 +162,7 @@ export default function Kid() {
                         </button>
                     </div>
                 </div>
-                <div className="relative w-[540px] h-96">
+                <div className="relative w-[470px] h-96">
                     <Image
                         src={img1}
                         alt="SS 24"
@@ -177,7 +177,7 @@ export default function Kid() {
                         </button>
                     </div>
                 </div>
-                <div className="relative w-[540px] h-96">
+                <div className="relative w-[470px] h-96">
                     <Image
                         src={img1}
                         alt="SS 24"
@@ -192,7 +192,7 @@ export default function Kid() {
                         </button>
                     </div>
                 </div>
-                <div className="relative w-[540px] h-96">
+                <div className="relative w-[470px] h-96">
                     <Image
                         src={img1}
                         alt="SS 24"
@@ -207,7 +207,7 @@ export default function Kid() {
                         </button>
                     </div>
                 </div>
-                <div className="relative w-[540px] h-96">
+                <div className="relative w-[470px] h-96">
                     <Image
                         src={img1}
                         alt="SS 24"
