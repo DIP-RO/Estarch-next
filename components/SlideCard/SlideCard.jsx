@@ -5,6 +5,7 @@ import { BsPlusLg } from "react-icons/bs";
 import { SlHandbag } from "react-icons/sl";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCardSlide } from "@/lib/slices/cardSlideSlice";
+import { decreaseQuantity, increaseQuantity, removeItem } from "@/lib/slices/cartSlice"; // import the necessary actions
 
 import Image from "next/image";
 import Link from "next/link";
@@ -19,16 +20,16 @@ const SlideCard = () => {
         document.body.style.overflow = isOpen ? "auto" : "hidden";
     };
 
-    const handleDecrease = (index) => {
-        dispatch(decreaseQuantity(index));
+    const handleDecrease = (id) => {
+        dispatch(decreaseQuantity(id));
     };
 
-    const handleIncrease = (index) => {
-        dispatch(increaseQuantity(index));
+    const handleIncrease = (id) => {
+        dispatch(increaseQuantity(id));
     };
 
-    const handleRemoveItem = (index) => {
-        dispatch(removeItem(index));
+    const handleRemoveItem = (id) => {
+        dispatch(removeItem(id));
     };
 
     const calculateSubtotal = () => {
@@ -45,8 +46,8 @@ const SlideCard = () => {
                     <div>
                         <h1 className="font-bold text-3xl mb-6">Shopping bag({cartItems.length})</h1>
                         <div className="h-[70%] overflow-y-auto">
-                            {cartItems.map((item, index) => (
-                                <div key={index} className="grid grid-cols-5 md:grid-cols-4 gap-6 relative py-5">
+                            {cartItems.map((item) => (
+                                <div key={item.id} className="grid grid-cols-5 md:grid-cols-4 gap-6 relative py-5">
                                     <div>
                                         {item.product.colors[0].images[0].url && (
                                             <Image width={120} height={120} src={item.product.colors[0].images[0].url} alt={item.product.title} />
@@ -62,7 +63,7 @@ const SlideCard = () => {
                                         )}
                                         <p>{item.product.stock.quantity} in stock</p>
                                         <div className="flex border w-20 my-5 py-2 px-2 rounded-md">
-                                            <button className="flex-1" onClick={() => handleDecrease(index)}>
+                                            <button className="flex-1" onClick={() => handleDecrease(item.id)}>
                                                 <HiOutlineMinus />
                                             </button>
                                             <input
@@ -71,14 +72,14 @@ const SlideCard = () => {
                                                 className="text-center w-full"
                                                 readOnly
                                             />
-                                            <button className="flex-1" onClick={() => handleIncrease(index)}>
+                                            <button className="flex-1" onClick={() => handleIncrease(item.id)}>
                                                 <BsPlusLg />
                                             </button>
                                         </div>
                                     </div>
                                     <div>
-                                        <h1>{item.product.price} AED</h1>
-                                        <p className="cursor-pointer" onClick={() => handleRemoveItem(index)}>Remove</p>
+                                        <h1>{item.product.price} tk</h1>
+                                        <p className="cursor-pointer" onClick={() => handleRemoveItem(item.id)}>Remove</p>
                                     </div>
                                 </div>
                             ))}
@@ -86,7 +87,7 @@ const SlideCard = () => {
                         <div className="grid gap-4 ">
                             <div className="flex justify-between items-center">
                                 <h1 className="font-bold text-xl">Subtotal:</h1>
-                                <h1 className="font-bold text-xl">{calculateSubtotal()} AED</h1>
+                                <h1 className="font-bold text-xl">{calculateSubtotal()} tk</h1>
                             </div>
                             <p>
                                 Tax included{" "}
@@ -95,9 +96,9 @@ const SlideCard = () => {
                                 </span>{" "}
                                 calculated at checkout.
                             </p>
-                            <a href="payment/information">
+                            <Link href="/product/order">
                                 <button className="btn bg-black text-white w-full hover:bg-black">CHECK OUT</button>
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 ) : (

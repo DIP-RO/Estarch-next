@@ -10,24 +10,30 @@ import { PiCoatHanger } from 'react-icons/pi';
 import { useDispatch } from "react-redux";
 import { openSize } from "@/lib/slices/sizeSlice";
 import Link from "next/link";
+
 export default function ProductDetails({ params }) {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
   const [mainImage, setMainImage] = useState(img);
+  const [selectedSize, setSelectedSize] = useState("32");
+  const title = "BIG STAR JEANS"; // Add actual product title if available
+  const price = 1350; // Adjust based on actual product price
+
   const handleAddToCart = () => {
     dispatch(addToCart({
       id: params.id, // Assuming params.id is the product ID
       product: {
-        title: "BIG STAR JEANS",
-        price: 1350,
+        title: title,
+        price: price,
         colors: [{ images: [{ url: img.src }] }],
         stock: { quantity: 10 }, // Adjust based on actual product details
       },
       quantity,
       color: 'Blue', // Add actual color if available
-      size: '32', // Add actual size if available
+      size: selectedSize,
     }));
   };
+
   const incrementQuantity = () => {
     setQuantity(quantity + 1);
   };
@@ -40,6 +46,10 @@ export default function ProductDetails({ params }) {
 
   const handleThumbnailClick = (imgSrc) => {
     setMainImage(imgSrc);
+  };
+
+  const handleSizeClick = (size) => {
+    setSelectedSize(size);
   };
 
   return (
@@ -74,23 +84,30 @@ export default function ProductDetails({ params }) {
             </div>
           </div>
           <div className="w-full md:w-1/2 p-4">
-            <h1 className="text-2xl font-bold mb-2">BIG STAR JEANS</h1>
+            <h1 className="text-2xl font-bold mb-2">{title}</h1>
             <p className="text-sm text-gray-600 mb-2">SKU: 00042</p>
-            <div className="flex  gap-1 items-center">
-              <p className="text-lg">Jeans Size </p>
-              <div className='w-48 h-[40px]  rounded-md flex justify-between '>
-                <p className="flex gap-2 items-center " onClick={() => dispatch(openSize())}>(<PiCoatHanger /> Size guide )</p>
+            <div className="flex gap-1 items-center">
+              <p className="text-lg">Jeans Size</p>
+              <div className='w-48 h-[40px] rounded-md flex justify-between '>
+                <p className="flex gap-2 items-center" onClick={() => dispatch(openSize())}>
+                  (<PiCoatHanger /> Size guide )
+                </p>
               </div>
             </div>
             <div className="flex mb-4">
-              <button className="border px-4 py-2 mr-2">30</button>
-              <button className="border px-4 py-2 mr-2">32</button>
-              <button className="border px-4 py-2 mr-2">34</button>
-              <button className="border px-4 py-2">36</button>
+              {["30", "32", "34", "36"].map(size => (
+                <button
+                  key={size}
+                  className={`border px-4 py-2 mr-2 ${selectedSize === size ? 'bg-gray-300' : ''}`}
+                  onClick={() => handleSizeClick(size)}
+                >
+                  {size}
+                </button>
+              ))}
             </div>
             <p className="text-red-600 text-xl mb-4">
               <span className="line-through text-gray-500 mr-2">৳ 1590</span>
-              ৳ 1350
+              ৳ {price}
             </p>
             <p className="text-lg mb-2">Quantity:</p>
             <div className="flex items-center mb-6">
@@ -115,16 +132,17 @@ export default function ProductDetails({ params }) {
                   Add to cart
                 </button>
               </Link>
-              <Link href='/product/order'><button className="bg-black text-white px-4 py-2 mr-2">
-                Order now
-              </button></Link>
+              <Link href='/product/order'>
+                <button className="bg-black text-white px-4 py-2 mr-2">
+                  Order now
+                </button>
+              </Link>
             </div>
-            <div className="flex items-center  justify-start ml-5">
-              <button className="flex w-48  text-white px-4 py-2" style={{ backgroundColor: 'rgb(30, 170, 72)' }}>
+            <div className="flex items-center justify-start ml-5">
+              <button className="flex w-48 text-white px-4 py-2" style={{ backgroundColor: 'rgb(30, 170, 72)' }}>
                 <span><FaWhatsapp size={25} /></span> Whatsapp Order
               </button>
             </div>
-
           </div>
         </div>
         <div className="border-t pt-4 bg-gray-200 rounded-lg">
