@@ -1,14 +1,6 @@
+// next.config.js
 module.exports = {
-  
-    images: {
-      remotePatterns: [
-        {
-          protocol: 'https',
-          hostname: 'estarch.com.bd',
-          port: '',
-          pathname: '/image/LOGO%201.png',
-        },
-      ],
-    },
-  }
-  
+  images: {
+    domains: ['estarch.com.bd', 'res.cloudinary.com'],
+  },
+};
