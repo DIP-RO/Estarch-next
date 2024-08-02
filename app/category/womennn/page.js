@@ -1,5 +1,5 @@
 import React from 'react';
-import img from '../../../public/images/c_panjabi.jpeg'
+import img from '../../../public/images/c_boxer.jpeg'
 import Link from 'next/link';
 import Image from 'next/image';
 import { CiFilter } from "react-icons/ci";
@@ -56,7 +56,7 @@ const page = () => {
                 <div className="drawer-content flex flex-col items-start justify-start">
                     {/* Products */}
                     <div className='col-span-10 gap-6 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4'>
-                        {products.map(product => (
+                        {products?.map(product => (
                             <div key={product.id} className="card card-compact bg-base-100 shadow-xl h-[350px] lg:h-[500px] ">
                                 <figure>
                                     <Image src={product.image} alt={product.title} />
@@ -179,31 +179,31 @@ const page = () => {
                                     <div className="form-control">
                                         <label className="label cursor-pointer flex justify-start gap-4">
                                             <input type="checkbox" className="checkbox checkbox-sm" />
-                                            <span className="label-text">Panjabi</span>
+                                            <span className="label-text">Shari</span>
                                         </label>
                                     </div>
                                     <div className="form-control">
                                         <label className="label cursor-pointer flex justify-start gap-4">
                                             <input type="checkbox" className="checkbox checkbox-sm" />
-                                            <span className="label-text">Pant</span>
+                                            <span className="label-text"> 3 Piece</span>
                                         </label>
                                     </div>
                                     <div className="form-control">
                                         <label className="label cursor-pointer flex justify-start gap-4">
                                             <input type="checkbox" className="checkbox checkbox-sm" />
-                                            <span className="label-text">Pajama</span>
+                                            <span className="label-text">Top</span>
                                         </label>
                                     </div>
                                     <div className="form-control">
                                         <label className="label cursor-pointer flex justify-start gap-4">
                                             <input type="checkbox" className="checkbox checkbox-sm" />
-                                            <span className="label-text">Boxer</span>
+                                            <span className="label-text">T-shirt</span>
                                         </label>
                                     </div>
                                     <div className="form-control">
                                         <label className="label cursor-pointer flex justify-start gap-4">
                                             <input type="checkbox" className="checkbox checkbox-sm" />
-                                            <span className="label-text">Polo</span>
+                                            <span className="label-text"></span>
                                         </label>
                                     </div>
                                 </div>
