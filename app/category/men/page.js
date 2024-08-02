@@ -1,10 +1,10 @@
 import React from 'react';
-import img from '../../../public/images/women.jpg'
+import img from '../../../public/images/c_t-shirt.jpeg'
 import Link from 'next/link';
 import Image from 'next/image';
 import { CiFilter } from "react-icons/ci";
 import { MdArrowDropDown } from "react-icons/md";
-const page = () => {
+const Men = () => {
 
 
     const products = [
@@ -216,4 +216,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Men;

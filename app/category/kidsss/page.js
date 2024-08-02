@@ -1,5 +1,5 @@
 import React from 'react';
-import img from '../../../public/images/c_panjabi.jpeg'
+import img from '../../../public/images/Products_You_Need_To_Have_For_Your_Child_During_These_Times.jpg'
 import Link from 'next/link';
 import Image from 'next/image';
 import { CiFilter } from "react-icons/ci";
@@ -7,7 +7,7 @@ import { MdArrowDropDown } from "react-icons/md";
 const page = () => {
 
 
-    const products = [
+    const kidssss = [
         { id: 1, title: "Premium Solid T Shirt for Men I MF-432",category:"men", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
         { id: 1, title: "Premium Solid T Shirt for Men I MF-432",category:"men", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
         { id: 1, title: "Premium Solid T Shirt for Men I MF-432",category:"women", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
@@ -56,16 +56,16 @@ const page = () => {
                 <div className="drawer-content flex flex-col items-start justify-start">
                     {/* Products */}
                     <div className='col-span-10 gap-6 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4'>
-                        {products?.map(product => (
-                            <div key={product?.id} className="card card-compact bg-base-100 shadow-xl h-[350px] lg:h-[500px] ">
+                        {kidssss?.map(kid => (
+                            <div key={kid?.id} className="card card-compact bg-base-100 shadow-xl h-[350px] lg:h-[500px] ">
                                 <figure>
-                                    <Image src={product.image} alt={product.title} />
+                                    <Image src={kid.image} alt={kid.title} />
                                 </figure>
                                 <div className="card-body">
-                                    <h2 className="text">{product.title}</h2>
-                                    <p className='md:text-[16px] text-gray-500'>{product.price} <span className='md:text-[14px] line-through'>{product.oldPrice}</span></p>
+                                    <h2 className="text">{kid.title}</h2>
+                                    <p className='md:text-[16px] text-gray-500'>{kid.price} <span className='md:text-[14px] line-through'>{kid.oldPrice}</span></p>
                                     <div className="card-actions justify-center">
-                                        <Link href={`/product/${product.id}`}>
+                                        <Link href={`/kidsss/${kid.id}`}>
                                             <button className="btn btn-sm mt-4 md:px-12 shadow-md">Buy Now</button>
                                         </Link>
                                     </div>
