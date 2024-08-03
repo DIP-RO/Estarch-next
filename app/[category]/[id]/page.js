@@ -17,7 +17,7 @@ const page = () => {
     )];
 
 
-    const { type } = useParams();
+    const { id } = useParams();
 
     const allRanges = [
         { min: 100, max: 300 },
@@ -31,7 +31,7 @@ const page = () => {
     // Fetch products from the backend
     useEffect(() => {
         const fetchProducts = async () => {
-            let url = `http://localhost:5000/api/products/products/${type}`;
+            let url = `http://localhost:5000/api/products/products/category/${id}`;
 
             // Add ranges to the query string if there are selected ranges
             if (selectedRanges.length > 0) {
@@ -39,13 +39,6 @@ const page = () => {
                 url += `?ranges=${encodeURIComponent(rangesQuery)}`;
             }
 
-            // Add categories to the query string if there are selected categories
-            if (selectedCategories.length > 0) {
-                const categoriesQuery = JSON.stringify(selectedCategories);
-                // Append categories to the query string
-                const delimiter = url.includes('?') ? '&' : '?';
-                url += `${delimiter}categories=${encodeURIComponent(categoriesQuery)}`;
-            }
 
             try {
                 const response = await fetch(url);
@@ -57,7 +50,7 @@ const page = () => {
         };
 
         fetchProducts();
-    }, [type, selectedRanges, selectedCategories]);
+    }, [id, selectedRanges]);
 
     // console.log(productss);
 
@@ -236,10 +229,11 @@ const page = () => {
                                 className="card card-compact bg-base-100 shadow-xl h-[350px] lg:h-[500px] "
                             >
                                 <figure>
-                                    <Image src={img} alt={product.title} />
+                                    <Image src={product.images[0]} alt={product.productName} width={500} 
+                                        height={700} />
                                 </figure>
                                 <div className="card-body">
-                                    <h2 className="text">Product Name</h2>
+                                    <h2 className="text">{product.productName}</h2>
                                     <p className="md:text-[16px] text-gray-500">
                                         {product.salePrice}{" "}
                                         <span className="md:text-[14px] line-through">

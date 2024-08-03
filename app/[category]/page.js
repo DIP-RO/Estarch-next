@@ -17,6 +17,7 @@ export default function Man() {
         axios.get(`http://localhost:5000/api/categories/categories/${category}`)
             .then(res => {
                 setCategories(res.data)
+                // console.log(res.data);
             })
     }, [])
 
@@ -41,14 +42,14 @@ export default function Man() {
                         <Link href={`/${category}/${cat._id}`}>
                             <Image
                                 src={cat.image}
-                                alt="SS 24"
+                                alt={cat.name}
                                 layout="fill"
                                 objectFit="cover"
                                 className="rounded-lg"
                             />
                             <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-center items-center text-white">
                                 <h2 className="text-4xl font-bold">{cat.name}</h2>
-                                <button className="mt-4 px-4 py-2 bg-white text-black font-semibold rounded">
+                                <button className="mt-4 px-4 py-2 bg-green-500 text-white font-semibold rounded">
                                     Shop Now
                                 </button>
                             </div>
