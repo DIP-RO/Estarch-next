@@ -7,19 +7,18 @@ import { FaApple } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { CiSearch } from "react-icons/ci";
-import img from '../../public/images/c_boxer.jpeg'
+import img from '../../public/images/c_boxer.jpeg';
+import logo from '../../public/images/LOGO 1.png';
 import Image from 'next/image';
 import Link from 'next/link';
 import { IoMdMenu } from "react-icons/io";
+import { useDispatch, useSelector } from 'react-redux';
 import { openSlide } from '@/lib/slices/sliderSlice';
-import { useDispatch } from 'react-redux';
 import { openCardSlide } from '@/lib/slices/cardSlideSlice';
-import { useSelector } from "react-redux";
 export default function NavBar() {
   const totalQuantity = useSelector(state => state.cart.totalQuantity);
   const dispatch = useDispatch();
   const [selectedCategory, setSelectedCategory] = useState('');
-
   const products = [
     { id: 1, title: "Premium Solid T Shirt for Men I MF-432", category: "men", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
     { id: 2, title: "Premium Solid T Shirt for Men I MF-432", category: "men", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
@@ -66,7 +65,7 @@ export default function NavBar() {
           </div>
         </div>
         <div className="navbar-center sm:mr-9">
-          <Link href="/"> <Image width={150} height={20} className="h-8" src="https://estarch.com.bd/image/LOGO%201.png" alt="logo" /></Link>
+          <Link href="/"> <Image width={150} height={20} className="h-8" src={logo} alt="logo" /></Link>
         </div>
         <div className="navbar-end">
           <div className='hidden lg:block md:block'>
@@ -84,7 +83,7 @@ export default function NavBar() {
                 <ul className="bg-white w-52 p-5">
                   <li className="text-base hover:bg-base-100"><Link href="/login">Login</Link></li>
                   <div className="divider h-1"></div>
-                  <li className="text-base hover:bg-base-100"><a>Register</a></li>
+                  <li className="text-base hover:bg-base-100"><Link href='/register'>Register</Link></li>
                   <div className="divider h-1"></div>
                   <li className="text-base hover:bg-base-100"><a>Order Tracking</a></li>
                 </ul>
@@ -111,32 +110,17 @@ export default function NavBar() {
             <Link href='/women'> <button >WOMEN</button></Link>
             <Link href='/kids'> <button >KIDS</button></Link>
             <Link href='/shoes'><button >SHOES</button></Link>
-            {/* <button onClick={() => setSelectedCategory('')}>ALL</button>
-            <button onClick={() => setSelectedCategory('summer')}>SUMMER</button>
-            <button onClick={() => setSelectedCategory('women')}>WOMEN</button>
-            <button onClick={() => setSelectedCategory('men')}>MEN</button>
-            <button onClick={() => setSelectedCategory('teen')}>TEEN</button>
-            <button onClick={() => setSelectedCategory('kids')}>KIDS</button>
-            <button onClick={() => setSelectedCategory('nargisus')}>NARGISUS</button>
-            <button onClick={() => setSelectedCategory('home decor')}>HOME DECOR</button> */}
           </div>
-          <div className="relative w-[60px]" onClick={() => dispatch(openCardSlide())}>
+          <div className="relative w-[40px]" onClick={() => dispatch(openCardSlide())}>
             <HiOutlineShoppingBag className="relative text-2xl" />
-            <p className="bg-red-600 text-white rounded-full absolute bottom-0 right-8 w-4 h-4 text-xs text-center">{totalQuantity}</p>
+            {totalQuantity > 0 && (
+                <span className="bg-red-600 text-white rounded-full absolute -top-1 -right-1 w-4 h-4 text-xs flex items-center justify-center">
+                    {totalQuantity}
+                </span>
+            )}
           </div>
         </div>
       </div>
-      {/* Render filtered products */}
-      {/* <div className="products">
-        {filteredProducts.map(product => (
-          <div key={product.id} className="product-card">
-            <Image src={product.image} alt={product.title} width={100} height={100} />
-            <h2>{product.title}</h2>
-            <p>{product.price}</p>
-            <p><del>{product.oldPrice}</del></p>
-          </div>
-        ))}
-      </div> */}
     </div>
   );
 }

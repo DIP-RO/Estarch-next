@@ -3,7 +3,7 @@ import { addToCart } from "@/lib/slices/cartSlice";
 import Image from "next/image";
 import { useState } from "react";
 import img from "../../../../public/images/Products_You_Need_To_Have_For_Your_Child_During_These_Times.jpg";
-import img1 from "../../../public/images/1716831105150-manfarebd-id-13.jpeg";
+import img1 from "../../../../public/images/1716831105150-manfarebd-id-13.jpeg";
 import RelatedProducts from "@/components/relatedproduct/page";
 import { FaWhatsapp } from "react-icons/fa";
 import { PiCoatHanger } from 'react-icons/pi';
