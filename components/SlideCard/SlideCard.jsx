@@ -47,7 +47,7 @@ const SlideCard = () => {
                         <h1 className="font-bold text-3xl mb-6">Shopping bag({cartItems.length})</h1>
                         <div className="h-[70%] overflow-y-auto">
                             {cartItems.map((item) => (
-                                <div key={item.id} className="grid grid-cols-5 md:grid-cols-4 gap-6 relative py-5">
+                                <div key={item.id} className="grid grid-cols-5  md:grid-cols-4 gap-6 relative py-5">
                                     <div>
                                         {item.product.colors[0].images[0].url && (
                                             <Image width={120} height={120} src={item.product.colors[0].images[0].url} alt={item.product.title} />

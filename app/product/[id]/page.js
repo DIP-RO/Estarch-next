@@ -18,7 +18,7 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [mainImage, setMainImage] = useState(null);
-  const [selectedSize, setSelectedSize] = useState("32");
+  const [selectedSize, setSelectedSize] = useState("");
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -28,6 +28,9 @@ const ProductDetails = () => {
         
         setProduct(response.data);
         setMainImage(response.data.images[0]);
+        if (response.data.selectedSizes.length > 0) {
+          setSelectedSize(response.data.selectedSizes[0]);
+        }
       } catch (error) {
         console.error("Error fetching product details:", error);
       }
@@ -42,8 +45,8 @@ const ProductDetails = () => {
     dispatch(addToCart({
       id: product._id,
       product: {
-        title: product.title,
-        price: product.price,
+        title: product.productName,
+        price: product.salePrice,
         colors: [{ images: [{ url: mainImage }] }],
         stock: { quantity: 10 }, // Adjust based on actual product details
       },
@@ -77,24 +80,24 @@ const ProductDetails = () => {
 
   return (
     <div className="container mx-auto p-4">
-      {/* <div className="flex flex-col md:flex-row justify-center">
+      <div className="flex flex-col md:flex-row justify-center">
         <div className="flex flex-col md:flex-row w-full md:w-2/3 border rounded-lg p-4">
           <div className="w-full md:w-1/2">
             <Image
               width={500}
               height={500}
               src={mainImage}
-              alt={product.title}
+              alt={product.productName}
               className="object-cover"
             />
             <div className="flex mt-2 gap-2">
-              {product?.images.map((img, index) => (
+              {product.images && product.images.map((img, index) => (
                 <Image
                   key={index}
                   width={120}
                   height={120}
                   src={img}
-                  alt={product.title}
+                  alt={product.productName}
                   className="object-cover cursor-pointer"
                   onClick={() => handleThumbnailClick(img)}
                 />
@@ -102,7 +105,7 @@ const ProductDetails = () => {
             </div>
           </div>
           <div className="w-full md:w-1/2 p-4">
-            <h1 className="text-2xl font-bold mb-2">{product.title}</h1>
+            <h1 className="text-2xl font-bold mb-2">{product.productName}</h1>
             <p className="text-sm text-gray-600 mb-2">SKU: {product.sku}</p>
             <div className="flex gap-1 items-center">
               <p className="text-lg">Jeans Size</p>
@@ -113,7 +116,7 @@ const ProductDetails = () => {
               </div>
             </div>
             <div className="flex mb-4">
-              {product?.sizes.map(size => (
+              {product.selectedSizes && product.selectedSizes.map(size => (
                 <button
                   key={size}
                   className={`border px-4 py-2 mr-2 ${selectedSize === size ? 'bg-gray-300' : ''}`}
@@ -124,8 +127,8 @@ const ProductDetails = () => {
               ))}
             </div>
             <p className="text-red-600 text-xl mb-4">
-              <span className="line-through text-gray-500 mr-2">৳ {product.originalPrice}</span>
-              ৳ {product.price}
+              <span className="line-through text-gray-500 mr-2">৳ {product.regularPrice}</span>
+              ৳ {product.salePrice}
             </p>
             <p className="text-lg mb-2">Quantity:</p>
             <div className="flex items-center mb-6">
@@ -178,7 +181,7 @@ const ProductDetails = () => {
             </p>
           </div>
         </div>
-      </div> */}
+      </div>
       <RelatedProducts />
     </div>
   );
