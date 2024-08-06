@@ -23,7 +23,7 @@ export default function Home() {
         }
     }, [dispatch]);
   return (
-    <main className="">
+    <main className="overflow-x-hidden">
       <HeaderBanner />
       <ServiceMoto />
       <SellingCategory/>

@@ -1,23 +1,23 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import img from "../../../public/images/product_img.jpeg";
 import Link from "next/link";
 import Image from "next/image";
 import { CiFilter } from "react-icons/ci";
 import { useParams } from "next/navigation";
+import baseUrl from "@/components/services/baseUrl";
+import axios from "axios";
 
-const page = () => {
+const Page = () => {
     const [selectedRanges, setSelectedRanges] = useState([]);
     const [products, setProducts] = useState([]);
-    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [subcategories, setSubcategories] = useState([]);
+    const [selectedSubcategories, setSelectedSubcategories] = useState([]);
+    const [uniqueSizes, setUniqueSizes] = useState([]);
+    const [selectedSizes, setSelectedSizes] = useState([]);
+    const [sortBy, setSortBy] = useState('Sort by Latest');
 
-    const uniqueCategories = [...new Set(products
-        .map(p => p.selectedCategoryName) // Map to get category names
-        .filter(category => category.trim() !== "") // Filter out empty strings
-    )];
-
-
-    const { type } = useParams();
+    const { id } = useParams();
+    console.log(uniqueSizes);
 
     const allRanges = [
         { min: 100, max: 300 },
@@ -31,7 +31,7 @@ const page = () => {
     // Fetch products from the backend
     useEffect(() => {
         const fetchProducts = async () => {
-            let url = `http://localhost:5000/api/products/products/${type}`;
+            let url = `${baseUrl}/api/products/products/category/${id}`;
 
             // Add ranges to the query string if there are selected ranges
             if (selectedRanges.length > 0) {
@@ -39,150 +39,96 @@ const page = () => {
                 url += `?ranges=${encodeURIComponent(rangesQuery)}`;
             }
 
-            // Add categories to the query string if there are selected categories
-            if (selectedCategories.length > 0) {
-                const categoriesQuery = JSON.stringify(selectedCategories);
-                // Append categories to the query string
+            // Add subcategories to the query string if there are selected subcategories
+            if (selectedSubcategories.length > 0) {
+                const subcategoriesQuery = JSON.stringify(selectedSubcategories);
                 const delimiter = url.includes('?') ? '&' : '?';
-                url += `${delimiter}categories=${encodeURIComponent(categoriesQuery)}`;
+                url += `${delimiter}subcategories=${encodeURIComponent(subcategoriesQuery)}`;
             }
+
+            // Add sizes to the query string if there are selected sizes
+            if (selectedSizes.length > 0) {
+                const sizesQuery = JSON.stringify(selectedSizes);
+                const delimiter = url.includes('?') ? '&' : '?';
+                url += `${delimiter}sizes=${encodeURIComponent(sizesQuery)}`;
+            }
+            const delimiter = url.includes('?') ? '&' : '?';
+            url += `${delimiter}sortBy=${encodeURIComponent(sortBy)}`;
 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
                 setProducts(data);
+                extractUniqueSizes(data); // Extract unique sizes from products
             } catch (error) {
                 console.error("Error fetching products:", error);
             }
         };
 
+        const fetchSubcategories = async () => {
+            try {
+                const response = await axios.get(`${baseUrl}/api/categories/subcategories/${id}`);
+                setSubcategories(response.data);
+            } catch (error) {
+                console.error("Error fetching subcategories:", error);
+            }
+        };
+
+        fetchSubcategories();
         fetchProducts();
-    }, [type, selectedRanges, selectedCategories]);
+    }, [id, selectedRanges, selectedSubcategories, selectedSizes, baseUrl, sortBy]);
 
-    // console.log(productss);
+    // Sort
+    const handleSortChange = (e) => {
+        setSortBy(e.target.value);
+    };
 
-    // const products = [
-    //     {
-    //         id: 1,
-    //         title: "Premium Solid T Shirt for Men I MF-432",
-    //         category: "men",
-    //         price: "TK. 999",
-    //         oldPrice: "Tk. 1499",
-    //         image: img,
-    //     },
-    //     {
-    //         id: 1,
-    //         title: "Premium Solid T Shirt for Men I MF-432",
-    //         category: "men",
-    //         price: "TK. 999",
-    //         oldPrice: "Tk. 1499",
-    //         image: img,
-    //     },
-    //     {
-    //         id: 1,
-    //         title: "Premium Solid T Shirt for Men I MF-432",
-    //         category: "women",
-    //         price: "TK. 999",
-    //         oldPrice: "Tk. 1499",
-    //         image: img,
-    //     },
-    //     {
-    //         id: 1,
-    //         title: "Premium Solid T Shirt for Men I MF-432",
-    //         category: "kids",
-    //         price: "TK. 999",
-    //         oldPrice: "Tk. 1499",
-    //         image: img,
-    //     },
-    //     {
-    //         id: 1,
-    //         title: "Premium Solid T Shirt for Men I MF-432",
-    //         price: "TK. 999",
-    //         oldPrice: "Tk. 1499",
-    //         image: img,
-    //     },
-    //     {
-    //         id: 1,
-    //         title: "Premium Solid T Shirt for Men I MF-432",
-    //         price: "TK. 999",
-    //         oldPrice: "Tk. 1499",
-    //         image: img,
-    //     },
-    //     {
-    //         id: 1,
-    //         title: "Premium Solid T Shirt for Men I MF-432",
-    //         price: "TK. 999",
-    //         oldPrice: "Tk. 1499",
-    //         image: img,
-    //     },
-    //     {
-    //         id: 1,
-    //         title: "Premium Solid T Shirt for Men I MF-432",
-    //         price: "TK. 999",
-    //         oldPrice: "Tk. 1499",
-    //         image: img,
-    //     },
-    //     {
-    //         id: 1,
-    //         title: "Premium Solid T Shirt for Men I MF-432",
-    //         price: "TK. 999",
-    //         oldPrice: "Tk. 1499",
-    //         image: img,
-    //     },
-    //     {
-    //         id: 1,
-    //         title: "Premium Solid T Shirt for Men I MF-432",
-    //         price: "TK. 999",
-    //         oldPrice: "Tk. 1499",
-    //         image: img,
-    //     },
-    //     {
-    //         id: 1,
-    //         title: "Premium Solid T Shirt for Men I MF-432",
-    //         price: "TK. 999",
-    //         oldPrice: "Tk. 1499",
-    //         image: img,
-    //     },
-    //     {
-    //         id: 1,
-    //         title: "Premium Solid T Shirt for Men I MF-432",
-    //         price: "TK. 999",
-    //         oldPrice: "Tk. 1499",
-    //         image: img,
-    //     },
-    //     // Add more product objects as needed
-    // ];
-
-
-
-    const handleCheckboxChangeCat = (category) => {
-        setSelectedCategories(prevCategories =>
-            prevCategories.includes(category)
-                ? prevCategories.filter(c => c !== category) // Uncheck if already selected
-                : [...prevCategories, category] // Check if not selected
+    const handleCheckboxChangeCat = (subcategory) => {
+        setSelectedSubcategories((prevSubcategories) =>
+            prevSubcategories.includes(subcategory)
+                ? prevSubcategories.filter((c) => c !== subcategory) // Uncheck if already selected
+                : [...prevSubcategories, subcategory] // Check if not selected
         );
     };
 
 
-    // Handle checkbox changes
+    // Handle checkbox changes for sizes
+    const handleCheckboxChangeSize = (size) => {
+        setSelectedSizes(prevSizes =>
+            prevSizes.includes(size)
+                ? prevSizes.filter(s => s !== size) // Uncheck if already selected
+                : [...prevSizes, size] // Check if not selected
+        );
+    };
+
+    // Handle checkbox changes for price ranges
     const handleCheckboxChange = (range) => {
         setSelectedRanges((prevSelected) => {
-            // Check if the range is already selected
             const isSelected = prevSelected.some(
                 (selectedRange) => selectedRange.min === range.min && selectedRange.max === range.max
             );
 
             if (isSelected) {
-                // If it is selected, remove it from the array
                 return prevSelected.filter(
                     (selectedRange) => !(selectedRange.min === range.min && selectedRange.max === range.max)
                 );
             } else {
-                // If it is not selected, add it to the array
                 return [...prevSelected, range];
             }
         });
     };
+
+
+    const extractUniqueSizes = (products) => {
+        const sizes = new Set();
+        products.forEach(product => {
+            if (product.selectedSizes) {
+                product.selectedSizes.forEach(size => sizes.add(size));
+            }
+        });
+        setUniqueSizes(Array.from(sizes));
+    };
+
 
     return (
         <div className="mx-4 lg:mx-12 mt-5">
@@ -198,17 +144,12 @@ const page = () => {
                         </li>
                     </ul>
                 </div>
-
                 <label className="form-control w-full max-w-[30%] md:max-w-[10%] flex">
-                    <select className="select select-bordered select-sm">
-                        <option disabled selected>
-                            Sort By
-                        </option>
-                        <option>Star Wars</option>
-                        <option>Harry Potter</option>
-                        <option>Lord of the Rings</option>
-                        <option>Planet of the Apes</option>
-                        <option>Star Trek</option>
+                    <select className="select select-bordered select-sm" value={sortBy} onChange={handleSortChange}>
+                        <option disabled>Sort By</option>
+                        <option>Price High to Low</option>
+                        <option>Price Low to High</option>
+                        <option>Sort by Latest</option>
                     </select>
                 </label>
             </div>
@@ -236,10 +177,11 @@ const page = () => {
                                 className="card card-compact bg-base-100 shadow-xl h-[350px] lg:h-[500px] "
                             >
                                 <figure>
-                                    <Image src={img} alt={product.title} />
+                                    <Image src={product.images[0]} alt={product.productName} width={500}
+                                        height={700} />
                                 </figure>
                                 <div className="card-body">
-                                    <h2 className="text">Product Name</h2>
+                                    <h2 className="text">{product.productName}</h2>
                                     <p className="md:text-[16px] text-gray-500">
                                         {product.salePrice}{" "}
                                         <span className="md:text-[14px] line-through">
@@ -300,60 +242,45 @@ const page = () => {
 
                             {/* SIZE */}
                             <div>
-                                <h1 className="mt-4 text-gray-400">SIZE</h1>
+                                <h1 className="mt-4 text-gray-400">Sizes</h1>
                                 <hr className="border-2" />
-                                <hr className="border-2 border-orange-300 max-w-[20%] mt-[-3px]" />
-                                <div className="mt-2">
-                                    <div className="form-control">
-                                        <label className="label cursor-pointer flex justify-start gap-4">
-                                            <input type="checkbox" className="checkbox checkbox-sm" />
-                                            <span className="label-text">M</span>
-                                        </label>
-                                    </div>
-                                    <div className="form-control">
-                                        <label className="label cursor-pointer flex justify-start gap-4">
-                                            <input type="checkbox" className="checkbox checkbox-sm" />
-                                            <span className="label-text">L</span>
-                                        </label>
-                                    </div>
-                                    <div className="form-control">
-                                        <label className="label cursor-pointer flex justify-start gap-4">
-                                            <input type="checkbox" className="checkbox checkbox-sm" />
-                                            <span className="label-text">XL</span>
-                                        </label>
-                                    </div>
-                                    <div className="form-control">
-                                        <label className="label cursor-pointer flex justify-start gap-4">
-                                            <input type="checkbox" className="checkbox checkbox-sm" />
-                                            <span className="label-text">XXL</span>
-                                        </label>
-                                    </div>
-                                    <div className="form-control">
-                                        <label className="label cursor-pointer flex justify-start gap-4">
-                                            <input type="checkbox" className="checkbox checkbox-sm" />
-                                            <span className="label-text">3XL</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Category */}
-                            <div>
-                                <h1 className=" mt-4 text-gray-400">Category</h1>
-                                <hr className="border-2" />
-                                <hr className="border-2 border-orange-300 max-w-[35%] mt-[-3px]" />
+                                <hr className="border-2 border-orange-300 max-w-[50%] mt-[-3px]" />
                                 <div className='mt-2'>
-                                    {uniqueCategories.map((category, index) => (
+                                    {uniqueSizes.map((size, index) => (
                                         <div key={index} className="form-control">
                                             <label className="label cursor-pointer flex justify-start gap-4">
                                                 <input
                                                     type="checkbox"
                                                     className="checkbox checkbox-sm"
-                                                    checked={selectedCategories.includes(category)}
-                                                    onChange={() => handleCheckboxChangeCat(category)}
+                                                    checked={selectedSizes.includes(size)}
+                                                    onChange={() => handleCheckboxChangeSize(size)}
                                                 />
                                                 <span className="label-text">
-                                                    {category}
+                                                    {size}
+                                                </span>
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Sub-Category */}
+                            <div>
+                                <h1 className="mt-4 text-gray-400">Sub-Category</h1>
+                                <hr className="border-2" />
+                                <hr className="border-2 border-orange-300 max-w-[50%] mt-[-3px]" />
+                                <div className='mt-2'>
+                                    {subcategories.map((subcategory, index) => (
+                                        <div key={index} className="form-control">
+                                            <label className="label cursor-pointer flex justify-start gap-4">
+                                                <input
+                                                    type="checkbox"
+                                                    className="checkbox checkbox-sm"
+                                                    checked={selectedSubcategories.includes(subcategory.name)}
+                                                    onChange={() => handleCheckboxChangeCat(subcategory.name)}
+                                                />
+                                                <span className="label-text">
+                                                    {subcategory.name}
                                                 </span>
                                             </label>
                                         </div>
@@ -368,4 +295,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Page;

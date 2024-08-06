@@ -18,8 +18,8 @@ export default function KidsProductDetails({ params }) {
     dispatch(addToCart({
       id: params.id, // Assuming params.id is the product ID
       product: {
-        title: "BIG STAR JEANS",
-        price: 1350,
+        title: title,
+        price: price,
         colors: [{ images: [{ url: img.src }] }],
         stock: { quantity: 10 }, // Adjust based on actual product details
       },

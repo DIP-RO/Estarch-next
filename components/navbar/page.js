@@ -106,7 +106,7 @@ export default function NavBar() {
           <div className="flex gap-4 justify-center items-center">
 
             <Link href='/'><button >HOME</button></Link>
-            <Link href='/man'><button>MEN</button></Link>
+            <Link href='/men'><button>MEN</button></Link>
             <Link href='/women'> <button >WOMEN</button></Link>
             <Link href='/kids'> <button >KIDS</button></Link>
             <Link href='/shoes'><button >SHOES</button></Link>

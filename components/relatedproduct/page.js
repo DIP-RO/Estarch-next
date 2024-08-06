@@ -56,7 +56,7 @@ export default function RelatedProducts() {
   return (
     <div>
     <div className="slider-container mx-0 lg:mx-20">
-      <h1 className='text-center mt-8 font-bold md:text-2xl text-xl'>Related Product</h1>
+      <h1 className='text-center mb-4 mt-8 font-bold md:text-2xl text-xl'>Related Product</h1>
       <Slider {...settings}>
         {products.map(product => (
           <div key={product.id} className="card card-compact bg-base-100 w-96 shadow-xl">
