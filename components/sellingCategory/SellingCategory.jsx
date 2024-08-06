@@ -13,13 +13,14 @@ import polo from '../../public/images/c_polo.jpeg'
 import boxer from '../../public/images/c_boxer.jpeg'
 import axios from 'axios';
 import Link from 'next/link';
+import baseUrl from '../services/baseUrl';
 
 const SellingCategory = () => {
 
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/categories/categories`)
+        axios.get(`${baseUrl}/api/categories/categories`)
             .then(res => {
                 console.log(res.data);
                 setCategories(res.data)
@@ -68,7 +69,11 @@ const SellingCategory = () => {
                                 <div className='relative'>
                                     <Image className='rounded-md' width={500}
                                         height={0} src={cat.image} alt="" />
-                                    <p className='cursor-pointer rounded-lg font-medium md:font-semibold text-xs md:text-sm py-1 bg-base-200 px-2 lg:px-8 absolute bottom-1 md:bottom-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>{cat.name}</p>
+                                    <p className='cursor-pointer rounded-lg font-medium md:font-semibold text-xs md:text-sm py-1 bg-base-200 px-2 lg:px-8 absolute bottom-1 md:bottom-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20'>{cat.name}</p>
+                                    <div className="absolute top-0 bg-[#1111112f] z-10 w-full min-h-full">
+                                        {/* This div is use for a overlay on background image */}
+                                    </div>
+
                                 </div>
                             </Link>
                         </SwiperSlide>

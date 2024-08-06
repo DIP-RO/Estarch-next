@@ -1,11 +1,12 @@
 "use client";
 import Image from 'next/image'
-import img from '../../public/images/banner1.jpeg'
-import img1 from '../../public/images/c_t-shirt.jpeg'
+import menBanner from '../../public/images/banner1.jpeg'
+import womenBanner from '../../public/images/banner1.jpeg'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'next/navigation';
+import baseUrl from '@/components/services/baseUrl';
 export default function Man() {
 
     const [categories, setCategories] = useState([])
@@ -14,7 +15,7 @@ export default function Man() {
     console.log(category);
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/categories/categories/${category}`)
+        axios.get(`${baseUrl}/api/categories/categories/${category}`)
             .then(res => {
                 setCategories(res.data)
                 // console.log(res.data);
@@ -25,7 +26,7 @@ export default function Man() {
         <div className="bg-white">
             <div className="relative flex justify-center items-center h-[500px] mt-5 bg-gray-100">
                 <Image
-                    src={img}
+                    src={menBanner}
                     alt="Main image"
                     layout="fill"
                     objectFit="cover"
