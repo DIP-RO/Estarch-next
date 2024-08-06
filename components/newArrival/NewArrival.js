@@ -9,17 +9,18 @@ import '../bestSell/BestSell-theme.css'
 import Image from 'next/image';
 import axios from 'axios';
 import baseUrl from '../services/baseUrl';
+import Link from 'next/link';
 export default function NewArrival() {
 
   const [products, setProducts] = useState([])
 
-  useEffect(()=>{
+  useEffect(() => {
     axios.get(`${baseUrl}/api/products/new-arrival`)
-    .then(res=>{
-      setProducts(res.data)
-      console.log(res.data);
-    })
-  },[])
+      .then(res => {
+        setProducts(res.data)
+        console.log(res.data);
+      })
+  }, [])
 
   // const products = [
   //   { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
@@ -34,7 +35,7 @@ export default function NewArrival() {
     centerMode: true,
     dots: false,
     infinite: true,
-    navigator:false,
+    navigator: false,
     speed: 600,
     slidesToShow: 4,
     slidesToScroll: 1,
@@ -77,19 +78,21 @@ export default function NewArrival() {
       <div className="slider-container mx-0 lg:mx-20">
         <h1 className='text-center mb-4  mt-12 font-bold md:text-2xl text-xl'>NEW ARRIVAL PRODUCTS</h1>
         <Slider {...settings}>
-        {products.map(product => (
-          <div key={product.id} className="card card-compact bg-base-100 w-96 shadow-sm rounded-none">
-            <figure>
-              <Image src={product.images[0]} width={500} height={0} alt={product.productName} />
-            </figure>
-            <div className="card-body">
-              <h2 className="md:card-title">{product.productName}</h2>
-              <p className='md:text-[20px] text-gray-500'><span>TK.</span>{product.salePrice} <span className='md:text-[17px] line-through'>Tk.{product.regularPrice}</span></p>
-              <div className="card-actions justify-center">
-              </div>
+          {products.map(product => (
+            <div key={product._id} className="card card-compact bg-base-100 w-96 shadow-sm rounded-none">
+              <Link href={`/product/${product._id}`}>
+                <figure>
+                  <Image src={product.images[0]} width={500} height={0} alt={product.productName} />
+                </figure>
+                <div className="card-body">
+                  <h2 className="md:card-title">{product.productName}</h2>
+                  <p className='md:text-[20px] text-gray-500'><span>TK.</span>{product.salePrice} <span className='md:text-[17px] line-through'>Tk.{product.regularPrice}</span></p>
+                  <div className="card-actions justify-center">
+                  </div>
+                </div>
+              </Link>
             </div>
-          </div>
-        ))}
+          ))}
 
         </Slider>
       </div>
