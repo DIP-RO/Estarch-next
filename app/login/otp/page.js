@@ -63,13 +63,6 @@ export default function Otp() {
   const handleSubmit = async () => {
     try {
       const otpCode = otp.join('');
-
-      await axios.post(`${baseUrl}/api/auth/verify`, { mobile, otp: otpCode });
-      // Navigate to set password page
-      window.location.href = '/login/setPassword';
-
-      console.log(otpCode , user);
-      
       await axios.post(`${baseUrl}/api/auth/verify-otp`, { userId:user, otp: otpCode });
       router.push('/login/setPassword');
 

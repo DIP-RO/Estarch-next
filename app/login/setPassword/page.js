@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import passwordImage from '../../../public/images/banner2.jpeg';
 import { useRouter } from 'next/navigation';
+import baseUrl from '@/components/services/baseUrl';
 
 export default function SetPassword() {
     const [password, setPassword] = useState('');
@@ -32,7 +33,8 @@ export default function SetPassword() {
                 userId:user,
                 password,
             });
-
+            console.log(response);
+            
             if (response.status === 200) {
                 alert('Password set successfully');
                 router.push('/user'); // Redirect to login page after successful password set
