@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import bkcash from '../../../public/images/BKash-Logo.wine.png';
 import cod from '../../../public/images/cash-on-delivery-icon.png';
 import ssl from '../../../public/images/ssl.png';
+import baseUrl from '@/components/services/baseUrl';
 
 export default function Checkout() {
   const cartItems = useSelector((state) => state.cart.items);
@@ -60,7 +61,7 @@ export default function Checkout() {
     console.log('Form Data:', orderData); // Log form data to verify
 
     try {
-      const response = await axios.post('http://localhost:5000/api/orders/orders', orderData);
+      const response = await axios.post(`${baseUrl}/api/orders/orders`, orderData);
       alert('Order placed successfully!');
       console.log(response.data);
     } catch (error) {

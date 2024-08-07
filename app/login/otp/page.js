@@ -6,6 +6,7 @@ import { setOtp, decrementResendTimer, resetResendTimer } from '../../../lib/sli
 import otp_icon from "../../../public/images/4a9a21b2517b3e8dd9816f589e878a8b.jpg";
 import Link from 'next/link';
 import axios from 'axios';
+import baseUrl from '@/components/services/baseUrl';
 
 export default function Otp() {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ export default function Otp() {
     dispatch(resetResendTimer());
 
     try {
-      await axios.post('http://localhost:5000/api/auth/resend-otp', { mobile });
+      await axios.post(`${baseUrl}/api/auth/resend-otp`, { mobile });
       alert('OTP resent successfully.');
     } catch (error) {
       console.error('Error resending OTP:', error);
@@ -50,7 +51,7 @@ export default function Otp() {
   const handleSubmit = async () => {
     try {
       const otpCode = otp.join('');
-      await axios.post('http://localhost:5000/api/auth/verify', { mobile, otp: otpCode });
+      await axios.post(`${baseUrl}/api/auth/verify`, { mobile, otp: otpCode });
       // Navigate to set password page
       window.location.href = '/login/setPassword';
     } catch (error) {
