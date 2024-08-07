@@ -81,8 +81,9 @@ export default function NewArrival() {
           {products.map(product => (
             <div key={product._id} className="card card-compact bg-base-100 w-96 shadow-sm rounded-none">
               <Link href={`/product/${product._id}`}>
-                <figure>
+                <figure className='relative'>
                   <Image src={product.images[0]} width={500} height={0} alt={product.productName} />
+                  <p className='absolute top-2 bg-error text-white left-2 px-2 rounded-md'>New</p>
                 </figure>
                 <div className="card-body">
                   <h2 className="md:card-title">{product.productName}</h2>
