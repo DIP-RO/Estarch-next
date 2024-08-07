@@ -70,7 +70,7 @@ export default function Otp() {
 
       console.log(otpCode , user);
       
-      await axios.post('http://localhost:5000/api/auth/verify-otp', { userId:user, otp: otpCode });
+      await axios.post(`${baseUrl}/api/auth/verify-otp`, { userId:user, otp: otpCode });
       router.push('/login/setPassword');
 
     } catch (error) {
