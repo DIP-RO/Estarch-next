@@ -2,7 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
+
+import { Router } from 'next/router';
+import baseUrl from '@/components/services/baseUrl';
+
 import { useRouter } from 'next/navigation';
+
 
 export default function Register() {
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -21,10 +26,17 @@ export default function Register() {
         event.preventDefault();
 
         try {
+
+            const response = await axios.post(`${baseUrl}/api/auth/register`, { mobile: `+880${phoneNumber}` });
+            localStorage.setItem('registerResponse', JSON.stringify(response.data));
+            Router.push('/login/otp');
+
+
             const response = await axios.post('http://localhost:5000/api/auth/register', { mobile: `+880${phoneNumber}` });
             console.log(response.data.message);
             
             localStorage.setItem('user', JSON.stringify(response.data.userId));
+
             setSuccessMessage(response.data.message);
             setErrorMessage('');
             router.push('/login/otp');
