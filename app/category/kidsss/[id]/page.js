@@ -3,7 +3,7 @@ import { addToCart } from "@/lib/slices/cartSlice";
 import Image from "next/image";
 import { useState } from "react";
 import img from "../../../../public/images/Products_You_Need_To_Have_For_Your_Child_During_These_Times.jpg";
-import img1 from "../../../public/images/1716831105150-manfarebd-id-13.jpeg";
+import img1 from "../../../../public/images/1716831105150-manfarebd-id-13.jpeg";
 import RelatedProducts from "@/components/relatedproduct/page";
 import { FaWhatsapp } from "react-icons/fa";
 import { PiCoatHanger } from 'react-icons/pi';
@@ -18,8 +18,8 @@ export default function KidsProductDetails({ params }) {
     dispatch(addToCart({
       id: params.id, // Assuming params.id is the product ID
       product: {
-        title: "BIG STAR JEANS",
-        price: 1350,
+        title: title,
+        price: price,
         colors: [{ images: [{ url: img.src }] }],
         stock: { quantity: 10 }, // Adjust based on actual product details
       },

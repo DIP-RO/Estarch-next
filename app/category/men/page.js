@@ -1,28 +1,8 @@
 import React from 'react';
-import img from '../../../public/images/c_t-shirt.jpeg'
 import Link from 'next/link';
 import Image from 'next/image';
 import { CiFilter } from "react-icons/ci";
-import { MdArrowDropDown } from "react-icons/md";
 const Men = () => {
-
-
-    const products = [
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432",category:"men", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432",category:"men", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432",category:"women", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432",category:"kids", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        // Add more product objects as needed
-    ];
-
     return (
         <div className='mx-4 lg:mx-12 mt-5'>
             {/* Upper part */}

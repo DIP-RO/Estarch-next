@@ -1,30 +1,35 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';// Updated import for router
-import { register } from '../../../lib/slices/authSlice.js'; // Adjust import path
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { Router } from 'next/router';
 
 export default function Register() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [isValidNumber, setIsValidNumber] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     const dispatch = useDispatch();
-    
 
     useEffect(() => {
-        // Validate phone number: must be exactly 10 digits
+        // Validate phone number format
         const phoneRegex = /^[0-9]{10}$/;
         setIsValidNumber(phoneRegex.test(phoneNumber));
     }, [phoneNumber]);
 
-    // Handle form submission
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (isValidNumber) {
-            // Prefix the phone number with +880 and dispatch
-            dispatch(register(`+880${phoneNumber}`))
-                .then(() => {
-                    // Redirect to OTP page on successful registration
-                    window.location.href = '/login/otp';
-                });
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        try {
+            const response = await axios.post('http://localhost:5000/api/auth/register', { mobile: `+880${phoneNumber}` });
+            localStorage.setItem('registerResponse', JSON.stringify(response.data));
+            Router.push('/login/otp');
+
+            setSuccessMessage(response.data.message);
+            setErrorMessage('');
+        } catch (error) {
+            setErrorMessage(error.response?.data?.message || 'An error occurred');
+            setSuccessMessage('');
         }
     };
 
@@ -44,17 +49,23 @@ export default function Register() {
                                 onChange={(e) => setPhoneNumber(e.target.value)}
                                 placeholder="Enter your 10-digit phone number"
                                 className="pl-16 py-2 w-full border border-gray-300 rounded"
-                                maxLength="10" // Limit input to 10 digits
+                                maxLength="10"
                             />
                         </div>
                         <button
                             type="submit"
-                            className={`w-full p-3 text-white font-bold ${isValidNumber ? 'bg-red-500' : 'bg-gray-400 cursor-not-allowed'}`}
-                            disabled={!isValidNumber} // Disable button if number is invalid
+                            className={`w-full p-3 text-white font-bold ${isValidNumber ? 'bg-red-500' : 'bg-gray-400'}`}
+                            disabled={!isValidNumber}
                         >
                             CONTINUE
                         </button>
                     </form>
+                    {successMessage && (
+                        <p className="text-green-500 text-center mt-4">{successMessage}</p>
+                    )}
+                    {errorMessage && (
+                        <p className="text-red-500 text-center mt-4">{errorMessage}</p>
+                    )}
                     <p className="text-sm text-center mb-4">
                         By continuing, I agree to the <span className="text-pink-500">Terms of Use</span> & <span className="text-pink-500">Privacy Policy</span>
                     </p>

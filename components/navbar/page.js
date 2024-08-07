@@ -8,18 +8,17 @@ import { CgProfile } from "react-icons/cg";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { CiSearch } from "react-icons/ci";
 import img from '../../public/images/c_boxer.jpeg';
+import logo from '../../public/images/LOGO 1.png';
 import Image from 'next/image';
 import Link from 'next/link';
 import { IoMdMenu } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
 import { openSlide } from '@/lib/slices/sliderSlice';
 import { openCardSlide } from '@/lib/slices/cardSlideSlice';
-
 export default function NavBar() {
   const totalQuantity = useSelector(state => state.cart.totalQuantity);
   const dispatch = useDispatch();
   const [selectedCategory, setSelectedCategory] = useState('');
-
   const products = [
     { id: 1, title: "Premium Solid T Shirt for Men I MF-432", category: "men", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
     { id: 2, title: "Premium Solid T Shirt for Men I MF-432", category: "men", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
@@ -66,7 +65,7 @@ export default function NavBar() {
           </div>
         </div>
         <div className="navbar-center sm:mr-9">
-          <Link href="/"> <Image width={150} height={20} className="h-8" src="https://estarch.com.bd/image/LOGO%201.png" alt="logo" /></Link>
+          <Link href="/"> <Image width={150} height={20} className="h-8" src={logo} alt="logo" /></Link>
         </div>
         <div className="navbar-end">
           <div className='hidden lg:block md:block'>
@@ -84,7 +83,7 @@ export default function NavBar() {
                 <ul className="bg-white w-52 p-5">
                   <li className="text-base hover:bg-base-100"><Link href="/login">Login</Link></li>
                   <div className="divider h-1"></div>
-                  <li className="text-base hover:bg-base-100"><a>Register</a></li>
+                  <li className="text-base hover:bg-base-100"><Link href='/register'>Register</Link></li>
                   <div className="divider h-1"></div>
                   <li className="text-base hover:bg-base-100"><a>Order Tracking</a></li>
                 </ul>

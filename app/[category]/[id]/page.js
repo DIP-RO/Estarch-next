@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import img from "../../../public/images/product_img.jpeg";
 import Link from "next/link";
 import Image from "next/image";
 import { CiFilter } from "react-icons/ci";

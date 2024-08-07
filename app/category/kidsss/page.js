@@ -9,17 +9,17 @@ const page = () => {
 
     const kidssss = [
         { id: 1, title: "Premium Solid T Shirt for Men I MF-432",category:"men", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432",category:"men", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432",category:"women", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432",category:"kids", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
-        { id: 1, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+        { id: 2, title: "Premium Solid T Shirt for Men I MF-432",category:"men", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+        { id: 3, title: "Premium Solid T Shirt for Men I MF-432",category:"women", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+        { id: 4, title: "Premium Solid T Shirt for Men I MF-432",category:"kids", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+        { id: 5, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+        { id: 6, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+        { id: 7, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+        { id: 8, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+        { id: 9, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+        { id: 10, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+        { id: 11, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
+        { id: 12, title: "Premium Solid T Shirt for Men I MF-432", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
         // Add more product objects as needed
     ];
 
@@ -65,7 +65,7 @@ const page = () => {
                                     <h2 className="text">{kid.title}</h2>
                                     <p className='md:text-[16px] text-gray-500'>{kid.price} <span className='md:text-[14px] line-through'>{kid.oldPrice}</span></p>
                                     <div className="card-actions justify-center">
-                                        <Link href={`/kidsss/${kid.id}`}>
+                                        <Link href={`/category/kidsss/${kid.id}`}>
                                             <button className="btn btn-sm mt-4 md:px-12 shadow-md">Buy Now</button>
                                         </Link>
                                     </div>

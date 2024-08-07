@@ -1,31 +1,53 @@
-"use client";
-import { addToCart } from "@/lib/slices/cartSlice";
+'use client'
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import axios from "axios";
 import Image from "next/image";
-import { useState } from "react";
-import img from "../../../public/images/product_img.jpeg";
-import img1 from "../../../public/images/1716831105150-manfarebd-id-13.jpeg";
-import RelatedProducts from "@/components/relatedproduct/page";
+import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/lib/slices/cartSlice";
+import { openSize } from "@/lib/slices/sizeSlice";
 import { FaWhatsapp } from "react-icons/fa";
 import { PiCoatHanger } from 'react-icons/pi';
-import { useDispatch } from "react-redux";
-import { openSize } from "@/lib/slices/sizeSlice";
-import Link from "next/link";
+import baseUrl from "@/components/services/baseUrl";
+import RelatedProducts from "@/components/relatedproduct/page";
 
-export default function ProductDetails({ params }) {
+const ProductDetails = () => {
   const dispatch = useDispatch();
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const [mainImage, setMainImage] = useState(img);
-  const [selectedSize, setSelectedSize] = useState("32");
-  const title = "BIG STAR JEANS"; // Add actual product title if available
-  const price = 1350; // Adjust based on actual product price
+  const [mainImage, setMainImage] = useState(null);
+  const [selectedSize, setSelectedSize] = useState("");
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(`${baseUrl}/api/products/products/product/${id}`);
+        console.log(response.data);
+        
+        setProduct(response.data);
+        setMainImage(response.data.images[0]);
+        if (response.data.selectedSizes.length > 0) {
+          setSelectedSize(response.data.selectedSizes[0]);
+        }
+      } catch (error) {
+        console.error("Error fetching product details:", error);
+      }
+    };
+
+    if (id) {
+      fetchProduct();
+    }
+  }, [id]);
 
   const handleAddToCart = () => {
     dispatch(addToCart({
-      id: params.id, // Assuming params.id is the product ID
+      id: product._id,
       product: {
-        title: title,
-        price: price,
-        colors: [{ images: [{ url: img.src }] }],
+        title: product.productName,
+        price: product.salePrice,
+        colors: [{ images: [{ url: mainImage }] }],
         stock: { quantity: 10 }, // Adjust based on actual product details
       },
       quantity,
@@ -52,40 +74,39 @@ export default function ProductDetails({ params }) {
     setSelectedSize(size);
   };
 
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div className="container bg-base-100 mx-auto p-4">
-      <div className="flex justify-center">
+    <div className="container mx-auto p-4">
+      <div className="flex flex-col md:flex-row justify-center">
         <div className="flex flex-col md:flex-row w-full md:w-2/3 border rounded-lg p-4">
           <div className="w-full md:w-1/2">
             <Image
               width={500}
               height={500}
               src={mainImage}
-              alt="Big Star Jeans"
+              alt={product.productName}
               className="object-cover"
             />
             <div className="flex mt-2 gap-2">
-              <Image
-                width={120}
-                height={120}
-                src={img1}
-                alt="Big Star Jeans"
-                className="object-cover cursor-pointer"
-                onClick={() => handleThumbnailClick(img1)}
-              />
-              <Image
-                width={120}
-                height={120}
-                src={img}
-                alt="Big Star Jeans"
-                className="object-cover cursor-pointer"
-                onClick={() => handleThumbnailClick(img)}
-              />
+              {product.images && product.images.map((img, index) => (
+                <Image
+                  key={index}
+                  width={120}
+                  height={120}
+                  src={img}
+                  alt={product.productName}
+                  className="object-cover cursor-pointer"
+                  onClick={() => handleThumbnailClick(img)}
+                />
+              ))}
             </div>
           </div>
           <div className="w-full md:w-1/2 p-4">
-            <h1 className="text-2xl font-bold mb-2">{title}</h1>
-            <p className="text-sm text-gray-600 mb-2">SKU: 00042</p>
+            <h1 className="text-2xl font-bold mb-2">{product.productName}</h1>
+            <p className="text-sm text-gray-600 mb-2">SKU: {product.sku}</p>
             <div className="flex gap-1 items-center">
               <p className="text-lg">Jeans Size</p>
               <div className='w-48 h-[40px] rounded-md flex justify-between '>
@@ -95,7 +116,7 @@ export default function ProductDetails({ params }) {
               </div>
             </div>
             <div className="flex mb-4">
-              {["30", "32", "34", "36"].map(size => (
+              {product.selectedSizes && product.selectedSizes.map(size => (
                 <button
                   key={size}
                   className={`border px-4 py-2 mr-2 ${selectedSize === size ? 'bg-gray-300' : ''}`}
@@ -106,8 +127,8 @@ export default function ProductDetails({ params }) {
               ))}
             </div>
             <p className="text-red-600 text-xl mb-4">
-              <span className="line-through text-gray-500 mr-2">৳ 1590</span>
-              ৳ {price}
+              <span className="line-through text-gray-500 mr-2">৳ {product.regularPrice}</span>
+              ৳ {product.salePrice}
             </p>
             <p className="text-lg mb-2">Quantity:</p>
             <div className="flex items-center mb-6">
@@ -145,7 +166,7 @@ export default function ProductDetails({ params }) {
             </div>
           </div>
         </div>
-        <div className="border-t pt-4 bg-gray-200 rounded-lg">
+        <div className="border-t pt-4 bg-gray-200 rounded-lg mt-4 md:mt-0 md:ml-4">
           <div className="mx-8">
             <h2 className="text-lg font-bold mb-2">Delivery Charge</h2>
             <p className="text-sm mb-2">
@@ -164,4 +185,6 @@ export default function ProductDetails({ params }) {
       <RelatedProducts />
     </div>
   );
-}
+};
+
+export default ProductDetails;
