@@ -1,17 +1,26 @@
 'use client';
 import Image from 'next/image';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOtp, decrementResendTimer, resetResendTimer } from '../../../lib/slices/otpSlice';
 import otp_icon from "../../../public/images/4a9a21b2517b3e8dd9816f589e878a8b.jpg";
 import Link from 'next/link';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export default function Otp() {
   const dispatch = useDispatch();
   const otp = useSelector((state) => state.otp.otp);
   const resendTimer = useSelector((state) => state.otp.resendTimer);
   const mobile = useSelector((state) => state.auth.mobile); // Adjust as needed for mobile number
+  const [user, setUser] = useState(null);
+  const router = useRouter();
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -50,9 +59,10 @@ export default function Otp() {
   const handleSubmit = async () => {
     try {
       const otpCode = otp.join('');
-      await axios.post('http://localhost:5000/api/auth/verify', { mobile, otp: otpCode });
-      // Navigate to set password page
-      window.location.href = '/login/setPassword';
+      console.log(otpCode , user);
+      
+      await axios.post('http://localhost:5000/api/auth/verify-otp', { userId:user, otp: otpCode });
+      router.push('/login/setPassword');
     } catch (error) {
       console.error('Error verifying OTP:', error);
       alert('Invalid OTP. Please try again.');

@@ -1,13 +1,47 @@
 'use client'
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setPassword } from '../../../lib/slices/userSlice';
-import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import axios from 'axios';
+
 import passwordImage from '../../../public/images/banner2.jpeg';
+import { useRouter } from 'next/navigation';
 
 export default function SetPassword() {
-   
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
+    const router = useRouter();
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+    }, []); // Replace with the actual user ID obtained after OTP verification
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (password !== confirmPassword) {
+            setError('Passwords do not match');
+            return;
+        }
+        
+        try {
+            const response = await axios.post('http://localhost:5000/api/auth/set-password', {
+                userId:user,
+                password,
+            });
+
+            if (response.status === 200) {
+                alert('Password set successfully');
+                router.push('/user'); // Redirect to login page after successful password set
+            }
+        } catch (error) {
+            console.error('Error setting password:', error);
+            setError('Failed to set password. Please try again.');
+        }
+    };
 
     return (
         <div className="flex items-center justify-center bg-gradient-to-r from-pink-100 to-yellow-100">
@@ -21,17 +55,20 @@ export default function SetPassword() {
                 />
                 <div className="p-12">
                     <h2 className="text-2xl font-bold text-center mb-4">Set Your Password</h2>
-                    <form>
+                    {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+                    <form onSubmit={handleSubmit}>
                         <input
                             type="password"
-                        
                             placeholder="Enter Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             className="border rounded px-4 py-2 w-full mb-4"
                         />
                         <input
                             type="password"
-                          
                             placeholder="Confirm Password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
                             className="border rounded px-4 py-2 w-full mb-4"
                         />
                         <button
