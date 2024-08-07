@@ -1,26 +1,19 @@
 "use client";
 import Image from 'next/image'
 import menBanner from '../../public/images/banner1.jpeg'
-import womenBanner from '../../public/images/banner1.jpeg'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'next/navigation';
 import baseUrl from '@/components/services/baseUrl';
-export default function Man() {
 
-    const [categories, setCategories] = useState([])
+export default function Man({ categoryData }) {
+    const [categories, setCategories] = useState([]);
     const { category } = useParams();
 
-    console.log(category);
-
     useEffect(() => {
-        axios.get(`${baseUrl}/api/categories/categories/${category}`)
-            .then(res => {
-                setCategories(res.data)
-                // console.log(res.data);
-            })
-    }, [])
+        setCategories(categoryData);
+    }, [categoryData]);
 
     return (
         <div className="bg-white">
@@ -55,14 +48,31 @@ export default function Man() {
                                 </button>
                             </div>
                         </Link>
-
                     </div>)
                 }
-
             </div>
-
-
         </div>
-
     )
+}
+
+// Fetching dynamic routes for static export
+export async function generateStaticParams() {
+    const res = await axios.get(`${baseUrl}/api/categories/categories`);
+    const categories = res.data;
+
+    return categories.map(category => ({
+        category: category.name,
+    }));
+}
+
+// Fetching data for each static page
+export async function getStaticProps({ params }) {
+    const res = await axios.get(`${baseUrl}/api/categories/categories/${params.category}`);
+    const categoryData = res.data;
+
+    return {
+        props: {
+            categoryData,
+        },
+    };
 }
