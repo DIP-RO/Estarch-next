@@ -30,7 +30,7 @@ export default function page() {
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-pink-500"
                 placeholder="Email or Mobile Number"
-                defaultValue="2222222222"
+                
               />
             </div>
             <div>
