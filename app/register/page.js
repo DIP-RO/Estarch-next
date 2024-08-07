@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import baseUrl from '@/components/services/baseUrl';
 
 export default function Register() {
@@ -12,7 +12,7 @@ export default function Register() {
     const [successMessage, setSuccessMessage] = useState('');
     const dispatch = useDispatch();
     const router = useRouter();
- 
+
     useEffect(() => {
         const phoneRegex = /^[0-9]{10}$/;
         setIsValidNumber(phoneRegex.test(phoneNumber));
@@ -22,21 +22,17 @@ export default function Register() {
         event.preventDefault();
 
         try {
-            // Make the first request to the baseUrl endpoint
-            let response = await axios.post(`${baseUrl}/api/auth/register`, { mobile: `+880${phoneNumber}` });
+            // Make the API request to the baseUrl endpoint
+            const response = await axios.post(`${baseUrl}/api/auth/register`, { mobile: `+880${phoneNumber}` });
             localStorage.setItem('registerResponse', JSON.stringify(response.data));
-            router.push('/login/otp');
-
-            // Make the second request to the localhost endpoint
-            response = await axios.post(`${baseUrl}/api/auth/register`, { mobile: `+880${phoneNumber}` });
-            console.log(response.data.message);
             localStorage.setItem('user', JSON.stringify(response.data.userId));
-
             setSuccessMessage(response.data.message);
             setErrorMessage('');
+            router.push('/login/otp');
         } catch (error) {
             console.log(error);
             setErrorMessage('Registration failed');
+            setSuccessMessage('');
         }
     };
 
