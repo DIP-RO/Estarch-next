@@ -1,87 +1,79 @@
-'use client'
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
+// pages/login/setPassword.js
+'use client';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
-import passwordImage from '../../../public/images/banner2.jpeg';
-import { useRouter } from 'next/navigation';
-import baseUrl from '@/components/services/baseUrl';
-
 export default function SetPassword() {
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [error, setError] = useState('');
-    const router = useRouter();
-    const [user, setUser] = useState(null);
-    useEffect(() => {
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
-      }
-    }, []); // Replace with the actual user ID obtained after OTP verification
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const router = useRouter();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-        if (password !== confirmPassword) {
-            setError('Passwords do not match');
-            return;
-        }
-        
-        try {
-            const response = await axios.post(`${baseUrl}/api/auth/set-password`, {
-                userId:user,
-                password,
-            });
-            console.log(response);
-            
-            if (response.status === 200) {
-                alert('Password set successfully');
-                router.push('/user'); // Redirect to login page after successful password set
-            }
-        } catch (error) {
-            console.error('Error setting password:', error);
-            setError('Failed to set password. Please try again.');
-        }
-    };
+    if (password !== confirmPassword) {
+      setErrorMessage('Passwords do not match');
+      return;
+    }
 
-    return (
-        <div className="flex items-center justify-center bg-gradient-to-r from-pink-100 to-yellow-100">
-            <div className="bg-white shadow-md mt-10 mb-10 h-[580px] rounded-lg max-w-md mx-auto">
-                <Image
-                    src={passwordImage}
-                    alt="Set Password"
-                    height={20}
-                    width={600}
-                    className="mx-auto"
-                />
-                <div className="p-12">
-                    <h2 className="text-2xl font-bold text-center mb-4">Set Your Password</h2>
-                    {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            type="password"
-                            placeholder="Enter Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="border rounded px-4 py-2 w-full mb-4"
-                        />
-                        <input
-                            type="password"
-                            placeholder="Confirm Password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            className="border rounded px-4 py-2 w-full mb-4"
-                        />
-                        <button
-                            type="submit"
-                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full"
-                        >
-                            Set Password
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    );
+    try {
+      const userId = JSON.parse(localStorage.getItem('user'));
+      await axios.post('http://localhost:5000/api/auth/set-password', { userId, password });
+      setSuccessMessage('Password set successfully');
+      setErrorMessage('');
+      router.push('/login');
+    } catch (error) {
+      console.error('Error setting password:', error);
+      setErrorMessage('Error setting password');
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-pink-100 to-yellow-100">
+      <div className="bg-white shadow-md rounded-lg max-w-md mx-auto p-8">
+        <h2 className="text-2xl font-bold mb-6">Set Your Password</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-1" htmlFor="password">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block text-sm font-medium mb-1" htmlFor="confirmPassword">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full py-2 bg-red-500 text-white font-bold rounded-md"
+          >
+            Set Password
+          </button>
+          {successMessage && (
+            <p className="text-green-500 mt-4">{successMessage}</p>
+          )}
+          {errorMessage && (
+            <p className="text-red-500 mt-4">{errorMessage}</p>
+          )}
+        </form>
+      </div>
+    </div>
+  );
 }

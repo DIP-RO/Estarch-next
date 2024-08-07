@@ -1,30 +1,25 @@
 'use client';
-import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOtp, decrementResendTimer, resetResendTimer } from '../../../lib/slices/otpSlice';
-import otp_icon from "../../../public/images/4a9a21b2517b3e8dd9816f589e878a8b.jpg";
-import Link from 'next/link';
 import axios from 'axios';
-
-import baseUrl from '@/components/services/baseUrl';
-
 import { useRouter } from 'next/navigation';
-
 
 export default function Otp() {
   const dispatch = useDispatch();
   const otp = useSelector((state) => state.otp.otp);
   const resendTimer = useSelector((state) => state.otp.resendTimer);
-  const mobile = useSelector((state) => state.auth.mobile); // Adjust as needed for mobile number
-  const [user, setUser] = useState(null);
+  const [userId, setUserId] = useState(null);
   const router = useRouter();
+
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(storedUserId);
+    } else {
+      router.push('/login'); // Redirect if no userId found
     }
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -42,7 +37,7 @@ export default function Otp() {
       dispatch(setOtp(newOtp));
 
       // Move to next input field if input is a number
-      if (value && index < 3) {
+      if (value && index < 5) {
         document.getElementById(`otp-input-${index + 1}`).focus();
       }
     }
@@ -52,7 +47,7 @@ export default function Otp() {
     dispatch(resetResendTimer());
 
     try {
-      await axios.post(`${baseUrl}/api/auth/resend-otp`, { mobile });
+      await axios.post('http://localhost:5000/api/auth/resend-otp', { mobile: `+880${phoneNumber}` });
       alert('OTP resent successfully.');
     } catch (error) {
       console.error('Error resending OTP:', error);
@@ -63,9 +58,8 @@ export default function Otp() {
   const handleSubmit = async () => {
     try {
       const otpCode = otp.join('');
-      await axios.post(`${baseUrl}/api/auth/verify-otp`, { userId:user, otp: otpCode });
+      await axios.post('http://localhost:5000/api/auth/verify-otp', { userId, otp: otpCode });
       router.push('/login/setPassword');
-
     } catch (error) {
       console.error('Error verifying OTP:', error);
       alert('Invalid OTP. Please try again.');
@@ -75,11 +69,8 @@ export default function Otp() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gradient-to-r from-pink-100 to-yellow-100">
       <div className="w-full max-w-sm p-8 space-y-8 bg-white shadow-lg rounded-lg">
-        <div className="flex flex-col items-center">
-          <Image src={otp_icon} width={200} height={30} alt="OTP Icon" />
-          <h2 className="mt-6 text-2xl font-bold">Verify with OTP</h2>
-          <p className="mt-2 text-sm text-gray-600">Sent to {mobile}</p>
-        </div>
+        <h2 className="mt-6 text-2xl font-bold">Verify with OTP</h2>
+        <p className="mt-2 text-sm text-gray-600">Sent to your mobile number</p>
         <div className="flex justify-center space-x-2">
           {otp.map((value, index) => (
             <input
@@ -107,14 +98,6 @@ export default function Otp() {
             Resend OTP
           </button>
         )}
-        <div className="flex flex-col items-center justify-center mt-4 text-sm">
-          <p>
-            Log in using <span className='text-red-500'><Link href="/login">Password</Link></span>
-          </p>
-          <p>
-            Having trouble logging in? <span className="text-red-500">Get help</span>
-          </p>
-        </div>
       </div>
     </div>
   );

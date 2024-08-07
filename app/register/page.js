@@ -1,17 +1,13 @@
-// pages/register.js
 'use client';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import baseUrl from '@/components/services/baseUrl';
 
 export default function Register() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isValidNumber, setIsValidNumber] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const dispatch = useDispatch();
   const router = useRouter();
 
   useEffect(() => {
@@ -25,10 +21,10 @@ export default function Register() {
     try {
       const response = await axios.post('http://localhost:5000/api/auth/register', { mobile: `+880${phoneNumber}` });
       localStorage.setItem('registerResponse', JSON.stringify(response.data));
-      localStorage.setItem('user', JSON.stringify(response.data.userId));
+      localStorage.setItem('userId', response.data.userId); // Store userId
       setSuccessMessage(response.data.message);
       setErrorMessage('');
-      router.push('/login/otp');
+      router.push('/login/otp'); // Navigate to OTP page
     } catch (error) {
       console.error(error);
       setErrorMessage('Registration failed');
