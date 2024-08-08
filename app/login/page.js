@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import baseUrl from '@/components/services/baseUrl';
 
 export default function Login() {
   const [mobile, setMobile] = useState('');
@@ -14,11 +15,16 @@ export default function Login() {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', { mobile, password });
+      const response = await axios.post(`${baseUrl}/api/auth/login`, { mobile, password },{ withCredentials: true });
+      console.log(response.data);
+      localStorage.setItem("userId", JSON.stringify(response.data.userId));
       setSuccessMessage(response.data.message);
       setErrorMessage('');
       // Redirect to a protected page or dashboard
       router.push('/user');
+      setTimeout(() => {
+        window.location.reload()
+      }, 1000);
     } catch (error) {
       console.error(error);
       setErrorMessage(error.response?.data?.message || 'Login failed');

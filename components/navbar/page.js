@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { BiMessageAltDots } from "react-icons/bi";
 import { FaCaretDown, FaGooglePlay } from "react-icons/fa";
 import { FaApple } from "react-icons/fa6";
@@ -15,10 +15,13 @@ import { IoMdMenu } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
 import { openSlide } from '@/lib/slices/sliderSlice';
 import { openCardSlide } from '@/lib/slices/cardSlideSlice';
+import { AuthContext } from '../context/AuthProvider';
 export default function NavBar() {
   const totalQuantity = useSelector(state => state.cart.totalQuantity);
   const dispatch = useDispatch();
   const [selectedCategory, setSelectedCategory] = useState('');
+  const {authUser} = useContext(AuthContext)
+
   const products = [
     { id: 1, title: "Premium Solid T Shirt for Men I MF-432", category: "men", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
     { id: 2, title: "Premium Solid T Shirt for Men I MF-432", category: "men", price: "TK. 999", oldPrice: "Tk. 1499", image: img },
@@ -67,7 +70,7 @@ export default function NavBar() {
         <div className="navbar-center sm:mr-9">
           <Link href="/"> <Image width={150} height={20} className="h-8" src={logo} alt="logo" /></Link>
         </div>
-        <div className="navbar-end">
+       { !authUser ? <div className="navbar-end">
           <div className='hidden lg:block md:block'>
             <div className="group relative cursor-pointer bg-white hover:bg-white">
               <a className="flex items-center gap-[2px] text-base font-semibold">
@@ -96,6 +99,25 @@ export default function NavBar() {
             <CgProfile className="text-[30px]" />
           </div>
         </div>
+        :
+        <div className="navbar-end">
+          <div className='hidden lg:block md:block'>
+            <div className="group relative cursor-pointer bg-white hover:bg-white">
+              <a className="flex items-center gap-[2px] text-base font-semibold">
+                <Link href={'/user'} className="flex items-center gap-1 justify-center">
+                  <CgProfile className="w-[26px] text-xl" />
+                  <p className="text">My Profile</p>
+                </Link>
+              </a>
+              
+            </div>
+          </div>
+          <div className='flex gap-2 ml-10 lg:hidden md:hidden'>
+            <CiSearch className="text-[30px]" />
+            <HiOutlineShoppingBag className="text-[30px]" />
+            <CgProfile className="text-[30px]" />
+          </div>
+        </div> }
       </div>
       <div className='hidden lg:block md:block'>
         <div className="flex bg-base-100 justify-between px-10 mt-10">

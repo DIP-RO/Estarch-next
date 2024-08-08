@@ -1,18 +1,22 @@
 'use client'
+import { AuthContext } from "@/components/context/AuthProvider";
+import baseUrl from "@/components/services/baseUrl";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 
 const UserInfo = () => {
   const [user, setUser] = useState({ mobile: '', fullName: '', email: '', gender: '' });
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [isEditing, setIsEditing] = useState(false); // State to track if the field is editable
+  const { authUser } = useContext(AuthContext);
+  console.log(authUser);
 
   useEffect(() => {
-    // Replace with actual mobile or user identifier
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/user-info/${user.mobile}`);
+        const response = await axios.get(`${baseUrl}/api/user-info/${user.mobile}`);
         setUser(response.data.user);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -20,7 +24,7 @@ const UserInfo = () => {
     };
 
     fetchUserData();
-  }, [user.mobile]); // Fetch data when user.mobile changes
+  }, [user.mobile]);
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
@@ -36,20 +40,37 @@ const UserInfo = () => {
     }
   };
 
+  const handleEditClick = () => {
+    setIsEditing(!isEditing); // Toggle the editable state
+  };
+
   return (
     <>
       <form className="mx-auto bg-white p-8 shadow-md rounded grid md:grid-cols-2 grid-cols-1 gap-6 items-center border border-gray-200">
         <h2 className="text-2xl">Account Details</h2>
         <div className="col-span-1 md:place-self-end">
-          <button
-            className="border border-gray-200 px-6 py-2 flex items-center gap-2 font-semibold"
-            type="button"
-          >
-            Edit{" "}
-            <span>
-              <CiEdit />
-            </span>
-          </button>
+
+          {!isEditing ?
+
+            <button
+              className="border border-gray-200 px-6 py-2 flex items-center gap-2 font-semibold"
+              type="button"
+              onClick={handleEditClick} // Handle the edit button click
+            >
+              Edit
+              <span>
+                <CiEdit />
+              </span>
+            </button>
+            :
+            <button
+              className="border border-gray-200 px-6 py-2 flex items-center gap-2 font-semibold"
+              type="button"
+              onClick={handleEditClick} // Handle the edit button click
+            >
+              Save
+            </button>
+          }
         </div>
 
         <hr className="md:col-span-2" />
@@ -65,9 +86,10 @@ const UserInfo = () => {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="fullName"
             type="text"
-            value={user.fullName}
+            defaultValue={authUser?.fullName}
             placeholder="Your full name"
             onChange={(e) => setUser({ ...user, fullName: e.target.value })}
+            readOnly={!isEditing} // Make the field read-only unless editing is enabled
           />
         </div>
 
@@ -82,7 +104,7 @@ const UserInfo = () => {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="phoneNumber"
             type="tel"
-            value={user.mobile}
+            value={authUser?.mobile}
             placeholder="01XXXXXXXXX"
             readOnly
           />
@@ -99,9 +121,10 @@ const UserInfo = () => {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="email"
             type="email"
-            value={user.email}
+            value={authUser?.email}
             placeholder="Enter your email address"
             onChange={(e) => setUser({ ...user, email: e.target.value })}
+            readOnly={!isEditing} // Make the field read-only unless editing is enabled
           />
         </div>
 
@@ -117,6 +140,7 @@ const UserInfo = () => {
             id="gender"
             value={user.gender}
             onChange={(e) => setUser({ ...user, gender: e.target.value })}
+            disabled={!isEditing} // Disable the field unless editing is enabled
           >
             <option value="">Choose a Gender</option>
             <option value="male">Male</option>

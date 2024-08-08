@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import baseUrl from '@/components/services/baseUrl';
 
 export default function SetPassword() {
   const [password, setPassword] = useState('');
@@ -20,8 +21,9 @@ export default function SetPassword() {
     }
 
     try {
-      const userId = JSON.parse(localStorage.getItem('user'));
-      await axios.post('http://localhost:5000/api/auth/set-password', { userId, password });
+      const userId = localStorage.getItem('userId'); 
+      console.log(userId);
+      await axios.post(`${baseUrl}/api/auth/set-password`, { userId, password });
       setSuccessMessage('Password set successfully');
       setErrorMessage('');
       router.push('/login');

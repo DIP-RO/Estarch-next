@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setOtp, decrementResendTimer, resetResendTimer } from '../../../lib/slices/otpSlice';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import baseUrl from '@/components/services/baseUrl';
 
 export default function Otp() {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ export default function Otp() {
     dispatch(resetResendTimer());
 
     try {
-      await axios.post('http://localhost:5000/api/auth/resend-otp', { mobile: `+880${phoneNumber}` });
+      await axios.post(`${baseUrl}/api/auth/resend-otp`, { mobile: `+880${phoneNumber}` });
       alert('OTP resent successfully.');
     } catch (error) {
       console.error('Error resending OTP:', error);
@@ -58,7 +59,7 @@ export default function Otp() {
   const handleSubmit = async () => {
     try {
       const otpCode = otp.join('');
-      await axios.post('http://localhost:5000/api/auth/verify-otp', { userId, otp: otpCode });
+      await axios.post(`${baseUrl}/api/auth/verify-otp`, { userId, otp: otpCode });
       router.push('/login/setPassword');
     } catch (error) {
       console.error('Error verifying OTP:', error);
