@@ -1,13 +1,20 @@
 'use client'
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import cod from '../../../public/images/cash-on-delivery-icon.png';
 import baseUrl from '@/components/services/baseUrl';
+import { AuthContext } from '@/components/context/AuthProvider';
+// import { login } from '@/lib/slices/userSlice';
 
 export default function Checkout() {
+
+  const { authUser } = useContext(AuthContext)
+  const userId = authUser ? authUser?._id : null;
+
   const cartItems = useSelector((state) => state.cart.items);
+  console.log(cartItems);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -39,6 +46,8 @@ export default function Checkout() {
     e.preventDefault();
     const orderData = {
       name: formData.name,
+      deliveryCharge: 150,
+      // date:new Date(),
       phone: formData.phone,
       altPhone: formData.altPhone,
       email: formData.email,
@@ -46,20 +55,22 @@ export default function Checkout() {
       address: formData.address,
       orderNotes: formData.orderNotes,
       cartItems: cartItems.map(item => ({
-        // productId: item.product.id, // Ensure productId is included
+        productId: item.id, // Ensure productId is included
         title: item.product.title,
         quantity: item.quantity,
-        price: item.product.price
+        price: item.product.price,
+        size: item.size
       })),
       paymentMethod: formData.paymentMethod,
       totalAmount: calculateTotal(),
-      orderStatus: 'Pending'
+      orderStatus: 'Pending',
+      userId:userId
     };
 
     console.log('Form Data:', orderData); // Log form data to verify
 
     try {
-      const response = await axios.post(`${baseUrl}/api/orders/orders`, orderData);
+      const response = await axios.post(`${baseUrl}/api/orders`, orderData);
       alert('Order placed successfully!');
       console.log(response.data);
     } catch (error) {
