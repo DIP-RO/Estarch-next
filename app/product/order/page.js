@@ -3,7 +3,6 @@ import { useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import bkcash from '../../../public/images/BKash-Logo.wine.png';
 import cod from '../../../public/images/cash-on-delivery-icon.png';
 import ssl from '../../../public/images/ssl.png';
 import baseUrl from '@/components/services/baseUrl';

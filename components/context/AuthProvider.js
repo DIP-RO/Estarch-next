@@ -3,45 +3,57 @@ import baseUrl from "../services/baseUrl";
 
 export const AuthContext = createContext();
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useAuthContext = () => {
-	return useContext(AuthContext);
+    return useContext(AuthContext);
 };
 
 export const AuthContextProvider = ({ children }) => {
-	const [authUser, setAuthUser] = useState(null);
-	const [loadingUser, setLoadingUser] = useState(true)
-	useEffect(() => {
-        // Get user ID from local storage
-        const userId = JSON.parse(localStorage.getItem('userId'))
-        console.log(userId);
-        
-        if (userId) {
-            // Fetch user data from API
-            fetchUserData(userId);
-        }else{
-			setLoadingUser(false)
-		}
-    }, []);
+    const [authUser, setAuthUser] = useState(null);
+    const [loadingUser, setLoadingUser] = useState(true);
 
-    const fetchUserData = async (userId) => {
-        console.log('useriD');
-		setLoadingUser(true);
+    useEffect(() => {
+        const fetchUserData = async (userId) => {
+            console.log('Fetching user data for userId:', userId);
+            setLoadingUser(true);
+            try {
+                const response = await fetch(`${baseUrl}/api/auth/user/${userId}`);
+                if (response.ok) {
+                    const userData = await response.json();
+                    setAuthUser(userData);
+                } else {
+                    console.error("Failed to fetch user data");
+                }
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            } finally {
+                setLoadingUser(false);
+            }
+        };
+
         try {
-            const response = await fetch(`${baseUrl}/api/auth/user/${userId}`);
-            if (response.ok) {
-                const userData = await response.json();
-                setAuthUser(userData);
+            const userIdString = localStorage.getItem('userId');
+            if (userIdString) {
+                const userId = JSON.parse(userIdString);
+                console.log('Parsed userId:', userId);
+                if (userId) {
+                    fetchUserData(userId);
+                } else {
+                    console.warn('userId is null or undefined');
+                    setLoadingUser(false);
+                }
             } else {
-                console.error("Failed to fetch user data");
+                console.warn('No userId found in localStorage');
+                setLoadingUser(false);
             }
         } catch (error) {
-            console.error("Error fetching user data:", error);
-        }finally{
-			setLoadingUser(false)
-		}
-    };
+            console.error('Error parsing userId from localStorage:', error);
+            setLoadingUser(false);
+        }
+    }, []);
 
-    // console.log(authUser);
-	return <AuthContext.Provider value={{ authUser, setAuthUser,loadingUser }}>{children}</AuthContext.Provider>;
+    return (
+        <AuthContext.Provider value={{ authUser, setAuthUser, loadingUser }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
