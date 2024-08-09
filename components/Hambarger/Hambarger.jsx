@@ -5,13 +5,13 @@ import { IoIosArrowDown, IoMdClose } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
 import axios from 'axios';
-import Link from 'next/link';  // Import Link from next/link for routing
+import Link from 'next/link'; routing
 import cupon from '../../public/images/banner2.jpeg';
 import { closeSlide } from '@/lib/slices/sliderSlice';
 
 function Hambarger() {
     const [categories, setCategories] = useState({});
-    const [activeCategory, setActiveCategory] = useState(null); // Track which main category is active
+    const [activeCategory, setActiveCategory] = useState(null); 
     const isOpen = useSelector((state) => state.slide.isOpen);
     const dispatch = useDispatch();
 
