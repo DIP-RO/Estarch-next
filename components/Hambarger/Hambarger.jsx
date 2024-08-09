@@ -1,37 +1,55 @@
-'use client'
+'use client';
 
-import { closeSlide } from '@/lib/slices/sliderSlice';
-import React, { useState } from 'react'
-import { FaCaretDown } from 'react-icons/fa'
-import { IoIosArrowBack, IoIosArrowDown, IoIosArrowForward, IoMdClose } from 'react-icons/io'
+import React, { useEffect, useState } from 'react';
+import { IoIosArrowDown, IoMdClose } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
-import cupon from '../../public/images/banner2.jpeg'
 import Image from 'next/image';
+import axios from 'axios';
+import Link from 'next/link';  // Import Link from next/link for routing
+import cupon from '../../public/images/banner2.jpeg';
+import { closeSlide } from '@/lib/slices/sliderSlice';
+
 function Hambarger() {
-    const [subHamburger, setSubHamburger] = useState(false)
-    const [subHamburgerNumber, setSubHamburgerNumber] = useState(-1)
-    const [subHamburgerSubCat, setSubHamburgerSubCat] = useState(false)
+    const [categories, setCategories] = useState({});
+    const [activeCategory, setActiveCategory] = useState(null); // Track which main category is active
     const isOpen = useSelector((state) => state.slide.isOpen);
     const dispatch = useDispatch();
-    const handleHamburger = () => {
-        setHamburger(!hamburger)
-        setSubHamburger(false)
-        setSubHamburgerSubCat(false)
-        console.log("Hamburger");
-    }
-    const handleSubHamburger = (index) => {
-        setSubHamburgerNumber(index)
-        setSubHamburger(subHamburger => !subHamburger)
-        setSubHamburgerSubCat(false)
 
-    }
-    const handleSubHamburgerSubCat = () => {
-        setSubHamburgerSubCat(!subHamburgerSubCat)
-    }
+    useEffect(() => {
+        // Fetch categories with subcategories from the API
+        const fetchCategories = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/categories/categories');
+                const groupedCategories = response.data.reduce((acc, category) => {
+                    const typeName = category.type.name;
+
+                    if (!acc[typeName]) {
+                        acc[typeName] = [];
+                    }
+
+                    acc[typeName].push(category);
+                    return acc;
+                }, {});
+                
+                setCategories(groupedCategories);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+
+        fetchCategories();
+    }, []);
+
+    const handleCategoryToggle = (typeName) => {
+        setActiveCategory(activeCategory === typeName ? null : typeName);
+    };
+
     return (
-        <div className='lg:hidden md:hidden'>
-            <div className={` bg-base-100 fixed top-0 left-0 w-80 min-h-screen z-[10] transition-right duration-500 ${isOpen ? '' : 'right-[-350px] hidden'} `}>
-                <p className="cursor-pointer relative left-[80%] top-3 text-2xl"><IoMdClose onClick={() => dispatch(closeSlide())} /></p>
+        <div className={`lg:hidden md:hidden`}>
+            <div className={`bg-base-100 fixed top-0 left-0 w-80 min-h-screen z-[10] transition-right duration-500 ${isOpen ? 'right-0' : 'right-[-350px] hidden'}`}>
+                <p className="cursor-pointer relative left-[80%] top-3 text-2xl">
+                    <IoMdClose onClick={() => dispatch(closeSlide())} />
+                </p>
                 <div className="my-6">
                     <hr />
                 </div>
@@ -43,99 +61,39 @@ function Hambarger() {
                     width={600}
                     className="mx-auto"
                 />
-                <ul className={`px-4 text-[#3d3d3d] space-y-4 text-[18px] mt-2`}>
-                    <li onClick={() => handleSubHamburger(1)} className="flex items-center justify-between font-semibold">Women <span><IoIosArrowForward /></span></li>
-                    <li onClick={() => handleSubHamburger(2)} className="flex items-center justify-between font-semibold">Men <span><IoIosArrowForward /></span></li>
-                    <li onClick={() => handleSubHamburger(3)} className="flex items-center justify-between font-semibold">Kids <span><IoIosArrowForward /></span></li>
-                    <li className="flex items-center justify-between font-semibold">About Us <span><IoIosArrowForward /></span></li>
-                    <li className="flex items-center justify-between font-semibold">Store</li>
-                </ul>
-                <div className="mt-16 mb-6"><hr /></div>
-                <div className=" text-black gap-4 flex  ml-4 ">
-                    <a><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" className="fill-current"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
-                    </a>
-                    <a><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" className="fill-current"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path></svg></a>
-                    <a><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" className="fill-current"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path></svg></a>
-                </div>
-            </div>
-            {/* Women */}
-            <div className={`bg-base-100 fixed top-0 z-[11] left-0 w-80 h-screen transition-left duration-500 ${isOpen ? '' : 'right-[-350px]'} ${subHamburger && subHamburgerNumber == 1 ? '' : 'left-[-350px]'}`}>
-                <div className="flex items-center justify-between pt-3 px-3">
-                    <p onClick={handleSubHamburger} className="cursor-pointer text-2xl"><IoIosArrowBack /></p>
-                    <p className="cursor-pointer text-xl">Women</p>
-                    <p onClick={handleHamburger} className="cursor-pointer text-2xl"><IoMdClose /></p>
-                </div>
 
-                <div className="my-6">
-                    <hr />
-                </div>
-                <ul className={`px-4 text-[#3d3d3d] space-y-4 text-[18px]`}>
-                    <li className="flex items-center justify-between font-semibold">All Shop</li>
-                    <li className="flex items-center justify-between font-semibold">New Arrival</li>
-                    <li onClick={handleSubHamburgerSubCat} className="flex items-center justify-between font-semibold">Shop by Category <span><IoIosArrowDown /></span></li>
-                    <ul className={`ml-3 space-y-5 text-[18px] transition-opacity transition-height ease-in-out duration-300 ${subHamburgerSubCat ? 'grid' : 'hidden'}`}>
-                        <li className="flex items-center justify-between">Tops</li>
-                        <li className="flex items-center justify-between">Bottoms</li>
-                        <li className="flex items-center justify-between">Dresses & Jumpsuits</li>
-                        <li className="flex items-center justify-between">Jackets</li>
-                    </ul>
-                    <li className="flex items-center justify-between font-semibold">Shop by Store <span><IoIosArrowDown /></span></li>
-                    <li className="flex items-center justify-between font-semibold text-red-500">Archive Sale</li>
-                </ul>
-            </div>
+                <ul className="px-4 text-[#3d3d3d] space-y-4 text-[18px] mt-2">
+                    {Object.keys(categories).map((typeName) => (
+                        <React.Fragment key={typeName}>
+                            {/* Main Category */}
+                            <li
+                                onClick={() => handleCategoryToggle(typeName)}
+                                className="flex items-center justify-between uppercase font-semibold cursor-pointer"
+                            >
+                                {typeName}
+                                <span><IoIosArrowDown /></span>
+                            </li>
 
-            {/* men */}
-            <div className={`bg-base-100 fixed top-0 z-[11] left-0 w-80 h-screen transition-left duration-500 ${isOpen ? '' : 'right-[-350px] hidden'} ${subHamburger && subHamburgerNumber == 2 ? '' : 'left-[-350px]'}`}>
-                <div className="flex items-center justify-between pt-3 px-3">
-                    <p onClick={handleSubHamburger} className="cursor-pointer text-2xl"><IoIosArrowBack /></p>
-                    <p className="cursor-pointer text-xl">Men</p>
-                    <p onClick={handleHamburger} className="cursor-pointer text-2xl"><IoMdClose /></p>
-                </div>
-                <div className="my-6">
-                    <hr />
-                </div>
-                <ul className={`px-4 text-[#3d3d3d] space-y-4 text-[18px]`}>
-                    <li className="flex items-center justify-between font-semibold">All Shop</li>
-                    <li className="flex items-center justify-between font-semibold">New Arrival</li>
-                    <li onClick={handleSubHamburgerSubCat} className="flex items-center justify-between font-semibold">Shop by Category <span><IoIosArrowDown /></span></li>
-                    <ul className={`ml-3 space-y-5 text-[18px] transition-opacity transition-height ease-in-out duration-300 ${subHamburgerSubCat ? 'grid' : 'hidden'}`}>
-                        <li className="flex items-center justify-between">Tops</li>
-                        <li className="flex items-center justify-between">Bottoms</li>
-                        <li className="flex items-center justify-between">Dresses & Jumpsuits</li>
-                        <li className="flex items-center justify-between">Jackets</li>
-                    </ul>
-                    <li className="flex items-center justify-between font-semibold">Shop by Store <span><IoIosArrowDown /></span></li>
-                    <li className="flex items-center justify-between font-semibold text-red-500">Archive Sale</li>
-                </ul>
-            </div>
-
-            {/* Kids */}
-            <div className={`bg-base-100 fixed top-0 z-[11] left-0 w-80 h-screen transition-left duration-500 ${isOpen ? '' : 'right-[-350px] hidden'} ${subHamburger && subHamburgerNumber == 3 ? '' : 'left-[-350px]'}`}>
-                <div className="flex items-center justify-between pt-3 px-3">
-                    <p onClick={handleSubHamburger} className="cursor-pointer text-2xl"><IoIosArrowBack /></p>
-                    <p className="cursor-pointer text-xl">Kids</p>
-                    <p onClick={handleHamburger} className="cursor-pointer text-2xl"><IoMdClose /></p>
-                </div>
-                <div className="my-6">
-                    <hr />
-                </div>
-                <ul className={`px-4 text-[#3d3d3d] space-y-4 text-[18px]`}>
-                    <li className="flex items-center justify-between font-semibold">All Shop</li>
-                    <li className="flex items-center justify-between font-semibold">New Arrival</li>
-                    <li onClick={handleSubHamburgerSubCat} className="flex items-center justify-between font-semibold">Shop by Category <span><IoIosArrowDown /></span></li>
-                    <ul className={`ml-3 space-y-5 text-[18px] transition-opacity transition-height ease-in-out duration-300 ${subHamburgerSubCat ? 'grid' : 'hidden'}`}>
-                        <li className="flex items-center justify-between">Tops</li>
-                        <li className="flex items-center justify-between">Bottoms</li>
-                        <li className="flex items-center justify-between">Dresses & Jumpsuits</li>
-                        <li className="flex items-center justify-between">Jackets</li>
-                    </ul>
-                    <li className="flex items-center justify-between font-semibold">Shop by Store <span><IoIosArrowDown /></span></li>
-                    <li className="flex items-center justify-between font-semibold text-red-500">Archive Sale</li>
+                            {/* Subcategories */}
+                            <ul
+                                className={`ml-3 space-y-5 text-[18px] transition-opacity ease-in-out duration-300 ${
+                                    activeCategory === typeName ? 'grid' : 'hidden'
+                                }`}
+                            >
+                                {categories[typeName].map((category) => (
+                                    <li key={category._id}>
+                                        <Link href={`/${typeName.toLowerCase()}/${category._id}`}>
+                                            {category.name}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </React.Fragment>
+                    ))}
                 </ul>
             </div>
         </div>
-
-    )
+    );
 }
 
-export default Hambarger
+export default Hambarger;

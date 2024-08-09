@@ -41,7 +41,7 @@ export default function Man() {
 
             <div className="grid lg:grid-cols-3 sm:grid-cols-1 justify-center items-center px-5 py-5 gap-5">
                 {
-                    categories.map(cat => <div key={cat._id} className="relative w-[470px] h-96">
+                    categories.map(cat => <div key={cat._id} className="relative  w-[470px] h-96">
                         <Link href={`/${category}/${cat._id}`}>
                             <Image
                                 src={cat.image}
