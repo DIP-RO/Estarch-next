@@ -1,13 +1,22 @@
 'use client'
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import cod from '../../../public/images/cash-on-delivery-icon.png';
 import baseUrl from '@/components/services/baseUrl';
+import { AuthContext } from '@/components/context/AuthProvider';
+// import { login } from '@/lib/slices/userSlice';
 
 export default function Checkout() {
+
+  const { authUser } = useContext(AuthContext)
+  const userId = authUser ? authUser?._id : null;
+  const [shippingCharge, setShippingCharge] = useState(null); // Initialize as null
+
+
   const cartItems = useSelector((state) => state.cart.items);
+  // console.log(cartItems);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -19,15 +28,27 @@ export default function Checkout() {
     paymentMethod: ''
   });
 
+  const handleAreaChange = (e) => {
+    const value = e.target.value;
+    setFormData({ ...formData, area: value });
+
+    if (value === "Inside Dhaka") {
+      setShippingCharge(60);
+    } else if (value === "Outside Dhaka") {
+      setShippingCharge(130);
+    } else {
+      setShippingCharge(null); // Hide shipping charge if no area is selected
+    }
+  };
+
   const calculateSubtotal = () => {
     return cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
   };
 
   const calculateTotal = () => {
+
     const subtotal = calculateSubtotal();
-    const shippingCharge = 150; // Example value
-    const vat = 300; // Example value
-    return subtotal + shippingCharge + vat;
+    return subtotal + (shippingCharge || 0);
   };
 
   const handleChange = (e) => {
@@ -38,28 +59,34 @@ export default function Checkout() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const orderData = {
+      serialId: 'E-commerce',
       name: formData.name,
       phone: formData.phone,
+      deliveryCharge: shippingCharge,
       altPhone: formData.altPhone,
       email: formData.email,
       district: formData.district,
       address: formData.address,
+      area: formData.area,
       orderNotes: formData.orderNotes,
       cartItems: cartItems.map(item => ({
-        // productId: item.product.id, // Ensure productId is included
+        productId: item.id, // Ensure productId is included
         title: item.product.title,
         quantity: item.quantity,
-        price: item.product.price
+        price: item.product.price,
+        size: item.size
       })),
       paymentMethod: formData.paymentMethod,
-      totalAmount: calculateTotal(),
-      orderStatus: 'Pending'
+      totalAmount: calculateTotal() - shippingCharge,
+      orderStatus: 'Pending',
+      userId: userId,
+      grandTotal: calculateTotal()
     };
 
     console.log('Form Data:', orderData); // Log form data to verify
 
     try {
-      const response = await axios.post(`${baseUrl}/api/orders/orders`, orderData);
+      const response = await axios.post(`${baseUrl}/api/orders`, orderData);
       alert('Order placed successfully!');
       console.log(response.data);
     } catch (error) {
@@ -90,6 +117,14 @@ export default function Checkout() {
               <div className="mb-4">
                 <label className="block text-sm font-bold mb-2" htmlFor="email">Email (optional)</label>
                 <input className="w-full p-2 border rounded" type="email" id="email" name="email" value={formData.email} onChange={handleChange} />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-bold mb-2" htmlFor="area">Area</label>
+                <select className="w-full p-2 border rounded" id="area" name="area" value={formData.area} onChange={handleAreaChange} required>
+                  <option value="">Select Area</option>
+                  <option value="Inside Dhaka">Inside Dhaka</option>
+                  <option value="Outside Dhaka">Outside Dhaka</option>
+                </select>
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-bold mb-2" htmlFor="district">District</label>
@@ -127,14 +162,12 @@ export default function Checkout() {
                   <span>Subtotal</span>
                   <span className='text-red-700'>৳ {calculateSubtotal().toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Shipping Charge</span>
-                  <span>৳ 150</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>VAT</span>
-                  <span>৳ 300</span>
-                </div>
+                {shippingCharge !== null && ( // Display only if shippingCharge is set
+                  <div className="flex justify-between">
+                    <span>Shipping Charge</span>
+                    <span>৳ {shippingCharge}</span>
+                  </div>
+                )}
               </div>
               <div className="flex justify-between font-bold text-xl">
                 <span>Total</span>

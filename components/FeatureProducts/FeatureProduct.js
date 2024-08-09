@@ -58,7 +58,7 @@ export default function FeatureProduct() {
   return (
     <div>
       <div className="slider-container mx-0 lg:mx-20">
-        <h1 className='text-center mb-4 mt-8 font-bold md:text-2xl text-xl'>Our Feature PRODUCTS</h1>
+        <h1 className='text-center mb-4 mt-8 font-bold md:text-2xl text-xl'>OUR FEATURE PRODUCTS</h1>
         <Slider {...settings}>
           {products.map(product => (
             <div key={product._id} className="card card-compact bg-base-100 w-96 shadow-xl">

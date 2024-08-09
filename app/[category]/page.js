@@ -32,8 +32,10 @@ export default function Man() {
                     objectFit="cover"
                     className="opacity-80"
                 />
-                <div className="absolute text-center">
-                    <h1 className="text-5xl font-bold text-gray-900">Your Main Text</h1>
+                <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-center items-center text-white">
+                    <div className="absolute text-center">
+                        <h1 className="text-5xl font-bold text-white uppercase ">{category}</h1>
+                    </div>
                 </div>
             </div>
 
@@ -54,6 +56,7 @@ export default function Man() {
                                     Shop Now
                                 </button>
                             </div>
+
                         </Link>
 
                     </div>)
