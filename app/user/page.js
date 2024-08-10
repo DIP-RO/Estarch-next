@@ -11,7 +11,6 @@ const UserInfo = () => {
   const [newPassword, setNewPassword] = useState('');
   const [isEditing, setIsEditing] = useState(false); // State to track if the field is editable
   const { authUser } = useContext(AuthContext);
-  console.log(authUser);
 
   useEffect(() => {
     const fetchUserData = async () => {

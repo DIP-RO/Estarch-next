@@ -20,7 +20,7 @@ export default function NavBar() {
   const totalQuantity = useSelector(state => state.cart.totalQuantity);
   const dispatch = useDispatch();
   const { authUser } = useContext(AuthContext)
- 
+
   return (
     <div className="">
       <div className="px-10 navbar bg-base-100 border-b">
@@ -79,7 +79,7 @@ export default function NavBar() {
               )}
             </div>
             <div className="group relative w-[40px] cursor-pointer bg-white hover:bg-white">
-            <CgProfile size={25} />  
+              <CgProfile size={25} />
               <div className="absolute z-10 bg-white right-1 hidden w-52 rounded-md h-28 p-2 text-black group-hover:block">
                 <ul className="bg-white w-52 p-5">
                   <li className="text-base hover:bg-base-100"><Link href="/login">Login</Link></li>
@@ -106,9 +106,11 @@ export default function NavBar() {
               </div>
             </div>
             <div className='flex gap-2 ml-10 lg:hidden md:hidden'>
-              <CiSearch className="text-[30px]" />
-              <HiOutlineShoppingBag className="text-[30px]" />
-              <CgProfile className="text-[30px]" />
+              {/* <CiSearch className="text-[30px]" /> */}
+              <HiOutlineShoppingBag onClick={() => dispatch(openCardSlide())} className="text-[30px]" />
+              <Link href={'/user'}>
+                <CgProfile className="text-[30px]" />
+              </Link>
             </div>
           </div>}
       </div>
@@ -116,9 +118,9 @@ export default function NavBar() {
         <div className="flex bg-base-100 justify-between px-10 mt-10">
           <div className="flex w-fit items-center justify-center">
             <CiSearch className="text-2xl" />
-            <input type="text" className='w-full max-w-xs h-8' placeholder="search product" />
+            {/* <input type="text" className='w-full max-w-xs h-8' placeholder="search product" /> */}
           </div>
-          <div className="flex gap-4 justify-center items-center">
+          <div className="flex gap-4  items-center">
 
             <Link href='/'><button >HOME</button></Link>
             <Link href='/men'><button>MEN</button></Link>
@@ -126,7 +128,7 @@ export default function NavBar() {
             <Link href='/kids'> <button >KIDS</button></Link>
             <Link href='/shoes'><button >SHOES</button></Link>
           </div>
-          <div className="relative w-[40px]" onClick={() => dispatch(openCardSlide())}>
+          <div className="relative w-[40px] cursor-pointer" onClick={() => dispatch(openCardSlide())}>
             <HiOutlineShoppingBag className="relative text-2xl" />
             {totalQuantity > 0 && (
               <span className="bg-red-600 text-white rounded-full absolute -top-1 -right-1 w-4 h-4 text-xs flex items-center justify-center">
