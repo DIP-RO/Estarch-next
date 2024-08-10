@@ -1,8 +1,8 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {  createContext, useContext, useEffect, useState } from "react";
 import baseUrl from "../services/baseUrl";
 
-export const AuthContext = createContext();
 
+export const AuthContext = createContext();
 export const useAuthContext = () => {
     return useContext(AuthContext);
 };

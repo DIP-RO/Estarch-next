@@ -7,11 +7,14 @@ import { FaRegUserCircle } from 'react-icons/fa';
 import { MdChecklist } from 'react-icons/md';
 import { RiLogoutBoxLine } from "react-icons/ri";
 import useLogout from '../Hook/useLogout';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthProvider';
 
 
 const Sidebar = () => {
   const pathname = usePathname();
   const { logout } = useLogout()
+  const {authUser} = useContext(AuthContext)
 
 
   return (
@@ -39,7 +42,7 @@ const Sidebar = () => {
         </li>
       </ul>
       <div className='w-full h-44 bg-[#FF4C4C] items-center rounded-b-2xl flex justify-evenly relative mb-8 md:hidden'>
-        <p className='text-white flex items-center gap-2 text-2xl'><FaRegUserCircle /> Hello, User</p>
+        <p className='text-white flex items-center gap-2 text-xl'><FaRegUserCircle /> Hello, {authUser?.fullName}</p>
         <Link href='/user' className={`bg-base-200 gap-3 flex flex-col justify-center items-center h-20 left-5 absolute -bottom-6 w-24 text-center rounded-lg border-b-2 ${pathname === '/user' ? 'border-2 border-gray-500' : ''}`}>
           <FaRegUserCircle className='text-2xl' /> My Profile
         </Link>
@@ -50,7 +53,7 @@ const Sidebar = () => {
           <CiStar className='text-2xl' /> Review
         </Link>
         <button onClick={logout} className={`bg-base-200 gap-3 flex flex-col justify-center items-center h-20 right-5 absolute -bottom-6 w-24 text-center rounded-lg border-b-2 ${pathname === '/user/reviews' ? 'border-2 border-gray-500' : ''}`}>
-          <CiStar className='text-2xl' /> Logout
+          <RiLogoutBoxLine  className='text-2xl' /> Logout
         </button>
       </div>
     </div>
