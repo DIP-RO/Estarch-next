@@ -13,6 +13,7 @@ import Link from "next/link";
 const SlideCard = () => {
     const isOpen = useSelector((state) => state.cardSlide.isOpen);
     const cartItems = useSelector((state) => state.cart.items);
+    console.log(cartItems);
     const dispatch = useDispatch();
 
     const handleSlideCard = () => {
@@ -55,13 +56,13 @@ const SlideCard = () => {
                                     </div>
                                     <div className="col-span-2">
                                         <h1 className="text-xl font-semibold">{item.product.title}</h1>
-                                        {item.color && (
+                                        {/* {item.color && (
                                             <p>Colour: {item.color}</p>
-                                        )}
+                                        )} */}
                                         {item.size && (
                                             <p>Size (UK): {item.size}</p>
                                         )}
-                                        <p>{item.product.stock.quantity} in stock</p>
+                                        {/* <p>{item.product.stock.quantity} in stock</p> */}
                                         <div className="flex border w-20 my-5 py-2 px-2 rounded-md">
                                             <button className="flex-1" onClick={() => handleDecrease(item.id)}>
                                                 <HiOutlineMinus />
@@ -97,7 +98,7 @@ const SlideCard = () => {
                                 calculated at checkout.
                             </p>
                             <Link href="/product/order">
-                                <button className="btn bg-black text-white w-full hover:bg-black">CHECK OUT</button>
+                                <button onClick={handleSlideCard} className="btn bg-black text-white w-full hover:bg-black">CHECK OUT</button>
                             </Link>
                         </div>
                     </div>
