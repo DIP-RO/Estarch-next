@@ -11,6 +11,8 @@ import { FaWhatsapp } from "react-icons/fa";
 import { PiCoatHanger } from 'react-icons/pi';
 import baseUrl from "@/components/services/baseUrl";
 import RelatedProducts from "@/components/relatedproduct/page";
+import { openCardSlide } from "@/lib/slices/cardSlideSlice";
+
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -148,11 +150,11 @@ const ProductDetails = () => {
             </div>
 
             <div className="flex mt-5 mb-4">
-              <Link href=''>
-                <button className="bg-green-500 text-white px-4 py-2 mr-2" onClick={handleAddToCart}>
+              <div onClick={handleAddToCart}>
+                <button className="bg-green-500 text-white px-4 py-2 mr-2" onClick={()=>{dispatch(openCardSlide())}}>
                   Add to cart
                 </button>
-              </Link>
+              </div>
               <Link href={`/product/order/${id}/${selectedSize}`}>
                 <button className="bg-black text-white px-4 py-2 mr-2">
                   Order now

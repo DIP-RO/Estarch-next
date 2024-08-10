@@ -81,7 +81,7 @@ export default function Checkout() {
             email: formData.email,
             district: formData.district,
             address: formData.address,
-            area:formData.area,
+            area: formData.area,
             orderNotes: formData.orderNotes,
             cartItems: [{
                 productId: product._id,
@@ -134,7 +134,7 @@ export default function Checkout() {
                             <div className="mb-4">
                                 <label className="block text-sm font-bold mb-2" htmlFor="area">Area</label>
                                 <select className="w-full p-2 border rounded" id="area" name="area" value={formData.area} onChange={handleAreaChange} required>
-                                    <option  value="">Select Area</option>
+                                    <option value="">Select Area</option>
                                     <option value="Inside Dhaka">Inside Dhaka</option>
                                     <option value="Outside Dhaka">Outside Dhaka</option>
                                 </select>
@@ -190,11 +190,23 @@ export default function Checkout() {
                             )}
                             <div className="mt-4 lg:mt-20">
                                 <label className="block text-sm font-bold mb-2">Payment Method</label>
-                                <div className="flex items-center mb-4">
-                                    <input type="radio" id="cod" name="paymentMethod" value="Cash on Delivery" onChange={handleChange} className="mr-2" required />
-                                    <label htmlFor="cod" className="text-sm">Cash on Delivery <Image src={cod} alt="Cash on Delivery Icon" width={24} height={24} /></label>
+                                <div className="mb-2">
+                                    <label className="inline-flex items-center">
+                                        <input type="radio" name="paymentMethod" value="Cash on Delivery" onChange={handleChange} required />
+                                        <div className='flex items-center gap-3 ml-2'>
+                                            <span>Cash on delivery</span>
+                                            <Image src={cod} alt='Cash on delivery' width={100} height={40} />
+                                        </div>
+                                    </label>
                                 </div>
-                                <button className="w-full bg-red-600 text-white p-2 rounded-lg" type="submit">Place Order</button>
+                            </div>
+                            <div className="flex justify-center mt-10 lg:mt-52">
+                                <button
+                                    type="submit"
+                                    className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition duration-200"
+                                >
+                                    Place Order
+                                </button>
                             </div>
                         </div>
                     </form>
