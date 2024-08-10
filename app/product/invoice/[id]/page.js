@@ -1,48 +1,41 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-
-// Import Image
-import logo from "../../assets/images/logo-dark.png";
-import baseUrl from "../../helpers/baseUrl";
 import Image from "next/image";
+import { useParams } from "next/navigation";
+
+import baseUrl from '@/components/services/baseUrl';
+ // Example for importing a local image
 
 const InvoiceDetail = () => {
   const { id } = useParams();
-  const [order, setOrder] = useState(null); // State to store order data
-  const [loading, setLoading] = useState(true); // State to manage loading state
+  const [order, setOrder] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Function to fetch order data
     const fetchOrder = async () => {
       try {
         const response = await fetch(`${baseUrl}/api/orders/order/${id}`);
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        setOrder(data); // Set order data in state
-        setLoading(false); // Set loading to false once data is fetched
+        setOrder(data);
+        setLoading(false);
       } catch (error) {
-        setError(error.message); // Set error message if any error occurs
-        setLoading(false); // Set loading to false in case of error
+        setError(error.message);
+        setLoading(false);
       }
     };
 
-    fetchOrder(); // Call the fetch function
-
-    // Optional cleanup function if needed
-    return () => {
-      // Cleanup logic
-    };
+    fetchOrder();
   }, [id]);
 
-  if (loading) return <p>Loading...</p>; // Show loading state
+  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
-  document.title = "Invoice Detail ";
 
-  // Print the Invoice
+  document.title = "Invoice Detail";
+
   const printInvoice = () => {
     window.print();
   };
@@ -78,7 +71,6 @@ const InvoiceDetail = () => {
       </style>
       <div className="page-content">
         <div className="container mx-auto p-4">
-          {/* Render Breadcrumbs */}
           <div className="mb-4">
             <h2 className="text-2xl font-bold">Invoices / Invoice Detail</h2>
           </div>
@@ -88,7 +80,7 @@ const InvoiceDetail = () => {
                 <div className="flex justify-between items-center mb-4">
                   <h4 className="text-xl font-semibold">{order.invoice}</h4>
                   <div>
-                    <Image src={logo} alt="logo" className="w-24" />
+                    <Image src='' alt="logo" className="w-24" />
                   </div>
                 </div>
                 <div className="text-gray-600">
@@ -169,16 +161,13 @@ const InvoiceDetail = () => {
                     </table>
                   </div>
                   <div className="mt-4 flex justify-end space-x-2">
-                    <Link
-                      to="#"
+                    <button
                       onClick={printInvoice}
-                      className="btn btn-success waves-effect waves-light me-1"
+                      className="bg-green-500 text-white font-bold py-2 px-4 rounded inline-flex items-center"
                     >
-                      <button className="bg-green-500 text-white font-bold py-2 px-4 rounded inline-flex items-center">
-                        <i className="fa fa-print mr-2"></i>
-                        Print
-                      </button>
-                    </Link>{" "}
+                      <i className="fa fa-print mr-2"></i>
+                      Print
+                    </button>
                   </div>
                 </div>
               </div>
