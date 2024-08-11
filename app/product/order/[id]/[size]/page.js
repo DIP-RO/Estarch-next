@@ -6,6 +6,7 @@ import cod from '../../../../../public/images/cash-on-delivery-icon.png';
 import baseUrl from '@/components/services/baseUrl';
 import { useParams, useRouter } from 'next/navigation';
 import { AuthContext } from '@/components/context/AuthProvider';
+import { FaPhoneAlt } from "react-icons/fa";
 import Link from 'next/link';
 
 export default function Checkout() {
@@ -21,10 +22,8 @@ export default function Checkout() {
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
-        altPhone: '',
-        email: '',
-        district: '',
         address: '',
+        area: '',
         orderNotes: '',
         paymentMethod: ''
     });
@@ -78,9 +77,6 @@ export default function Checkout() {
             name: formData.name,
             phone: formData.phone,
             deliveryCharge: shippingCharge,
-            altPhone: formData.altPhone,
-            email: formData.email,
-            district: formData.district,
             address: formData.address,
             area: formData.area,
             orderNotes: formData.orderNotes,
@@ -105,120 +101,69 @@ export default function Checkout() {
             // Redirect to the invoice page (adjust according to your actual routing)
             // router.push(`/product/invoice/${response.data.order._id}`);
             window.location.href = `/product/invoice/${response.data.order._id}`
-          } catch (error) {
+        } catch (error) {
             console.error('There was an error placing the order!', error);
-          }
-
-        // try {
-        //     const response = await axios.post(`${baseUrl}/api/orders`, orderData);
-        //     alert('Order placed successfully!');
-        //     console.log(response.data);
-
-        //     // Redirect using Link with href to the invoice or product confirmation page
-        //     const orderId = response.data._id;
-        //     const category = product.category || "default-category"; // Replace with actual category logic if necessary
-
-        //     // Here, we set the route dynamically after a successful order placement
-        //     const redirectUrl = `/product/invoice/${orderId}`;
-        //     router.push(redirectUrl); // Use router to push the route after order placement
-        // } catch (error) {
-        //     console.error('There was an error placing the order!', error);
-        // }
+        }
     };
 
     return (
         <div className="container mx-auto py-10 px-4">
-            <div className="flex flex-col md:flex-row">
-                <div className="flex-1 p-4 border rounded-lg bg-white shadow-lg">
+            <div className="flex flex-col md:flex-row gap-6">
+                <div className="flex-1 p-4 lg:px-16 py-8 border rounded-lg bg-white shadow-lg">
                     <h2 className="text-2xl font-bold mb-4">Checkout</h2>
-                    <form className="flex flex-col md:flex-row" onSubmit={handleSubmit}>
-                        <div className="md:w-1/2 md:pr-4">
+                    <form className="" onSubmit={handleSubmit}>
+                        <div className="">
                             <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="name">Name</label>
+                                <label className="block text-sm font-bold mb-2" htmlFor="name">Name:</label>
+                                <label className="input input-bordered flex items-center gap-2">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 16 16"
+                                        fill="currentColor"
+                                        className="h-4 w-4 opacity-70">
+                                        <path
+                                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                                    </svg>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        required className="grow" placeholder="Enter Your name" />
+                                </label>
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-bold mb-2" htmlFor="phone">Phone:</label>
+                                <label className="input input-bordered flex items-center gap-2">
+                                    <FaPhoneAlt className='opacity-75' />
+                                    <input
+                                        type="text"
+                                        id="phone"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        required className="grow" placeholder="Your Phone Number" />
+                                </label>
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-bold mb-2" htmlFor="area">Area:</label>
+                                <div className="">
+                                    <label className="inline-flex items-center">
+                                        <input className="radio checked:bg-blue-500" type="radio" name="area" value="Inside Dhaka" onChange={handleAreaChange} required />
+                                        <span className="ml-2">Inside Dhaka</span>
+                                    </label>
+                                    <br />
+                                    <label className="inline-flex items-center">
+                                        <input className="radio checked:bg-red-500" type="radio" name="area" value="Outside Dhaka" onChange={handleAreaChange} required />
+                                        <span className="ml-2">Outside Dhaka</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-bold mb-2" htmlFor="address">Address:</label>
                                 <input
-                                    className="w-full p-2 border rounded"
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="phone">Phone</label>
-                                <input
-                                    className="w-full p-2 border rounded"
-                                    type="text"
-                                    id="phone"
-                                    name="phone"
-                                    value={formData.phone}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="alt-phone">Alternative Phone Number</label>
-                                <input
-                                    className="w-full p-2 border rounded"
-                                    type="text"
-                                    id="alt-phone"
-                                    name="altPhone"
-                                    value={formData.altPhone}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="email">Email (optional)</label>
-                                <input
-                                    className="w-full p-2 border rounded"
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="area">Area</label>
-                                <select
-                                    className="w-full p-2 border rounded"
-                                    id="area"
-                                    name="area"
-                                    value={formData.area}
-                                    onChange={handleAreaChange}
-                                    required
-                                >
-                                    <option value="">Select Area</option>
-                                    <option value="Inside Dhaka">Inside Dhaka</option>
-                                    <option value="Outside Dhaka">Outside Dhaka</option>
-                                </select>
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="district">District</label>
-                                <select
-                                    className="w-full p-2 border rounded"
-                                    id="district"
-                                    name="district"
-                                    value={formData.district}
-                                    onChange={handleChange}
-                                    required
-                                >
-                                    <option value="">Select District</option>
-                                    <option value="Barisal">Barisal</option>
-                                    <option value="Chittagong">Chittagong</option>
-                                    <option value="Dhaka">Dhaka</option>
-                                    <option value="Khulna">Khulna</option>
-                                    <option value="Mymensingh">Mymensingh</option>
-                                    <option value="Rajshahi">Rajshahi</option>
-                                    <option value="Rangpur">Rangpur</option>
-                                    <option value="Sylhet">Sylhet</option>
-                                </select>
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="address">Address</label>
-                                <input
-                                    className="w-full p-2 border rounded"
+                                    className=" input input-bordered w-full "
                                     type="text"
                                     id="address"
                                     name="address"
@@ -228,64 +173,74 @@ export default function Checkout() {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="order-notes">Order notes (optional)</label>
+                                <label className="block text-sm font-bold mb-2" htmlFor="order-notes">Order notes (optional):</label>
                                 <textarea
                                     className="w-full p-2 border rounded"
                                     id="order-notes"
                                     name="orderNotes"
                                     value={formData.orderNotes}
+                                    rows={1}
                                     onChange={handleChange}
                                 ></textarea>
                             </div>
-                        </div>
-                        <div className="md:w-1/2 md:pl-4 mt-4 md:mt-0">
-                            <h2 className="text-2xl font-bold mb-4 bg-gray-200 p-2 rounded">Your order</h2>
-                            {product && (
-                                <>
-                                    <div className="mb-4">
-                                        <div className="flex justify-between mb-2">
-                                            <span>{product.productName} - 1 pcs</span>
-                                            <span>৳ {product.salePrice}</span>
-                                        </div>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span>Subtotal</span>
-                                        <span className='text-red-700'>৳ {product.salePrice.toFixed(2)}</span>
-                                    </div>
-                                    {shippingCharge !== null && ( // Display only if shippingCharge is set
-                                        <div className="flex justify-between">
-                                            <span>Shipping Charge</span>
-                                            <span>৳ {shippingCharge}</span>
-                                        </div>
-                                    )}
-                                    <div className="flex justify-between font-bold text-xl">
-                                        <span>Total</span>
-                                        <span className='text-red-700'>৳ {calculateTotal().toFixed(2)}</span>
-                                    </div>
-                                </>
-                            )}
-                            <div className="mt-4 lg:mt-20">
-                                <label className="block text-sm font-bold mb-2">Payment Method</label>
+                            <div className="mb-4">
+                                <label className="block text-sm font-bold mb-2">Payment Method:</label>
                                 <div className="mb-2">
                                     <label className="inline-flex items-center">
-                                        <input type="radio" name="paymentMethod" value="Cash on Delivery" onChange={handleChange} required />
+                                        <input className='radio checked:bg-red-500' type="radio" name="paymentMethod" value="Cash on Delivery" onChange={handleChange} required />
                                         <div className='flex items-center gap-3 ml-2'>
                                             <span>Cash on delivery</span>
-                                            <Image src={cod} alt='Cash on delivery' width={100} height={40} />
+                                            <Image src={cod} alt='Cash on delivery' width={80} height={40} />
                                         </div>
                                     </label>
                                 </div>
                             </div>
-                            <div className="flex justify-center mt-10 lg:mt-52">
+                            <div className='mb-4'>
+                                <p className='font-bold lg:text-xl border p-2'>Your Total Payable Amount: {product?.salePrice} ৳</p>
+                            </div>
+                            <div className="flex justify-center">
                                 <button
                                     type="submit"
-                                    className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition duration-200"
+                                    className="bg-orange-400 text-white px-6 py-3 rounded-lg hover:bg-orange-800 transition duration-200"
                                 >
                                     Place Order
                                 </button>
                             </div>
                         </div>
                     </form>
+                </div>
+
+                <div className="md:w-1/2 rounded-md mt-4 md:mt-0 p-4 lg:px-16 py-8 border shadow-lg">
+                    <h2 className="text-2xl font-bold mb-4 bg-gray-200 p-2 rounded text-center">Your order</h2>
+                    {product && (
+                        <>
+                            <div className="mb-4">
+                                <div className="grid grid-cols-2 items-center gap-2">
+                                    <div className='flex items-center gap-2'>
+                                        <span><img className='w-12' src={product?.images[0]} alt="" /></span>
+                                        <span>{product.productName} - 1 pcs</span>
+                                    </div>
+                                    <span className='place-self-end'>৳ {product?.salePrice}</span>
+                                </div>
+                            </div>
+                            <hr />
+                            <div className="flex justify-between mt-12">
+                                <span>Subtotal</span>
+                                <span className='text-red-700'>৳ {product.salePrice.toFixed(2)}</span>
+                            </div>
+                            <hr className='my-2' />
+                            {shippingCharge !== null && ( // Display only if shippingCharge is set
+                                <div className="flex justify-between">
+                                    <span>Shipping Charge</span>
+                                    <span>৳ {shippingCharge}</span>
+                                </div>
+                            )}
+                            <div className="flex justify-between font-bold text-xl">
+                                <span>Total</span>
+                                <span className='text-red-700'>৳ {calculateTotal().toFixed(2)}</span>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </div>
