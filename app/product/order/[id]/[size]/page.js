@@ -100,9 +100,9 @@ export default function Checkout() {
             // Redirect to the invoice page (adjust according to your actual routing)
             // router.push(`/product/invoice/${response.data.order._id}`);
             window.location.href = `/product/invoice/${response.data.order._id}`
-          } catch (error) {
+        } catch (error) {
             console.error('There was an error placing the order!', error);
-          }
+        }
     };
 
     return (
@@ -113,19 +113,27 @@ export default function Checkout() {
                     <form className="flex flex-col md:flex-row" onSubmit={handleSubmit}>
                         <div className="md:w-1/2 md:pr-4">
                             <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="name">Name</label>
-                                <input
-                                    className="w-full p-2 border rounded"
+                                <label className="block text-sm font-bold mb-2" htmlFor="name">Name:</label>
+                                <label className="input input-bordered flex items-center gap-2">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 16 16"
+                                        fill="currentColor"
+                                        className="h-4 w-4 opacity-70">
+                                        <path
+                                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                                    </svg>
+                                    <input  
                                     type="text"
                                     id="name"
                                     name="name"
                                     value={formData.name}
                                     onChange={handleChange}
-                                    required
-                                />
+                                    required className="grow" placeholder="Enter Your name" />
+                                </label>
                             </div>
                             <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="phone">Phone</label>
+                                <label className="block text-sm font-bold mb-2" htmlFor="phone">Phone:</label>
                                 <input
                                     className="w-full p-2 border rounded"
                                     type="text"
@@ -136,7 +144,7 @@ export default function Checkout() {
                                     required
                                 />
                             </div>
-                            <div className="mb-4 flex gap-2">
+                            <div className="mb-4 flex gap-2 ">
                                 <label className="block text-sm font-bold " htmlFor="area">Area:</label>
                                 <div className="flex gap-4">
                                     <label className="inline-flex items-center">
@@ -150,7 +158,7 @@ export default function Checkout() {
                                 </div>
                             </div>
                             <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="address">Address</label>
+                                <label className="block text-sm font-bold mb-2" htmlFor="address">Address:</label>
                                 <input
                                     className="w-full p-2 border rounded"
                                     type="text"
@@ -162,16 +170,38 @@ export default function Checkout() {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="order-notes">Order notes (optional)</label>
+                                <label className="block text-sm font-bold mb-2" htmlFor="order-notes">Order notes (optional):</label>
                                 <textarea
                                     className="w-full p-2 border rounded"
                                     id="order-notes"
                                     name="orderNotes"
                                     value={formData.orderNotes}
+                                    rows={1}
                                     onChange={handleChange}
                                 ></textarea>
                             </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-bold mb-2">Payment Method:</label>
+                                <div className="mb-2">
+                                    <label className="inline-flex items-center">
+                                        <input type="radio" name="paymentMethod" value="Cash on Delivery" onChange={handleChange} required />
+                                        <div className='flex items-center gap-3 ml-2'>
+                                            <span>Cash on delivery</span>
+                                            <Image src={cod} alt='Cash on delivery' width={100} height={40} />
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="flex justify-center md:justify-start">
+                                <button
+                                    type="submit"
+                                    className="bg-orange-400 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition duration-200"
+                                >
+                                    Place Order
+                                </button>
+                            </div>
                         </div>
+
                         <div className="md:w-1/2 md:pl-4 mt-4 md:mt-0">
                             <h2 className="text-2xl font-bold mb-4 bg-gray-200 p-2 rounded">Your order</h2>
                             {product && (
@@ -198,26 +228,6 @@ export default function Checkout() {
                                     </div>
                                 </>
                             )}
-                            <div className="mt-4 lg:mt-20">
-                                <label className="block text-sm font-bold mb-2">Payment Method</label>
-                                <div className="mb-2">
-                                    <label className="inline-flex items-center">
-                                        <input type="radio" name="paymentMethod" value="Cash on Delivery" onChange={handleChange} required />
-                                        <div className='flex items-center gap-3 ml-2'>
-                                            <span>Cash on delivery</span>
-                                            <Image src={cod} alt='Cash on delivery' width={100} height={40} />
-                                        </div>
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="flex justify-center mt-10 lg:mt-52">
-                                <button
-                                    type="submit"
-                                    className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition duration-200"
-                                >
-                                    Place Order
-                                </button>
-                            </div>
                         </div>
                     </form>
                 </div>

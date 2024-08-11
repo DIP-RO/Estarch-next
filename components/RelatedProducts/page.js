@@ -22,7 +22,7 @@ export default function RelatedProductsSinglePage() {
   return (
     <div>
       <div className="slider-container mx-0 lg:mx-20">
-        <h1 className='text-center mb-4 mt-8 font-bold md:text-2xl text-xl uppercase'>OUR Related PRODUCTS</h1>
+        <h1 className='text-center mb-4 mt-8 font-bold md:text-2xl text-xl uppercase'>You May Also Like</h1>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {products.map(product => (

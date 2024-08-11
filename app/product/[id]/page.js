@@ -211,7 +211,7 @@ const ProductDetails = () => {
         </div>
       </div>
       <div className="lg:flex  lg:items-center lg:justify-center  mt-10">
-        <h1 className="text center">Frequently Bought Together</h1>
+        <h1 className="text center">Related Products</h1>
       </div>
       <div className="lg:mx-20">
       <ProductCard />
