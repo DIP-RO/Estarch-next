@@ -15,6 +15,7 @@ import { openCardSlide } from "@/lib/slices/cardSlideSlice";
 import SizeChart from "@/components/sizes/page";
 import ProductCard from "@/components/productLike/page";
 import RelatedProductsSinglePage from "@/components/RelatedProducts/page";
+import ProductModal from "@/components/ProductModal/page";
 
 
 const ProductDetails = () => {
@@ -24,7 +25,6 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [mainImage, setMainImage] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
-
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -158,30 +158,30 @@ const ProductDetails = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-2 mt-5 mb-4">
-  <div onClick={handleAddToCart} className="flex-1 sm:flex-initial">
-    <button
-      className="w-full sm:w-auto bg-blue-500 text-white px-4 py-2"
-      onClick={() => { dispatch(openCardSlide()) }}
-    >
-      Add to cart
-    </button>
-  </div>
+              <div onClick={handleAddToCart} className="flex-1 sm:flex-initial">
+                <button
+                  className="w-full sm:w-auto bg-blue-500 text-white px-4 py-2"
+                  onClick={() => { dispatch(openCardSlide()) }}
+                >
+                  Add to cart
+                </button>
+              </div>
 
-  <Link href={`/product/order/${id}/${selectedSize}`} className="flex-1 sm:flex-initial">
-    <button className="w-full sm:w-auto bg-black text-white px-4 py-2">
-      Order now
-    </button>
-  </Link>
+              <Link href={`/product/order/${id}/${selectedSize}`} className="flex-1 sm:flex-initial">
+                <button className="w-full sm:w-auto bg-black text-white px-4 py-2">
+                  Order now
+                </button>
+              </Link>
 
-  <div className="flex-1 sm:flex-initial">
-    <button
-      className="w-full sm:w-auto flex justify-center items-center text-white px-4 py-2"
-      style={{ backgroundColor: 'rgb(30, 170, 72)' }}
-    >
-      <span className="mr-2"><FaWhatsapp size={25} /></span> Whatsapp
-    </button>
-  </div>
-</div>
+              <div className="flex-1 sm:flex-initial">
+                <button
+                  className="w-full sm:w-auto flex justify-center items-center text-white px-4 py-2"
+                  style={{ backgroundColor: 'rgb(30, 170, 72)' }}
+                >
+                  <span className="mr-2"><FaWhatsapp size={25} /></span> Whatsapp
+                </button>
+              </div>
+            </div>
 
             <div className="divider"></div>
             <p className="font-light text-xs">
@@ -214,9 +214,8 @@ const ProductDetails = () => {
         <h1 className="text center">Frequently Bought Together</h1>
       </div>
       <div className="lg:mx-20">
-      <ProductCard />
+        <ProductCard />
       </div>
-
       <RelatedProductsSinglePage />
     </div>
   );
