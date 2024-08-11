@@ -1,19 +1,21 @@
 'use client'
-import { IoMdClose } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
 import { HiOutlineMinus } from "react-icons/hi";
 import { BsPlusLg } from "react-icons/bs";
 import { SlHandbag } from "react-icons/sl";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCardSlide } from "@/lib/slices/cardSlideSlice";
 import { decreaseQuantity, increaseQuantity, removeItem } from "@/lib/slices/cartSlice"; // import the necessary actions
+import { HiOutlineShoppingBag } from "react-icons/hi2";
 
 import Image from "next/image";
 import Link from "next/link";
+import { RxCross2 } from "react-icons/rx";
+import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
 const SlideCard = () => {
     const isOpen = useSelector((state) => state.cardSlide.isOpen);
     const cartItems = useSelector((state) => state.cart.items);
-    console.log(cartItems);
     const dispatch = useDispatch();
 
     const handleSlideCard = () => {
@@ -38,78 +40,68 @@ const SlideCard = () => {
     };
 
     return (
-        <div className={`w-[80%] md:w-[30%] bg-base-100 shadow-2xl h-full z-[999] p-6 fixed top-0 ${isOpen ? "right-0 transition-all duration-500" : "hidden right-[-620px] transition-all duration-500"}`}>
-            <p onClick={handleSlideCard} className="absolute right-5 text-2xl cursor-pointer">
-                <IoMdClose />
+        <div className={`w-[100%] md:w-[30%] bg-base-100 shadow-2xl h-full z-[999] p-6 fixed top-0 transition-all duration-500 ${isOpen ? "right-0" : "right-[-620px] hidden"}`}>
+            <p onClick={handleSlideCard} className="absolute right-5 text-xl cursor-pointer border px-3 rounded-md py-1">
+                Close
             </p>
-            {
-                cartItems.length > 0 ? (
-                    <div>
-                        <h1 className="font-bold text-3xl mb-6">Shopping bag({cartItems.length})</h1>
-                        <div className="h-[70%] overflow-y-auto">
-                            {cartItems.map((item) => (
-                                <div key={item.id} className="grid grid-cols-5  md:grid-cols-4 gap-6 relative py-5">
-                                    <div>
-                                        {item.product.colors[0].images[0].url && (
-                                            <Image width={120} height={120} src={item.product.colors[0].images[0].url} alt={item.product.title} />
-                                        )}
-                                    </div>
-                                    <div className="col-span-2">
-                                        <h1 className="text-xl font-semibold">{item.product.title}</h1>
-                                        {/* {item.color && (
-                                            <p>Colour: {item.color}</p>
-                                        )} */}
-                                        {item.size && (
-                                            <p>Size (UK): {item.size}</p>
-                                        )}
-                                        {/* <p>{item.product.stock.quantity} in stock</p> */}
-                                        <div className="flex border w-20 my-5 py-2 px-2 rounded-md">
-                                            <button className="flex-1" onClick={() => handleDecrease(item.id)}>
-                                                <HiOutlineMinus />
-                                            </button>
-                                            <input
-                                                type="text"
-                                                value={item.quantity}
-                                                className="text-center w-full"
-                                                readOnly
-                                            />
-                                            <button className="flex-1" onClick={() => handleIncrease(item.id)}>
-                                                <BsPlusLg />
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h1>{item.product.price} tk</h1>
-                                        <p className="cursor-pointer" onClick={() => handleRemoveItem(item.id)}>Remove</p>
-                                    </div>
+            {cartItems.length > 0 ? (
+                <div className="relative h-full flex flex-col justify-between">
+                    <div className="h-[70%] overflow-y-auto">
+                        <h1 className="font-bold text-2xl mb-6 flex gap-1"><HiOutlineShoppingBag size={30} />
+                            {cartItems.length} items</h1>
+                        {cartItems.map((item) => (
+                            <div key={`${item.id}-${item.size}`} className="flex relative gap-4 py-5">
+                                <div className="flex flex-col justify-center items-center text-lg">
+                                <MdArrowDropUp onClick={() => handleIncrease(item.id)} />
+                                <span>{item.quantity}</span>
+                                <MdArrowDropDown onClick={() => handleDecrease(item.id)}/>
                                 </div>
-                            ))}
-                        </div>
-                        <div className="grid gap-4 ">
-                            <div className="flex justify-between items-center">
-                                <h1 className="font-bold text-xl">Subtotal:</h1>
-                                <h1 className="font-bold text-xl">{calculateSubtotal()} tk</h1>
+                                <div>
+                                    {item.product.colors[0].images[0].url && (
+                                        <Image width={80} height={80} src={item.product.colors[0].images[0].url} alt={item.product.title} />
+                                    )}
+                                </div>
+                                <div className="col-span-2 ml-1">
+                                    <h1 className="text-base font-normal ">{item.product.title}</h1>
+                                    {item.size && (
+                                        <p className="text-sm">Size (UK): {item.size}</p>
+                                    )}
+                                    <h1>{item.product.price} tk</h1>
+                                </div>
+                                <div className="flex justify-center items-center ">
+                                    <h1 className="text-sm cursor-pointer text-red-600" onClick={() => handleRemoveItem(item.id)}><RxCross2 size={20} />
+                                    </h1>
+                                </div>
                             </div>
-                            <p>
-                                Tax included{" "}
-                                <span className="text-[#5b9bbe]">
-                                    <a href="">Shipping</a>
-                                </span>{" "}
-                                calculated at checkout.
-                            </p>
-                            <Link href="/product/order">
-                                <button onClick={handleSlideCard} className="btn bg-black text-white w-full hover:bg-black">CHECK OUT</button>
-                            </Link>
+                        ))}
+                    </div>
+
+                    <div className="absolute bottom-0 left-0 w-full p-4 bg-white">
+                        <div className="flex justify-between items-center mb-4">
+                            <h1 className="font-bold text-xl">Subtotal:</h1>
+                            <h1 className="font-bold text-xl">{calculateSubtotal()} tk</h1>
                         </div>
+                        <p>
+                            Tax included{" "}
+                            <span className="text-[#5b9bbe]">
+                                <a href="">Shipping</a>
+                            </span>{" "}
+                            calculated at checkout.
+                        </p>
+                        <Link href="/product/order">
+                            <button onClick={handleSlideCard} className="btn bg-black text-white w-full hover:bg-black">CHECK OUT</button>
+                        </Link>
                     </div>
-                ) : (
-                    <div className="flex flex-col justify-center items-center mt-32 space-y-3 text-xl font-semibold">
-                        <SlHandbag className="text-3xl font-bold " />
-                        <h1>YOUR BAG IS EMPTY</h1>
-                       <Link href='/'> <button className="bg-slate-800 text-xs text-white p-3 rounded-md">START SHOPPING</button></Link>
-                    </div>
-                )
-            }
+                </div>
+            ) : (
+                <div className="flex flex-col justify-center items-center mt-32 space-y-3 text-xl font-semibold">
+                    <SlHandbag className="text-3xl font-bold" />
+                    <h1>YOUR BAG IS EMPTY</h1>
+                    <Link href='/'>
+                        <button className="bg-slate-800 text-xs text-white p-3 rounded-md">START SHOPPING</button>
+                    </Link>
+                </div>
+            )}
         </div>
     );
 };

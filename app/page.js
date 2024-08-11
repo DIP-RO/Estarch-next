@@ -8,8 +8,8 @@ import NewArrival from "@/components/newArrival/NewArrival";
 import FeatureProduct from "@/components/FeatureProducts/FeatureProduct";
 import { useDispatch } from "react-redux";
 import { setInitialState } from "@/lib/slices/cartSlice";
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
+import VideoGallery from "@/components/VideoGallery/page";
 
 
 export default function Home() {
@@ -28,6 +28,7 @@ export default function Home() {
       <div className="hidden md:grid"><ServiceMoto /></div>
       <div className="mx-6 md:mx-0"><SellingCategory /></div>
       <NewArrival />
+      <VideoGallery/>
       <FeatureProduct />
       <Subscription />
     </main>
