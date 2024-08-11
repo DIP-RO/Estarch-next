@@ -15,7 +15,6 @@ import { openCardSlide } from "@/lib/slices/cardSlideSlice";
 import SizeChart from "@/components/sizes/page";
 import ProductCard from "@/components/productLike/page";
 import RelatedProductsSinglePage from "@/components/RelatedProducts/page";
-import ProductModal from "@/components/ProductModal/page";
 
 
 const ProductDetails = () => {

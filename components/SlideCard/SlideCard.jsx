@@ -41,7 +41,7 @@ const SlideCard = () => {
 
     return (
         <div className={`w-[100%] md:w-[30%] bg-base-100 shadow-2xl h-full z-[999] p-6 fixed top-0 transition-all duration-500 ${isOpen ? "right-0" : "right-[-620px] hidden"}`}>
-            <p onClick={handleSlideCard} className="absolute right-5 text-xl cursor-pointer border px-3 rounded-md py-1">
+            <p onClick={handleSlideCard} className="absolute right-5 text-xl cursor-pointer border px-3 rounded-md py-1 z-[100]">
                 Close
             </p>
             {cartItems.length > 0 ? (
