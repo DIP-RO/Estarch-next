@@ -5,12 +5,6 @@ import { Navigation, FreeMode, Autoplay } from 'swiper/modules';
 import Image from 'next/image';
 
 import './styles.css';
-import shirt from '../../public/images/c_shirt.jpeg';
-import t_shirt from '../../public/images/c_t-shirt.jpeg';
-import panjabi from '../../public/images/c_panjabi.jpeg';
-import pajama from '../../public/images/c_pajama.jpeg';
-import polo from '../../public/images/c_polo.jpeg';
-import boxer from '../../public/images/c_boxer.jpeg';
 import axios from 'axios';
 import Link from 'next/link';
 import baseUrl from '../services/baseUrl';
@@ -25,10 +19,9 @@ const SellingCategory = () => {
                 setCategories(res.data);
             });
     }, []);
-
     return (
         <div className='mx-0 md:mx-12 lg:mx-20'>
-            <h1 className='text-center mt-8 font-bold md:text-2xl text-xl pb-5'>BROWSE OUR CATEGORY</h1>
+            <h1 className='text-center mt-4 md:mt-8 lg:mt-8 font-bold md:text-2xl text-xl pb-5'>BROWSE OUR CATEGORY</h1>
             <Swiper
                 slidesPerView={4}
                 navigation={true}
