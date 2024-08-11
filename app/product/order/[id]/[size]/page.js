@@ -12,6 +12,7 @@ export default function Checkout() {
     const [product, setProduct] = useState(null);
     const { id } = useParams();
     const { size } = useParams();
+    const router = useRouter();
 
     const { authUser } = useContext(AuthContext);
     const userId = authUser ? authUser?._id : null;
@@ -101,17 +102,28 @@ export default function Checkout() {
             const response = await axios.post(`${baseUrl}/api/orders`, orderData);
             alert('Order placed successfully!');
             console.log(response.data);
-
-            // Redirect using Link with href to the invoice or product confirmation page
-            const orderId = response.data._id;
-            const category = product.category || "default-category"; // Replace with actual category logic if necessary
-
-            // Here, we set the route dynamically after a successful order placement
-            const redirectUrl = `/product/invoice/${orderId}`;
-            router.push(redirectUrl); // Use router to push the route after order placement
-        } catch (error) {
+            // Redirect to the invoice page (adjust according to your actual routing)
+            // router.push(`/product/invoice/${response.data.order._id}`);
+            window.location.href = `/product/invoice/${response.data.order._id}`
+          } catch (error) {
             console.error('There was an error placing the order!', error);
-        }
+          }
+
+        // try {
+        //     const response = await axios.post(`${baseUrl}/api/orders`, orderData);
+        //     alert('Order placed successfully!');
+        //     console.log(response.data);
+
+        //     // Redirect using Link with href to the invoice or product confirmation page
+        //     const orderId = response.data._id;
+        //     const category = product.category || "default-category"; // Replace with actual category logic if necessary
+
+        //     // Here, we set the route dynamically after a successful order placement
+        //     const redirectUrl = `/product/invoice/${orderId}`;
+        //     router.push(redirectUrl); // Use router to push the route after order placement
+        // } catch (error) {
+        //     console.error('There was an error placing the order!', error);
+        // }
     };
 
     return (
@@ -121,8 +133,110 @@ export default function Checkout() {
                     <h2 className="text-2xl font-bold mb-4">Checkout</h2>
                     <form className="flex flex-col md:flex-row" onSubmit={handleSubmit}>
                         <div className="md:w-1/2 md:pr-4">
-                            {/* Form fields */}
-                            {/* ... */}
+                            <div className="mb-4">
+                                <label className="block text-sm font-bold mb-2" htmlFor="name">Name</label>
+                                <input
+                                    className="w-full p-2 border rounded"
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-bold mb-2" htmlFor="phone">Phone</label>
+                                <input
+                                    className="w-full p-2 border rounded"
+                                    type="text"
+                                    id="phone"
+                                    name="phone"
+                                    value={formData.phone}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-bold mb-2" htmlFor="alt-phone">Alternative Phone Number</label>
+                                <input
+                                    className="w-full p-2 border rounded"
+                                    type="text"
+                                    id="alt-phone"
+                                    name="altPhone"
+                                    value={formData.altPhone}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-bold mb-2" htmlFor="email">Email (optional)</label>
+                                <input
+                                    className="w-full p-2 border rounded"
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-bold mb-2" htmlFor="area">Area</label>
+                                <select
+                                    className="w-full p-2 border rounded"
+                                    id="area"
+                                    name="area"
+                                    value={formData.area}
+                                    onChange={handleAreaChange}
+                                    required
+                                >
+                                    <option value="">Select Area</option>
+                                    <option value="Inside Dhaka">Inside Dhaka</option>
+                                    <option value="Outside Dhaka">Outside Dhaka</option>
+                                </select>
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-bold mb-2" htmlFor="district">District</label>
+                                <select
+                                    className="w-full p-2 border rounded"
+                                    id="district"
+                                    name="district"
+                                    value={formData.district}
+                                    onChange={handleChange}
+                                    required
+                                >
+                                    <option value="">Select District</option>
+                                    <option value="Barisal">Barisal</option>
+                                    <option value="Chittagong">Chittagong</option>
+                                    <option value="Dhaka">Dhaka</option>
+                                    <option value="Khulna">Khulna</option>
+                                    <option value="Mymensingh">Mymensingh</option>
+                                    <option value="Rajshahi">Rajshahi</option>
+                                    <option value="Rangpur">Rangpur</option>
+                                    <option value="Sylhet">Sylhet</option>
+                                </select>
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-bold mb-2" htmlFor="address">Address</label>
+                                <input
+                                    className="w-full p-2 border rounded"
+                                    type="text"
+                                    id="address"
+                                    name="address"
+                                    value={formData.address}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-bold mb-2" htmlFor="order-notes">Order notes (optional)</label>
+                                <textarea
+                                    className="w-full p-2 border rounded"
+                                    id="order-notes"
+                                    name="orderNotes"
+                                    value={formData.orderNotes}
+                                    onChange={handleChange}
+                                ></textarea>
+                            </div>
                         </div>
                         <div className="md:w-1/2 md:pl-4 mt-4 md:mt-0">
                             <h2 className="text-2xl font-bold mb-4 bg-gray-200 p-2 rounded">Your order</h2>

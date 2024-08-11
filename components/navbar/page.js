@@ -15,11 +15,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openSlide } from '@/lib/slices/sliderSlice';
 import { openCardSlide } from '@/lib/slices/cardSlideSlice';
 import { AuthContext } from '../context/AuthProvider';
+import baseUrl from '../services/baseUrl';
+import axios from 'axios';
 
 export default function NavBar() {
   const totalQuantity = useSelector(state => state.cart.totalQuantity);
   const dispatch = useDispatch();
   const { authUser } = useContext(AuthContext)
+  const [types, setTypes] = useState([])
+
+  useEffect(() => {
+    axios.get(`${baseUrl}/api/types`)
+      .then(res => {
+        setTypes(res.data)
+      })
+
+  }, [])
+
+  // console.log(categories);
 
   return (
     <div className="">
@@ -114,19 +127,31 @@ export default function NavBar() {
             </div>
           </div>}
       </div>
-      <div className='hidden lg:block md:block'>
+      <div className='hidden md:grid'>
         <div className="flex bg-base-100 justify-between px-10 mt-10">
           <div className="flex w-fit items-center justify-center">
-            <CiSearch className="text-2xl" />
-            {/* <input type="text" className='w-full max-w-xs h-8' placeholder="search product" /> */}
+            <label className="input input-bordered flex items-center gap-2">
+              <input type="text" className="grow" placeholder="Search" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                className="h-4 w-4 opacity-70">
+                <path
+                  fillRule="evenodd"
+                  d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                  clipRule="evenodd" />
+              </svg>
+            </label>
           </div>
           <div className="flex gap-4  items-center">
 
             <Link href='/'><button >HOME</button></Link>
-            <Link href='/men'><button>MEN</button></Link>
-            <Link href='/women'> <button >WOMEN</button></Link>
-            <Link href='/kids'> <button >KIDS</button></Link>
-            <Link href='/shoes'><button >SHOES</button></Link>
+            {
+              types.map(t =>
+                <Link className='text uppercase' href={`/${t.name}`}>{t.name}</Link>
+              )
+            }
           </div>
           <div className="relative w-[40px] cursor-pointer" onClick={() => dispatch(openCardSlide())}>
             <HiOutlineShoppingBag className="relative text-2xl" />

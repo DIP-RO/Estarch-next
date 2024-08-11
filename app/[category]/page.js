@@ -41,13 +41,13 @@ export default function Man() {
 
             <div className="grid lg:grid-cols-3 sm:grid-cols-1 justify-center items-center px-5 py-5 gap-5">
                 {
-                    categories.map(cat => <div key={cat._id} className="relative  w-[470px] h-96">
+                    categories.map(cat => <div key={cat._id} className="relative">
                         <Link href={`/${category}/${cat._id}`}>
-                            <Image
+                            <img
                                 src={cat.image}
                                 alt={cat.name}
-                                layout="fill"
-                                objectFit="cover"
+                                // layout="fill"
+                                // objectFit="cover"
                                 className="rounded-lg"
                             />
                             <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-center items-center text-white">

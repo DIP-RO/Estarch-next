@@ -233,27 +233,24 @@ export default function Checkout() {
               </div>
               <div className="mt-4 lg:mt-20">
                 <label className="block text-sm font-bold mb-2">Payment Method</label>
-                <div className="flex items-center space-x-4">
-                  <div className="flex items-center">
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      value="Cash on Delivery"
-                      checked={formData.paymentMethod === "Cash on Delivery"}
-                      onChange={handleChange}
-                      required
-                    />
-                    <span className="ml-2">Cash on Delivery</span>
-                  </div>
-                  <Image src={cod} width={35} height={35} alt="Cash on Delivery" />
+                <div className="mb-2">
+                  <label className="inline-flex items-center">
+                    <input type="radio" name="paymentMethod" value="Cash on Delivery" onChange={handleChange} required />
+                    <div className='flex items-center gap-3 ml-2'>
+                      <span>Cash on delivery</span>
+                      <Image src={cod} alt='Cash on delivery' width={100} height={40} />
+                    </div>
+                  </label>
                 </div>
               </div>
-              <button
-                type="submit"
-                className="w-full mt-6 py-3 bg-red-700 text-white text-lg font-bold rounded"
-              >
-                Place Order
-              </button>
+              <div className="flex justify-center mt-10 lg:mt-52">
+                <button
+                  type="submit"
+                  className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition duration-200"
+                >
+                  Place Order
+                </button>
+              </div>
             </div>
           </form>
         </div>
