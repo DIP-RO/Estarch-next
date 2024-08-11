@@ -14,7 +14,7 @@ import img3 from "../../public/images/banner3.jpeg";
 import Image from 'next/image';
 export default function HeaderBanner() {
   return (
-    <div className="max-h-[600px] mt-10">
+    <div className="max-h-[600px] mt-4 lg:mt-8 md:mt-8">
       <div className="relative">
         <Swiper
           pagination={{

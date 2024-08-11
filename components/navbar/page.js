@@ -5,8 +5,9 @@ import { BiMessageAltDots } from "react-icons/bi";
 import { FaCaretDown, FaGooglePlay } from "react-icons/fa";
 import { FaApple } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
+import { FaSearch } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
-import { CiSearch } from "react-icons/ci";
+import { IoIosArrowDown } from "react-icons/io";
 import logo from '../../public/images/LOGO 1.png';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,6 +18,7 @@ import { openCardSlide } from '@/lib/slices/cardSlideSlice';
 import { AuthContext } from '../context/AuthProvider';
 import baseUrl from '../services/baseUrl';
 import axios from 'axios';
+import { CiSearch } from 'react-icons/ci';
 
 export default function NavBar() {
   const totalQuantity = useSelector(state => state.cart.totalQuantity);
@@ -36,7 +38,7 @@ export default function NavBar() {
 
   return (
     <div className="">
-      <div className="px-10 navbar bg-base-100 border-b">
+      <div className="md:px-10 lg:px-10 navbar bg-base-100 border-b sticky top-0 z-10">
         <div className="navbar-start">
           <div className='hidden lg:block md:block'>
             <div className='gap-4 flex'>
@@ -81,9 +83,10 @@ export default function NavBar() {
               </div>
             </div>
           </div>
-          <div className='flex gap-2 ml-10 lg:hidden md:hidden'>
+          <div className='flex  gap-3 ml-10 lg:hidden md:hidden'>
             {/* <CiSearch className="text-[30px]" /> */}
-            <div className="relative w-[40px]" onClick={() => dispatch(openCardSlide())}>
+            <CiSearch size={25} />
+            <div className="relative " onClick={() => dispatch(openCardSlide())}>
               <HiOutlineShoppingBag className="relative text-2xl" />
               {totalQuantity > 0 && (
                 <span className="bg-red-600 text-white rounded-full absolute -top-1 -right-1 w-4 h-4 text-xs flex items-center justify-center">
@@ -91,10 +94,10 @@ export default function NavBar() {
                 </span>
               )}
             </div>
-            <div className="group relative w-[40px] cursor-pointer bg-white hover:bg-white">
-              <CgProfile size={25} />
-              <div className="absolute z-10 bg-white right-1 hidden w-52 rounded-md h-28 p-2 text-black group-hover:block">
-                <ul className="bg-white w-52 p-5">
+            <div className="group relative  cursor-pointer bg-white hover:bg-white">
+              <IoIosArrowDown size={25}/>
+              <div className="absolute z-10 bg-white right-[-30px] lg:right-1 md:right-1  hidden w-52 rounded-md h-28 p-2 text-black group-hover:block">
+                <ul className="bg-white w-44 lg:w-52 md:w-52 p-5">
                   <li className="text-base hover:bg-base-100"><Link href="/login">Login</Link></li>
                   <div className="divider h-1"></div>
                   <li className="text-base hover:bg-base-100"><Link href='/register'>Register</Link></li>
@@ -127,11 +130,11 @@ export default function NavBar() {
             </div>
           </div>}
       </div>
-      <div className='hidden md:grid'>
-        <div className="flex bg-base-100 justify-between px-10 mt-10">
-          <div className="flex w-fit items-center justify-center">
+      <div className=''>
+        <div className="grid md:grid-cols-3 lg:grid-cols-3 grid-cols-1 bg-base-100  px-10 mt-4">
+          <div className="lg:flex md:flex w-fit items-center justify-center hidden">
             <label className="input input-bordered flex items-center gap-2">
-              <input type="text" className="grow" placeholder="Search" />
+              <input type="text" className="grow border-0" placeholder="Search" />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
@@ -144,22 +147,24 @@ export default function NavBar() {
               </svg>
             </label>
           </div>
-          <div className="flex gap-4  items-center">
+          <div className="flex gap-4 justify-center  items-center">
 
             <Link href='/'><button >HOME</button></Link>
             {
               types.map(t =>
-                <Link className='text uppercase' href={`/${t.name}`}>{t.name}</Link>
+                <Link key={t._id} className='text uppercase' href={`/${t.name}`}>{t.name}</Link>
               )
             }
           </div>
-          <div className="relative w-[40px] cursor-pointer" onClick={() => dispatch(openCardSlide())}>
-            <HiOutlineShoppingBag className="relative text-2xl" />
-            {totalQuantity > 0 && (
-              <span className="bg-red-600 text-white rounded-full absolute -top-1 -right-1 w-4 h-4 text-xs flex items-center justify-center">
-                {totalQuantity}
-              </span>
-            )}
+          <div className='lg:flex md:flex justify-end items-center hidden'>
+            <div className="relative w-[40px] cursor-pointer" onClick={() => dispatch(openCardSlide())}>
+              <HiOutlineShoppingBag className="relative text-2xl" />
+              {totalQuantity > 0 && (
+                <span className="bg-red-600 text-white rounded-full absolute -top-1 -right-1 w-4 h-4 text-xs flex items-center justify-center">
+                  {totalQuantity}
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </div>
