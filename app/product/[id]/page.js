@@ -10,8 +10,11 @@ import { openSize } from "@/lib/slices/sizeSlice";
 import { FaWhatsapp } from "react-icons/fa";
 import { PiCoatHanger } from 'react-icons/pi';
 import baseUrl from "@/components/services/baseUrl";
-import RelatedProducts from "@/components/relatedproduct/page";
+
 import { openCardSlide } from "@/lib/slices/cardSlideSlice";
+import SizeChart from "@/components/sizes/page";
+import ProductCard from "@/components/productLike/page";
+import RelatedProductsSinglePage from "@/components/RelatedProducts/page";
 
 
 const ProductDetails = () => {
@@ -27,7 +30,7 @@ const ProductDetails = () => {
       try {
         const response = await axios.get(`${baseUrl}/api/products/products/product/${id}`);
         console.log(response.data);
-        
+
         setProduct(response.data);
         setMainImage(response.data.images[0]);
         if (response.data.selectedSizes.length > 0) {
@@ -105,10 +108,15 @@ const ProductDetails = () => {
                 />
               ))}
             </div>
+
           </div>
           <div className="w-full md:w-1/2 p-4">
-            <h1 className="text-2xl font-bold mb-2">{product.productName}</h1>
-            <p className="text-sm text-gray-600 mb-2">SKU: {product.sku}</p>
+            <h1 className="text-2xl font-bold">{product.productName}</h1>
+            <p className="text-sm text-gray-600 ">SKU: {product.sku}</p>
+            <p className="text-red-600 text-xl ">
+              <span className="line-through text-gray-500 mr-2">৳ {product.regularPrice}</span>
+              ৳ {product.salePrice}
+            </p>
             <div className="flex gap-1 items-center">
               <p className="text-lg">Jeans Size</p>
               <div className='w-48 h-[40px] rounded-md flex justify-between '>
@@ -117,54 +125,72 @@ const ProductDetails = () => {
                 </p>
               </div>
             </div>
+
             <div className="flex mb-4">
               {product.selectedSizes && product.selectedSizes.map(size => (
                 <button
                   key={size}
-                  className={`border px-4 py-2 mr-2 ${selectedSize === size ? 'bg-gray-300' : ''}`}
+                  className={`border px-4  mr-2 ${selectedSize === size ? 'bg-gray-300' : ''}`}
                   onClick={() => handleSizeClick(size)}
                 >
                   {size}
                 </button>
               ))}
             </div>
-            <p className="text-red-600 text-xl mb-4">
-              <span className="line-through text-gray-500 mr-2">৳ {product.regularPrice}</span>
-              ৳ {product.salePrice}
-            </p>
-            <p className="text-lg mb-2">Quantity:</p>
-            <div className="flex items-center mb-6">
-              <button
-                className="border px-4 py-2"
-                onClick={decrementQuantity}
-              >
-                -
-              </button>
-              <p className="mx-4">{quantity}</p>
-              <button
-                className="border px-4 py-2"
-                onClick={incrementQuantity}
-              >
-                +
-              </button>
-            </div>
 
-            <div className="flex mt-5 mb-4">
-              <div onClick={handleAddToCart}>
-                <button className="bg-green-500 text-white px-4 py-2 mr-2" onClick={()=>{dispatch(openCardSlide())}}>
-                  Add to cart
+            <div className="flex flex-row gap-2  items-center">
+              <p className="text-lg mb-2">Quantity:</p>
+              <div className="flex items-center ">
+                <button
+                  className="border px-4 py-1"
+                  onClick={decrementQuantity}
+                >
+                  -
+                </button>
+                <p className="mx-4">{quantity}</p>
+                <button
+                  className="border px-4 py-1"
+                  onClick={incrementQuantity}
+                >
+                  +
                 </button>
               </div>
-              <Link href={`/product/order/${id}/${selectedSize}`}>
-                <button className="bg-black text-white px-4 py-2 mr-2">
-                  Order now
-                </button>
-              </Link>
             </div>
-            <div className="flex items-center justify-start ml-5">
-              <button className="flex w-48 text-white px-4 py-2" style={{ backgroundColor: 'rgb(30, 170, 72)' }}>
-                <span><FaWhatsapp size={25} /></span> Whatsapp Order
-              </button>
+
+            <div className="flex flex-col sm:flex-row gap-2 mt-5 mb-4">
+  <div onClick={handleAddToCart} className="flex-1 sm:flex-initial">
+    <button
+      className="w-full sm:w-auto bg-blue-500 text-white px-4 py-2"
+      onClick={() => { dispatch(openCardSlide()) }}
+    >
+      Add to cart
+    </button>
+  </div>
+
+  <Link href={`/product/order/${id}/${selectedSize}`} className="flex-1 sm:flex-initial">
+    <button className="w-full sm:w-auto bg-black text-white px-4 py-2">
+      Order now
+    </button>
+  </Link>
+
+  <div className="flex-1 sm:flex-initial">
+    <button
+      className="w-full sm:w-auto flex justify-center items-center text-white px-4 py-2"
+      style={{ backgroundColor: 'rgb(30, 170, 72)' }}
+    >
+      <span className="mr-2"><FaWhatsapp size={25} /></span> Whatsapp
+    </button>
+  </div>
+</div>
+
+            <div className="divider"></div>
+            <p className="font-light text-xs">
+              Fabrilife Men's Premium Quality t-shirt offers a much smoother, silky feel and more structured, mid-weight fit than regular t-shirts. The t-shirts are made with the finest quality Combed Compact Cotton, which features astonishing ~175 GSM on just 26's cotton, giving a smooth and compact construction.
+              The compact finish guarantees that the t-shirt length and width will not change over wash or months of usage.
+            </p>
+            <div className="divider"></div>
+            <div>
+              <SizeChart />
             </div>
           </div>
         </div>
@@ -184,7 +210,14 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-      <RelatedProducts />
+      <div className="lg:flex  lg:items-center lg:justify-center  mt-10">
+        <h1 className="text center">Frequently Bought Together</h1>
+      </div>
+      <div className="lg:mx-20">
+      <ProductCard />
+      </div>
+
+      <RelatedProductsSinglePage />
     </div>
   );
 };
