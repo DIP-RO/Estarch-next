@@ -12,19 +12,6 @@ const UserInfo = () => {
   const [isEditing, setIsEditing] = useState(false); // State to track if the field is editable
   const { authUser } = useContext(AuthContext);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/api/user-info/${user.mobile}`);
-        setUser(response.data.user);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    fetchUserData();
-  }, [user.mobile]);
-
   const handleChangePassword = async (e) => {
     e.preventDefault();
     try {

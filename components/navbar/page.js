@@ -95,7 +95,7 @@ export default function NavBar() {
               )}
             </div>
             <div className="group relative  cursor-pointer bg-white hover:bg-white">
-              <IoIosArrowDown size={25}/>
+              <IoIosArrowDown size={25} />
               <div className="absolute z-10 bg-white right-[-30px] lg:right-1 md:right-1  hidden w-52 rounded-md h-28 p-2 text-black group-hover:block">
                 <ul className="bg-white w-44 lg:w-52 md:w-52 p-5">
                   <li className="text-base hover:bg-base-100"><Link href="/login">Login</Link></li>
@@ -157,6 +157,7 @@ export default function NavBar() {
             }
           </div>
           <div className='lg:flex md:flex justify-end items-center hidden'>
+            <CiSearch size={25} />
             <div className="relative w-[40px] cursor-pointer" onClick={() => dispatch(openCardSlide())}>
               <HiOutlineShoppingBag className="relative text-2xl" />
               {totalQuantity > 0 && (
