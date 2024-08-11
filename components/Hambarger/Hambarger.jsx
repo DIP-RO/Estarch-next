@@ -9,6 +9,7 @@ import Link from 'next/link';
 // import { useRouter } from 'next/router'; 
 import cupon from '../../public/images/banner2.jpeg';
 import { closeSlide } from '@/lib/slices/sliderSlice';
+import baseUrl from '../services/baseUrl';
 
 function Hambarger() {
     const [categories, setCategories] = useState({});
@@ -20,7 +21,7 @@ function Hambarger() {
         // Fetch categories with subcategories from the API
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/categories/categories');
+                const response = await axios.get(`${baseUrl}/api/categories/categories`);
                 const groupedCategories = response.data.reduce((acc, category) => {
                     const typeName = category.type.name;
 
