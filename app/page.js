@@ -15,21 +15,21 @@ import { useEffect } from "react";
 export default function Home() {
   const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-            const totalQuantity = JSON.parse(localStorage.getItem('totalQuantity')) || 0;
-            dispatch(setInitialState({ items: cartItems, totalQuantity }));
-        }
-    }, [dispatch]);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const totalQuantity = JSON.parse(localStorage.getItem('totalQuantity')) || 0;
+      dispatch(setInitialState({ items: cartItems, totalQuantity }));
+    }
+  }, [dispatch]);
   return (
     <main className="overflow-x-hidden">
       <HeaderBanner />
-      <ServiceMoto />
-      <SellingCategory/>
-      <NewArrival/>
+      <div className="hidden md:grid"><ServiceMoto /></div>
+      <div className="mx-6 md:mx-0"><SellingCategory /></div>
+      <NewArrival />
       <FeatureProduct />
-      <Subscription />    
+      <Subscription />
     </main>
   );
 }
