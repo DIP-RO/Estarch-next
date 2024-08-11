@@ -36,12 +36,12 @@
 @media (max-width: 480px) {
     .slick-prev {
         left: 8% !important;
-        top: -37px !important;
+        top: -65px !important;
     }
 
     .slick-next {
         right: 8% !important;
-        top: -37px !important;
+        top: -65px !important;
     }
 }
 

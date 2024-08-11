@@ -58,7 +58,10 @@ export default function FeatureProduct() {
   return (
     <div>
       <div className="slider-container mx-0 lg:mx-20">
-        <h1 className='text-center mb-4 mt-8 font-bold md:text-2xl text-xl'>OUR FEATURE PRODUCTS</h1>
+        <h1 className='text-center mt-8 font-bold md:text-2xl text-xl'>OUR FEATURE PRODUCTS</h1>
+        <div className='md:text-right text-center mb-4'>
+          <Link className='text-xl font-normal text-orange-500' href={''}>View All</Link>
+        </div>
         <Slider {...settings}>
           {products.map(product => (
             <div key={product._id} className="card card-compact bg-base-100 w-96 shadow-xl">
@@ -74,7 +77,7 @@ export default function FeatureProduct() {
                   <p className='md:text-[20px] text-gray-500'>Tk.{product.regularPrice} <span className='md:text-[17px] line-through'>TK.{product.salePrice}</span></p>
                   <div className="card-actions justify-center ">
                     <Link href={`/product/${product._id}`}>
-                      <button className="btn btn-sm mt-4 md:px-12 shadow-md">Buy Now</button>
+                      <button className="btn btn-sm mt-4 md:px-12 text-white bg-black">Buy Now</button>
                     </Link>
                   </div>
               </div>
