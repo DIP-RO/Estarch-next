@@ -15,7 +15,7 @@ export default function Footer() {
     <div
       className="bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: `url('https://i.ibb.co/ZzMKDVF/vector-JUNE-2020-13.jpg')`,
+        backgroundImage: `url('https://i.ibb.co/hKfMqp4/photo-2024-08-11-23-25-37.jpg')`,
         backgroundBlendMode: "overlay",
         opacity: 0.9, // Adjust opacity as needed
       }}

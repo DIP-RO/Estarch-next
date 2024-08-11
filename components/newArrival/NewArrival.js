@@ -83,7 +83,7 @@ export default function NewArrival() {
         <Slider {...settings}>
           {products.map(product => (
             <div key={product._id} className="card card-compact bg-base-100 w-96 shadow-md rounded-none">
-              <Link href={`/product/${product._id}`}>
+              <div>
                 <figure className='relative'>
                   <Image src={product.images[0]} width={500} height={0} alt={product.productName} />
                   <p className='absolute top-2 bg-error text-white left-2 px-2 rounded-md'>New</p>
@@ -94,9 +94,11 @@ export default function NewArrival() {
                   <div className="card-actions justify-center">
                   </div>
                 </div>
-              </Link>
+              </div>
               <div className='text-center'>
-                <button className="btn btn-sm mb-4 bg-black text-white">BUY NOW</button>
+                <Link href={`/product/${product._id}`} >
+                  <button className="btn btn-sm mb-4 bg-black text-white">BUY NOW</button>
+                </Link>
               </div>
             </div>
           ))}

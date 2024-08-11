@@ -201,7 +201,7 @@ const Page = () => {
                     </div>
                 </div>
 
-                <div className="drawer-side h-full lg:h-screen">
+                <div className="drawer-side h-full lg:h-screen z-20">
                     <label
                         htmlFor="my-drawer-2"
                         aria-label="close sidebar"

@@ -64,7 +64,7 @@ export default function FeatureProduct() {
         </div>
         <Slider {...settings}>
           {products.map(product => (
-            <div key={product._id} className="card card-compact bg-base-100 w-96 shadow-xl">
+            <div key={product._id} className="card card-compact bg-base-100 w-96 shadow-md">
               <figure>
                 <Image src={product.images[0]} width={500} height={700} alt={product.productName} />
               </figure>
