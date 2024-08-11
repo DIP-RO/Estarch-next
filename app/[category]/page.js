@@ -23,7 +23,7 @@ export default function Man() {
     }, [])
 
     return (
-        <div className="bg-white">
+        <div className="bg-white ">
             <div className="relative flex justify-center items-center h-[500px] mt-5 bg-gray-100">
                 <Image
                     src={menBanner}

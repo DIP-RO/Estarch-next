@@ -224,7 +224,7 @@ export default function Checkout() {
                                 </div>
                             </div>
                             <hr />
-                            <div className="flex justify-between mt-12">
+                            <div className="flex justify-between mt-2">
                                 <span>Subtotal</span>
                                 <span className='text-red-700'>৳ {product.salePrice.toFixed(2)}</span>
                             </div>

@@ -131,7 +131,7 @@ const Page = () => {
 
 
     return (
-        <div className="mx-4 lg:mx-12 mt-5">
+        <div className="mx-4 lg:mx-12 mt-5 mb-8">
             {/* Upper part */}
             <div className="flex justify-between items-center mb-4">
                 <div className="breadcrumbs text-sm">
@@ -174,7 +174,7 @@ const Page = () => {
                         {products.map((product) => (
                             <div
                                 key={product.id}
-                                className="card card-compact bg-base-100 shadow-xl h-[350px] lg:h-[500px] "
+                                className="card card-compact bg-base-100 shadow-md h-[350px] lg:h-[500px] "
                             >
                                 <figure>
                                     <Image src={product.images[0]} alt={product.productName} width={500}
@@ -190,7 +190,7 @@ const Page = () => {
                                     </p>
                                     <div className="card-actions justify-center">
                                         <Link href={`/product/${product._id}`}>
-                                            <button className="btn btn-sm mt-4 md:px-12 shadow-md">
+                                            <button className="btn btn-sm mt-4 md:px-12 bg-black text-white">
                                                 Buy Now
                                             </button>
                                         </Link>
