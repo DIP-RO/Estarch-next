@@ -19,9 +19,7 @@ export default function Checkout() {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    altPhone: '',
-    email: '',
-    district: '',
+    area: '',
     address: '',
     orderNotes: '',
     paymentMethod: ''
@@ -62,9 +60,6 @@ export default function Checkout() {
       name: formData.name,
       phone: formData.phone,
       deliveryCharge: shippingCharge,
-      altPhone: formData.altPhone,
-      email: formData.email,
-      district: formData.district,
       address: formData.address,
       area: formData.area,
       orderNotes: formData.orderNotes,
@@ -127,62 +122,17 @@ export default function Checkout() {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-bold mb-2" htmlFor="alt-phone">Alternative Phone Number</label>
-                <input
-                  className="w-full p-2 border rounded"
-                  type="text"
-                  id="alt-phone"
-                  name="altPhone"
-                  value={formData.altPhone}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-bold mb-2" htmlFor="email">Email (optional)</label>
-                <input
-                  className="w-full p-2 border rounded"
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-4">
                 <label className="block text-sm font-bold mb-2" htmlFor="area">Area</label>
-                <select
-                  className="w-full p-2 border rounded"
-                  id="area"
-                  name="area"
-                  value={formData.area}
-                  onChange={handleAreaChange}
-                  required
-                >
-                  <option value="">Select Area</option>
-                  <option value="Inside Dhaka">Inside Dhaka</option>
-                  <option value="Outside Dhaka">Outside Dhaka</option>
-                </select>
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-bold mb-2" htmlFor="district">District</label>
-                <select
-                  className="w-full p-2 border rounded"
-                  id="district"
-                  name="district"
-                  value={formData.district}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">Select District</option>
-                  <option value="Barisal">Barisal</option>
-                  <option value="Chittagong">Chittagong</option>
-                  <option value="Dhaka">Dhaka</option>
-                  <option value="Khulna">Khulna</option>
-                  <option value="Mymensingh">Mymensingh</option>
-                  <option value="Rajshahi">Rajshahi</option>
-                  <option value="Rangpur">Rangpur</option>
-                  <option value="Sylhet">Sylhet</option>
-                </select>
+                <div className="flex gap-4">
+                  <label className="inline-flex items-center">
+                    <input type="radio" name="area" value="Inside Dhaka" onChange={handleAreaChange} required />
+                    <span className="ml-2">Inside Dhaka</span>
+                  </label>
+                  <label className="inline-flex items-center">
+                    <input type="radio" name="area" value="Outside Dhaka" onChange={handleAreaChange} required />
+                    <span className="ml-2">Outside Dhaka</span>
+                  </label>
+                </div>
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-bold mb-2" htmlFor="address">Address</label>

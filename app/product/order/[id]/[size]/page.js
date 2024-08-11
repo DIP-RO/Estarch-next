@@ -21,10 +21,8 @@ export default function Checkout() {
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
-        altPhone: '',
-        email: '',
-        district: '',
         address: '',
+        area: '',
         orderNotes: '',
         paymentMethod: ''
     });
@@ -78,9 +76,6 @@ export default function Checkout() {
             name: formData.name,
             phone: formData.phone,
             deliveryCharge: shippingCharge,
-            altPhone: formData.altPhone,
-            email: formData.email,
-            district: formData.district,
             address: formData.address,
             area: formData.area,
             orderNotes: formData.orderNotes,
@@ -108,22 +103,6 @@ export default function Checkout() {
           } catch (error) {
             console.error('There was an error placing the order!', error);
           }
-
-        // try {
-        //     const response = await axios.post(`${baseUrl}/api/orders`, orderData);
-        //     alert('Order placed successfully!');
-        //     console.log(response.data);
-
-        //     // Redirect using Link with href to the invoice or product confirmation page
-        //     const orderId = response.data._id;
-        //     const category = product.category || "default-category"; // Replace with actual category logic if necessary
-
-        //     // Here, we set the route dynamically after a successful order placement
-        //     const redirectUrl = `/product/invoice/${orderId}`;
-        //     router.push(redirectUrl); // Use router to push the route after order placement
-        // } catch (error) {
-        //     console.error('There was an error placing the order!', error);
-        // }
     };
 
     return (
@@ -157,63 +136,18 @@ export default function Checkout() {
                                     required
                                 />
                             </div>
-                            <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="alt-phone">Alternative Phone Number</label>
-                                <input
-                                    className="w-full p-2 border rounded"
-                                    type="text"
-                                    id="alt-phone"
-                                    name="altPhone"
-                                    value={formData.altPhone}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="email">Email (optional)</label>
-                                <input
-                                    className="w-full p-2 border rounded"
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="area">Area</label>
-                                <select
-                                    className="w-full p-2 border rounded"
-                                    id="area"
-                                    name="area"
-                                    value={formData.area}
-                                    onChange={handleAreaChange}
-                                    required
-                                >
-                                    <option value="">Select Area</option>
-                                    <option value="Inside Dhaka">Inside Dhaka</option>
-                                    <option value="Outside Dhaka">Outside Dhaka</option>
-                                </select>
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="district">District</label>
-                                <select
-                                    className="w-full p-2 border rounded"
-                                    id="district"
-                                    name="district"
-                                    value={formData.district}
-                                    onChange={handleChange}
-                                    required
-                                >
-                                    <option value="">Select District</option>
-                                    <option value="Barisal">Barisal</option>
-                                    <option value="Chittagong">Chittagong</option>
-                                    <option value="Dhaka">Dhaka</option>
-                                    <option value="Khulna">Khulna</option>
-                                    <option value="Mymensingh">Mymensingh</option>
-                                    <option value="Rajshahi">Rajshahi</option>
-                                    <option value="Rangpur">Rangpur</option>
-                                    <option value="Sylhet">Sylhet</option>
-                                </select>
+                            <div className="mb-4 flex gap-2">
+                                <label className="block text-sm font-bold " htmlFor="area">Area:</label>
+                                <div className="flex gap-4">
+                                    <label className="inline-flex items-center">
+                                        <input type="radio" name="area" value="Inside Dhaka" onChange={handleAreaChange} required />
+                                        <span className="ml-2">Inside Dhaka</span>
+                                    </label>
+                                    <label className="inline-flex items-center">
+                                        <input type="radio" name="area" value="Outside Dhaka" onChange={handleAreaChange} required />
+                                        <span className="ml-2">Outside Dhaka</span>
+                                    </label>
+                                </div>
                             </div>
                             <div className="mb-4">
                                 <label className="block text-sm font-bold mb-2" htmlFor="address">Address</label>
