@@ -95,12 +95,10 @@ export default function Checkout() {
       userId: userId || 'guest',
     };
 
-    console.log('Form Data:', orderData);
 
     try {
       const response = await axios.post(`${baseUrl}/api/orders`, orderData);
       alert('Order placed successfully!');
-      console.log(response.data);
       router.push(`/product/invoice/${response.data.order._id}`);
     } catch (error) {
       console.error('There was an error placing the order!', error);

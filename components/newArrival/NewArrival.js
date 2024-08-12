@@ -15,7 +15,6 @@ export default function NewArrival() {
     axios.get(`${baseUrl}/api/products/new-arrival`)
       .then(res => {
         setProducts(res.data);
-        console.log(res.data);
       })
       .catch(err => {
         console.error('Error fetching new arrivals:', err);
@@ -23,13 +22,14 @@ export default function NewArrival() {
   }, []);
 
   var settings = {
-    className: "center",
-    centerMode: true,
     dots: false,
     infinite: true,
-    speed: 600,
+    speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
+    initialSlide: 0,
+    autoplay: true,
+    autoplaySpeed: 2200,
     responsive: [
       {
         breakpoint: 1024,
@@ -65,7 +65,7 @@ export default function NewArrival() {
       <div className="slider-container mx-0 lg:mx-20">
         <h1 className='text-center mt-12 font-bold md:text-2xl text-xl'>NEW ARRIVAL PRODUCTS</h1>
         <div className='text-center mb-4'>
-          <Link className='text-xl font-normal text-orange-500' href={''}>View All</Link>
+          <Link className='text-xl font-normal text-orange-500' href={'/new-arrival'}>View All</Link>
         </div>
         <Slider {...settings}>
           {products.map(product => (

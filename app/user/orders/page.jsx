@@ -19,7 +19,6 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (userId) {
-            console.log(userId);
             axios.get(`${baseUrl}/api/orders/order-count/${userId}`)
                 .then(res => {
                     setAllOrders(res.data);

@@ -16,7 +16,6 @@ export default function Login() {
 
     try {
       const response = await axios.post(`${baseUrl}/api/auth/login`, { mobile, password }, { withCredentials: true });
-      console.log(response.data);
       localStorage.setItem("userId", JSON.stringify(response.data.userId));
       setSuccessMessage(response.data.message);
       setErrorMessage('');

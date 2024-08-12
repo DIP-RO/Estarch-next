@@ -31,7 +31,6 @@ const ProductDetails = () => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`${baseUrl}/api/products/products/product/${id}`);
-        console.log(response.data);
 
         setProduct(response.data);
         setMainImage(response.data.images[0]);
@@ -93,13 +92,13 @@ const ProductDetails = () => {
             <Link className="uppercase" href={'/'}>Home</Link>
           </li>
           <li>
-            <Link className="uppercase" href={`/`}>{product.selectedType}</Link>
+            <Link className="uppercase" href={`/${product.selectedType}`}>{product.selectedType}</Link>
           </li>
           <li>
-            <Link href={'/'} className="uppercase ">{product.selectedSubCategory}</Link>
+            <Link href={`/${product.selectedType}/${product.selectedCategory}`} className="uppercase ">{product.selectedSubCategory}</Link>
           </li>
           <li>
-            <Link href={'/'} className="uppercase font-bold">{product.productName}</Link>
+            <Link href={`/product/${id}`} className="uppercase font-bold">{product.productName}</Link>
           </li>
         </ul>
       </div>

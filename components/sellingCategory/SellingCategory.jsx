@@ -15,7 +15,6 @@ const SellingCategory = () => {
     useEffect(() => {
         axios.get(`${baseUrl}/api/categories/categories`)
             .then(res => {
-                console.log(res.data);
                 setCategories(res.data);
             });
     }, []);

@@ -12,13 +12,11 @@ export default function Man() {
     const [categories, setCategories] = useState([])
     const { category } = useParams();
 
-    console.log(category);
 
     useEffect(() => {
         axios.get(`${baseUrl}/api/categories/categories/${category}`)
             .then(res => {
                 setCategories(res.data)
-                // console.log(res.data);
             })
     }, [])
 

@@ -6,8 +6,9 @@ import { CiFilter } from "react-icons/ci";
 import { useParams } from "next/navigation";
 import baseUrl from "@/components/services/baseUrl";
 import axios from "axios";
+import { FaCircleArrowDown } from "react-icons/fa6";
 
-const Page = () => {
+const NewArrivalAllProducts = () => {
     const [selectedRanges, setSelectedRanges] = useState([]);
     const [products, setProducts] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
@@ -15,10 +16,7 @@ const Page = () => {
     const [uniqueSizes, setUniqueSizes] = useState([]);
     const [selectedSizes, setSelectedSizes] = useState([]);
     const [sortBy, setSortBy] = useState('Sort by Latest');
-    const [categoryName, setCategoryName] = useState('')
-
-    const { id } = useParams();
-    const { category } = useParams();
+    const [index, setIndex] = useState(4)
 
     const allRanges = [
         { min: 100, max: 300 },
@@ -32,7 +30,7 @@ const Page = () => {
     // Fetch products from the backend
     useEffect(() => {
         const fetchProducts = async () => {
-            let url = `${baseUrl}/api/products/products/category/${id}`;
+            let url = `${baseUrl}/api/products/new-all-products`;
 
             // Add ranges to the query string if there are selected ranges
             if (selectedRanges.length > 0) {
@@ -68,21 +66,16 @@ const Page = () => {
 
         const fetchSubcategories = async () => {
             try {
-                const response = await axios.get(`${baseUrl}/api/categories/subcategories/${id}`);
+                const response = await axios.get(`${baseUrl}/api/categories/subcategories`);
                 setSubcategories(response.data);
             } catch (error) {
                 console.error("Error fetching subcategories:", error);
             }
         };
 
-        axios.get(`${baseUrl}/api/categories/find/${id}`)
-        .then(res=>{
-            setCategoryName(res.data.name);
-        })
-
         fetchSubcategories();
         fetchProducts();
-    }, [id, selectedRanges, selectedSubcategories, selectedSizes, baseUrl, sortBy]);
+    }, [selectedRanges, selectedSubcategories, selectedSizes, baseUrl, sortBy]);
 
     // Sort
     const handleSortChange = (e) => {
@@ -146,10 +139,7 @@ const Page = () => {
                             <Link className="uppercase" href={'/'}>Home</Link>
                         </li>
                         <li>
-                            <Link className="uppercase" href={`/${category}`}>{category}</Link>
-                        </li>
-                        <li>
-                            <Link href={`/${category}/${id}`} className="uppercase font-bold">{categoryName}</Link>
+                            <Link href={`/new-arrival`} className="uppercase font-bold">New arrival</Link>
                         </li>
                     </ul>
                 </div>
@@ -180,10 +170,10 @@ const Page = () => {
                 <div className="drawer-content flex flex-col items-start justify-start">
                     {/* Products */}
                     <div className="col-span-10 gap-6 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
-                        {products.map((product) => (
+                        {products.slice(0, index).map((product) => (
                             <div
-                                key={product.id}
-                                className="card card-compact bg-base-100 shadow-md rounded-none h-[350px] md:h-full relative"
+                                key={product._id}
+                                className="card card-compact bg-base-200 shadow-lg rounded-none h-[350px] md:h-full relative"
                             >
                                 <figure>
                                     <Image src={product.images[0]} alt={product.productName} width={500}
@@ -224,6 +214,11 @@ const Page = () => {
                                 </div>
                             </div>
                         ))}
+                        <div className="place-self-center md:col-span-4 col-span-2 ">
+                            <button onClick={() => setIndex(index + 4)} className={`btn flex items-center gap-1 btn-sm btn-primary text-white ${products.length <= index ? "hidden" : 'grid'}`}>
+                                SEE MORE 
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -321,4 +316,4 @@ const Page = () => {
     );
 };
 
-export default Page;
+export default NewArrivalAllProducts;

@@ -22,7 +22,6 @@ export default function SetPassword() {
 
     try {
       const userId = localStorage.getItem('userId'); 
-      console.log(userId);
       await axios.post(`${baseUrl}/api/auth/set-password`, { userId, password });
       setSuccessMessage('Password set successfully');
       setErrorMessage('');
