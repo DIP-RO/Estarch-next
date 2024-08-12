@@ -174,27 +174,44 @@ const Page = () => {
                         {products.map((product) => (
                             <div
                                 key={product.id}
-                                className="card card-compact bg-base-100 shadow-md h-[350px] lg:h-[500px] "
+                                className="card card-compact bg-base-100 shadow-md h-[350px] lg:h-[480px] rounded-none "
                             >
                                 <figure>
                                     <Image src={product.images[0]} alt={product.productName} width={500}
                                         height={700} />
                                 </figure>
-                                <div className="card-body">
-                                    <h2 className="text">{product.productName}</h2>
-                                    <p className="md:text-[16px] text-gray-500">
-                                        {product.salePrice}{" "}
-                                        <span className="md:text-[14px] line-through">
-                                            {product.regularPrice}
-                                        </span>
-                                    </p>
-                                    <div className="card-actions justify-center">
-                                        <Link href={`/product/${product._id}`}>
-                                            <button className="btn btn-sm mt-4 md:px-12 bg-black text-white">
-                                                Buy Now
-                                            </button>
-                                        </Link>
+                                <div className="pt-1 px-6">
+                                    <h2 className="md:text-[18px] text-[16px] font-bold text-center">
+                                        {product.productName.length > 22
+                                            ? `${product.productName.slice(0, 22)}...`
+                                            : product.productName
+                                        }</h2>
+                                    <div className='text-center'>
+                                        <div>
+                                            <p className={`bg-black text-white mt-2 w-full md:w-[40%] mx-auto mb-2 ${product.regularPrice - product.salePrice > 0 ? 'visible' : 'invisible'}`}>
+                                                Save Tk. {product.regularPrice - product.salePrice}
+                                            </p>
+                                            {
+                                                product.regularPrice - product.salePrice > 0 && (
+                                                    <p className='my-1 text-[16px] md:text-[20px] text-black text-center'>
+                                                        <span>TK.</span>{product.salePrice}
+                                                        <span className='md:text-[17px] text-sm line-through text-red-500'> Tk.{product.regularPrice}</span>
+                                                    </p>
+                                                )
+                                            }
+                                        </div>
+
+                                        {product.regularPrice - product.salePrice <= 0 && (
+                                            <p className='my-1 text-[20px] text-black text-center'>
+                                                <span className=''>TK.</span>{product.salePrice}
+                                            </p>
+                                        )}
                                     </div>
+                                </div>
+                                <div className='text-center'>
+                                    <Link href={`/product/${product._id}`}>
+                                        <button className=" bg-black text-white w-full py-2">BUY NOW</button>
+                                    </Link>
                                 </div>
                             </div>
                         ))}

@@ -64,22 +64,45 @@ export default function FeatureProduct() {
         </div>
         <Slider {...settings}>
           {products.map(product => (
-            <div key={product._id} className="card card-compact bg-base-100 w-96 shadow-md">
-              <figure>
-                <Image src={product.images[0]} width={500} height={700} alt={product.productName} />
-              </figure>
-              <div className="card-body">
-                <h2 className="md:card-title text-xs">
-                  {product.productName.length > 22
-                    ? `${product.productName.slice(0, 22)}...`
-                    : product.productName
-                  }</h2>
-                  <p className='md:text-[20px] text-gray-500'>Tk.{product.salePrice} <span className='md:text-[17px] line-through'>TK.{product.regularPrice}</span></p>
-                  <div className="card-actions justify-center ">
-                    <Link href={`/product/${product._id}`}>
-                      <button className="btn btn-sm mt-4 md:px-12 text-white bg-black">Buy Now</button>
-                    </Link>
+            <div key={product._id} className="card card-compact bg-base-100 w-96 shadow-md ">
+                <figure className='relative'>
+                  <Image className='rounded-t-lg' src={product.images[0]} width={500} height={0} alt={product.productName} />
+                  <p className='absolute top-2 bg-error text-white left-2 px-2 rounded-md'>New</p>
+                </figure>
+                <div className="pt-1 px-6">
+                  <h2 className="md:text-[18px] text-[16px] font-bold text-center">
+                    {product.productName.length > 22
+                      ? `${product.productName.slice(0, 22)}...`
+                      : product.productName
+                    }</h2>
+                  <div className='text-center'>
+
+                    <>
+                      <p className={`bg-black text-white mt-2 w-[40%] mx-auto mb-2 ${product.regularPrice - product.salePrice > 0 ? 'visible' : 'invisible'}`}>
+                        Save Tk. {product.regularPrice - product.salePrice}
+                      </p>
+                      {
+                        product.regularPrice - product.salePrice > 0 && (
+                          <p className='my-1 text-[20px] text-black text-center'>
+                            <span className=''>TK.</span>{product.salePrice}
+                            <span className='md:text-[17px] line-through text-red-500'> Tk.{product.regularPrice}</span>
+                          </p>
+                        )
+                      }
+                    </>
+
+                    {product.regularPrice - product.salePrice <= 0 && (
+                      <p className='my-1 text-[20px] text-black text-center'>
+                        <span className=''>TK.</span>{product.salePrice}
+                      </p>
+                    )}
                   </div>
+                </div>
+             
+              <div className='text-center'>
+                <Link href={`/product/${product._id}`}>
+                  <button className=" bg-black text-white w-full py-2">BUY NOW</button>
+                </Link>
               </div>
             </div>
           ))}
