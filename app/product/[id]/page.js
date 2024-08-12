@@ -15,6 +15,9 @@ import { openCardSlide } from "@/lib/slices/cardSlideSlice";
 import SizeChart from "@/components/sizes/page";
 import ProductCard from "@/components/productLike/page";
 import RelatedProductsSinglePage from "@/components/RelatedProducts/page";
+import WishlistPhone from "@/components/WishlistPhone/page";
+import ContactCard from "@/components/WishlistPhone/page";
+import DeliveryAndDescription from "@/components/DeliveryAndDescription/page";
 
 
 const ProductDetails = () => {
@@ -181,16 +184,16 @@ const ProductDetails = () => {
                 </button>
               </div>
             </div>
-
             <div className="divider"></div>
-            <p className="font-light text-xs">
-              Fabrilife Men's Premium Quality t-shirt offers a much smoother, silky feel and more structured, mid-weight fit than regular t-shirts. The t-shirts are made with the finest quality Combed Compact Cotton, which features astonishing ~175 GSM on just 26's cotton, giving a smooth and compact construction.
-              The compact finish guarantees that the t-shirt length and width will not change over wash or months of usage.
-            </p>
+            <ContactCard />
             <div className="divider"></div>
-            <div>
-              <SizeChart />
+            <SizeChart />
+            <div className="divider"></div>
+            
+            <div className="hidden md:block lg:block">
+            <DeliveryAndDescription />
             </div>
+                   
           </div>
         </div>
         <div className="border-t pt-4 bg-gray-200 rounded-lg mt-4 md:mt-0 md:ml-4">
@@ -208,6 +211,9 @@ const ProductDetails = () => {
             </p>
           </div>
         </div>
+      </div>
+      <div className="lg:hidden">
+      <DeliveryAndDescription /> 
       </div>
       <div className="lg:flex  lg:items-center lg:justify-center  mt-10">
         <h1 className="text center">Related Products</h1>
