@@ -8,17 +8,20 @@ import { useParams, useRouter } from 'next/navigation';
 import { AuthContext } from '@/components/context/AuthProvider';
 import { FaPhoneAlt } from "react-icons/fa";
 import Link from 'next/link';
+import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function Checkout() {
     const [product, setProduct] = useState(null);
     const { id } = useParams();
     const { size } = useParams();
     const router = useRouter();
-
+    const cartItems = useSelector((state) => state.cart.items);
     const { authUser } = useContext(AuthContext);
     const userId = authUser ? authUser?._id : null;
+    const dispatch = useDispatch();
 
-    const [shippingCharge, setShippingCharge] = useState(null); // Initialize as null
+    const [shippingCharge, setShippingCharge] = useState(null); 
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
@@ -53,19 +56,35 @@ export default function Checkout() {
         } else if (value === "Outside Dhaka") {
             setShippingCharge(130);
         } else {
-            setShippingCharge(null); // Hide shipping charge if no area is selected
+            setShippingCharge(null);
         }
     };
 
     const calculateTotal = () => {
         if (!product) return 0;
         const subtotal = product.salePrice;
-        return subtotal + (shippingCharge || 0); // Add 0 if shippingCharge is null
+        return subtotal + (shippingCharge || 0); 
     };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+    };
+
+    const handleDecrease = (id) => {
+        dispatch(decreaseQuantity(id));
+    };
+
+    const handleIncrease = (id) => {
+        dispatch(increaseQuantity(id));
+    };
+
+    const handleRemoveItem = (id) => {
+        dispatch(removeItem(id));
+    };
+
+    const calculateSubtotal = () => {
+        return cartItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
     };
 
     const handleSubmit = async (e) => {
@@ -84,7 +103,7 @@ export default function Checkout() {
                 productId: product._id,
                 title: product.productName,
                 price: product.salePrice,
-                quantity: 1, // Assume ordering 1 unit of the product
+                quantity: 1,
                 size: size
             }],
             paymentMethod: formData.paymentMethod,
@@ -97,9 +116,6 @@ export default function Checkout() {
         try {
             const response = await axios.post(`${baseUrl}/api/orders`, orderData);
             alert('Order placed successfully!');
-            console.log(response.data);
-            // Redirect to the invoice page (adjust according to your actual routing)
-            // router.push(`/product/invoice/${response.data.order._id}`);
             window.location.href = `/product/invoice/${response.data.order._id}`
         } catch (error) {
             console.error('There was an error placing the order!', error);
@@ -111,101 +127,130 @@ export default function Checkout() {
             <div className="flex flex-col md:flex-row gap-6">
                 <div className="flex-1 p-4 lg:px-16 py-8 border rounded-lg bg-white shadow-lg">
                     <h2 className="text-2xl font-bold mb-4">Checkout</h2>
-                    <form className="" onSubmit={handleSubmit}>
-                        <div className="">
-                            <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="name">Name:</label>
-                                <label className="input input-bordered flex items-center gap-2">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 16 16"
-                                        fill="currentColor"
-                                        className="h-4 w-4 opacity-70">
-                                        <path
-                                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
-                                    </svg>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        required className="grow" placeholder="Enter Your name" />
-                                </label>
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="phone">Phone:</label>
-                                <label className="input input-bordered flex items-center gap-2">
-                                    <FaPhoneAlt className='opacity-75' />
-                                    <input
-                                        type="text"
-                                        id="phone"
-                                        name="phone"
-                                        value={formData.phone}
-                                        onChange={handleChange}
-                                        required className="grow" placeholder="Your Phone Number" />
-                                </label>
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="area">Area:</label>
-                                <div className="">
-                                    <label className="inline-flex items-center">
-                                        <input className="radio checked:bg-blue-500" type="radio" name="area" value="Inside Dhaka" onChange={handleAreaChange} required />
-                                        <span className="ml-2">Inside Dhaka</span>
-                                    </label>
-                                    <br />
-                                    <label className="inline-flex items-center">
-                                        <input className="radio checked:bg-red-500" type="radio" name="area" value="Outside Dhaka" onChange={handleAreaChange} required />
-                                        <span className="ml-2">Outside Dhaka</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="address">Address:</label>
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-4">
+                            <label className="block text-sm font-bold mb-2" htmlFor="name">Name:</label>
+                            <label className="input input-bordered flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4 opacity-70">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                                </svg>
                                 <input
-                                    className=" input input-bordered w-full "
                                     type="text"
-                                    id="address"
-                                    name="address"
-                                    value={formData.address}
+                                    id="name"
+                                    name="name"
+                                    value={formData.name}
                                     onChange={handleChange}
-                                    required
+                                    required 
+                                    className="grow" 
+                                    placeholder="Enter Your name" 
                                 />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2" htmlFor="order-notes">Order notes (optional):</label>
-                                <textarea
-                                    className="w-full p-2 border rounded"
-                                    id="order-notes"
-                                    name="orderNotes"
-                                    value={formData.orderNotes}
-                                    rows={1}
+                            </label>
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="block text-sm font-bold mb-2" htmlFor="phone">Phone:</label>
+                            <label className="input input-bordered flex items-center gap-2">
+                                <FaPhoneAlt className='opacity-75' />
+                                <input
+                                    type="text"
+                                    id="phone"
+                                    name="phone"
+                                    value={formData.phone}
                                     onChange={handleChange}
-                                ></textarea>
+                                    required 
+                                    className="grow" 
+                                    placeholder="Your Phone Number" 
+                                />
+                            </label>
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="block text-sm font-bold mb-2" htmlFor="area">Area:</label>
+                            <div>
+                                <label className="inline-flex items-center">
+                                    <input 
+                                        className="radio checked:bg-blue-500" 
+                                        type="radio" 
+                                        name="area" 
+                                        value="Inside Dhaka" 
+                                        onChange={handleAreaChange} 
+                                        required 
+                                    />
+                                    <span className="ml-2">Inside Dhaka</span>
+                                </label>
+                                <br />
+                                <label className="inline-flex items-center">
+                                    <input 
+                                        className="radio checked:bg-red-500" 
+                                        type="radio" 
+                                        name="area" 
+                                        value="Outside Dhaka" 
+                                        onChange={handleAreaChange} 
+                                        required 
+                                    />
+                                    <span className="ml-2">Outside Dhaka</span>
+                                </label>
                             </div>
-                            <div className="mb-4">
-                                <label className="block text-sm font-bold mb-2">Payment Method:</label>
-                                <div className="mb-2">
-                                    <label className="inline-flex items-center">
-                                        <input className='radio checked:bg-red-500' type="radio" name="paymentMethod" value="Cash on Delivery" onChange={handleChange} required />
-                                        <div className='flex items-center gap-3 ml-2'>
-                                            <span>Cash on delivery</span>
-                                            <Image src={cod} alt='Cash on delivery' width={80} height={40} />
-                                        </div>
-                                    </label>
-                                </div>
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="block text-sm font-bold mb-2" htmlFor="address">Address:</label>
+                            <input
+                                className="input input-bordered w-full"
+                                type="text"
+                                id="address"
+                                name="address"
+                                value={formData.address}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="block text-sm font-bold mb-2" htmlFor="order-notes">Order notes (optional):</label>
+                            <textarea
+                                className="w-full p-2 border rounded"
+                                id="order-notes"
+                                name="orderNotes"
+                                value={formData.orderNotes}
+                                rows={1}
+                                onChange={handleChange}
+                            ></textarea>
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="block text-sm font-bold mb-2">Payment Method:</label>
+                            <div className="mb-2">
+                                <label className="inline-flex items-center">
+                                    <input 
+                                        className='radio checked:bg-red-500' 
+                                        type="radio" 
+                                        name="paymentMethod" 
+                                        value="Cash on Delivery" 
+                                        onChange={handleChange} 
+                                        required 
+                                    />
+                                    <div className='flex items-center gap-3 ml-2'>
+                                        <span>Cash on delivery</span>
+                                        <Image src={cod} alt='Cash on delivery' width={80} height={40} />
+                                    </div>
+                                </label>
                             </div>
-                            <div className='mb-4'>
-                                <p className='font-bold lg:text-xl border p-2'>Your Total Payable Amount: {product?.salePrice} ৳</p>
-                            </div>
-                            <div className="flex justify-center">
-                                <button
-                                    type="submit"
-                                    className="bg-orange-400 text-white px-6 py-3 rounded-lg hover:bg-orange-800 transition duration-200"
-                                >
-                                    Place Order
-                                </button>
-                            </div>
+                        </div>
+
+                        <div className='mb-4'>
+                            <p className='font-bold lg:text-xl border p-2'>
+                                Your Total Payable Amount: {product?.salePrice} ৳
+                            </p>
+                        </div>
+
+                        <div className="flex justify-center">
+                            <button
+                                type="submit"
+                                className="bg-orange-400 text-white px-6 py-3 rounded-lg hover:bg-orange-800 transition duration-200"
+                            >
+                                Place Order
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -215,12 +260,40 @@ export default function Checkout() {
                     {product && (
                         <>
                             <div className="mb-4">
-                                <div className="grid grid-cols-2 items-center gap-2">
+                                <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-2">
                                     <div className='flex items-center gap-2'>
-                                        <span><img className='w-12' src={product?.images[0]} alt="" /></span>
+                                        <span>
+                                            <img className='w-12' src={product?.images[0]} alt="" />
+                                        </span>
+                                        <div>
                                         <span>{product.productName} - 1 pcs</span>
+                                        <span>
+                                            {product.size && (
+                                                <p className="text-sm">Your Size: {product.size}</p>
+                                            )}
+                                        </span>
+                                        <div className='flex items-center gap-2 mt-1'>
+                                            <span>Qty:</span>
+                                            <button 
+                                                onClick={() => handleDecrease(product._id)} 
+                                                className="bg-gray-300 w-6 h-6 flex items-center justify-center"
+                                            >
+                                                -
+                                            </button>
+                                            <span>{product.quantity}</span>
+                                            <button 
+                                                onClick={() => handleIncrease(product._id)} 
+                                                className="bg-gray-300 w-6 h-6 flex items-center justify-center"
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                        </div>
                                     </div>
+                                    <div className='lg:ml-60'>
                                     <span className='place-self-end'>৳ {product?.salePrice}</span>
+                                    <button onClick={() => handleRemoveItem(product.id)} className=" flex items-center justify-center underline">Remove</button>
+                                    </div>
                                 </div>
                             </div>
                             <hr />
@@ -229,7 +302,7 @@ export default function Checkout() {
                                 <span className='text-red-700'>৳ {product.salePrice.toFixed(2)}</span>
                             </div>
                             <hr className='my-2' />
-                            {shippingCharge !== null && ( // Display only if shippingCharge is set
+                            {shippingCharge !== null && (
                                 <div className="flex justify-between">
                                     <span>Shipping Charge</span>
                                     <span>৳ {shippingCharge}</span>
