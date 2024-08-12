@@ -47,8 +47,8 @@ function Hambarger() {
     };
 
     return (
-        <div className={`lg:hidden md:hidden`}>
-            <div className={`bg-base-100 fixed top-0 left-0 w-80 min-h-screen z-[10] transition-right duration-500 ${isOpen ? 'right-0' : 'right-[-350px] hidden'}`}>
+        <div className={`lg:hidden md:hidden `}>
+            <div className={`bg-base-100 fixed top-0 left-0 w-80 min-h-screen z-[999] transition-right duration-500 ${isOpen ? 'right-0' : 'right-[-350px] hidden'}`}>
                 <p className="cursor-pointer relative left-[80%] top-3 text-2xl">
                     <IoMdClose onClick={() => dispatch(closeSlide())} />
                 </p>

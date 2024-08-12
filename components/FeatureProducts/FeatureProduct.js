@@ -74,7 +74,7 @@ export default function FeatureProduct() {
                     ? `${product.productName.slice(0, 22)}...`
                     : product.productName
                   }</h2>
-                  <p className='md:text-[20px] text-gray-500'>Tk.{product.regularPrice} <span className='md:text-[17px] line-through'>TK.{product.salePrice}</span></p>
+                  <p className='md:text-[20px] text-gray-500'>Tk.{product.salePrice} <span className='md:text-[17px] line-through'>TK.{product.regularPrice}</span></p>
                   <div className="card-actions justify-center ">
                     <Link href={`/product/${product._id}`}>
                       <button className="btn btn-sm mt-4 md:px-12 text-white bg-black">Buy Now</button>

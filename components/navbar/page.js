@@ -38,8 +38,8 @@ export default function NavBar() {
 
   return (
     <div className="">
-      <div className="md:px-10 lg:px-10 navbar bg-base-100 border-b sticky top-0 z-10">
-        <div className="navbar-start">
+      <div className="md:px-10 lg:px-10 bg-base-100 shadow-lg md:shadow-none navbar border-b fixed lg:relative top-0 z-[99]">
+        <div className="navbar-start ">
           <div className='hidden lg:block md:block'>
             <div className='gap-4 flex'>
               <div className="flex items-center gap-1 justify-center">
@@ -131,7 +131,7 @@ export default function NavBar() {
           </div>}
       </div>
       <div className=''>
-        <div className="grid md:grid-cols-3 lg:grid-cols-3 grid-cols-1 bg-base-100  px-10 mt-4">
+        <div className="grid md:grid-cols-3 lg:grid-cols-3 grid-cols-1 px-10 mt-20 lg:mt-5 bg-base-100">
           <div className="lg:flex md:flex w-fit items-center justify-center hidden">
             <label className="input input-bordered flex items-center gap-2">
               <input type="text" className="grow border-0" placeholder="Search" />
