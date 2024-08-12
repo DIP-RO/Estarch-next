@@ -11,7 +11,9 @@ const ContactCard = () => {
                 <span className="text-gray-500 text-sm font-semibold">ADD TO WISHLIST</span>
             </div>
             <div className='mt-5'>
-                <Image src={call} width={300} height={20} alt=''/>
+            <a href="tel:01781813939">
+        <Image src={callIcon} width={300} height={20} alt='Call' />
+      </a>
             </div>
             <div className='flex flex-row  items-center gap-3'>
                 <div className="text-sm mt-2">Share To:</div>
