@@ -87,6 +87,22 @@ const ProductDetails = () => {
 
   return (
     <div className="container mx-auto p-4">
+      <div className="breadcrumbs text-xs md:my-6 my-3 md:pl-8 pl-2">
+        <ul>
+          <li>
+            <Link className="uppercase" href={'/'}>Home</Link>
+          </li>
+          <li>
+            <Link className="uppercase" href={`/`}>{product.selectedType}</Link>
+          </li>
+          <li>
+            <Link href={'/'} className="uppercase ">{product.selectedSubCategory}</Link>
+          </li>
+          <li>
+            <Link href={'/'} className="uppercase font-bold">{product.productName}</Link>
+          </li>
+        </ul>
+      </div>
       <div className="flex flex-col md:flex-row justify-center">
         <div className="flex flex-col md:flex-row w-full md:w-2/3 border rounded-lg p-4">
           <div className="w-full md:w-1/2">

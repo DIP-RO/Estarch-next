@@ -15,8 +15,11 @@ const Page = () => {
     const [uniqueSizes, setUniqueSizes] = useState([]);
     const [selectedSizes, setSelectedSizes] = useState([]);
     const [sortBy, setSortBy] = useState('Sort by Latest');
+    const [categoryName, setCategoryName] = useState('')
 
     const { id } = useParams();
+    const { category } = useParams();
+    // console.log(category);
     console.log(uniqueSizes);
 
     const allRanges = [
@@ -73,6 +76,11 @@ const Page = () => {
                 console.error("Error fetching subcategories:", error);
             }
         };
+
+        axios.get(`${baseUrl}/api/categories/find/${id}`)
+        .then(res=>{
+            setCategoryName(res.data.name);
+        })
 
         fetchSubcategories();
         fetchProducts();
@@ -137,10 +145,13 @@ const Page = () => {
                 <div className="breadcrumbs text-sm">
                     <ul>
                         <li>
-                            <a>Home</a>
+                            <Link className="uppercase" href={'/'}>Home</Link>
                         </li>
                         <li>
-                            <a>Shop</a>
+                            <Link className="uppercase" href={`/${category}`}>{category}</Link>
+                        </li>
+                        <li>
+                            <Link href={`/${category}/${id}`} className="uppercase font-bold">{categoryName}</Link>
                         </li>
                     </ul>
                 </div>

@@ -64,10 +64,9 @@ export default function FeatureProduct() {
         </div>
         <Slider {...settings}>
           {products.map(product => (
-            <div key={product._id} className="card card-compact bg-base-100 w-96 shadow-md ">
+            <div key={product._id} className="card card-compact bg-base-100 w-96 shadow-md rounded-none ">
                 <figure className='relative'>
-                  <Image className='rounded-t-lg' src={product.images[0]} width={500} height={0} alt={product.productName} />
-                  <p className='absolute top-2 bg-error text-white left-2 px-2 rounded-md'>New</p>
+                  <Image src={product.images[0]} width={500} height={0} alt={product.productName} />
                 </figure>
                 <div className="pt-1 px-6">
                   <h2 className="md:text-[18px] text-[16px] font-bold text-center">
