@@ -1,21 +1,22 @@
-'use client'
+'use client';
 import { useContext, useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector } from 'react-redux';
 import cod from '../../../public/images/cash-on-delivery-icon.png';
 import baseUrl from '@/components/services/baseUrl';
 import { AuthContext } from '@/components/context/AuthProvider';
 import { useRouter } from 'next/navigation';
 import { FaPhoneAlt } from 'react-icons/fa';
-
+import { decreaseQuantity, increaseQuantity, removeItem } from "@/lib/slices/cartSlice";
 export default function Checkout() {
   const router = useRouter();
   const { authUser } = useContext(AuthContext);
   const userId = authUser ? authUser._id : null;
   const [shippingCharge, setShippingCharge] = useState(null);
-
   const cartItems = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
+
 
   const [formData, setFormData] = useState({
     name: '',
@@ -53,6 +54,22 @@ export default function Checkout() {
     setFormData({ ...formData, [name]: value });
   };
 
+  
+
+    const handleDecrease = (id) => {
+        dispatch(decreaseQuantity(id));
+    };
+
+    const handleIncrease = (id) => {
+        dispatch(increaseQuantity(id));
+    };
+
+    const handleRemoveItem = (id) => {
+        dispatch(removeItem(id));
+    };
+
+    
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -65,17 +82,17 @@ export default function Checkout() {
       area: formData.area,
       orderNotes: formData.orderNotes,
       cartItems: cartItems.map(item => ({
-        productId: item.id,  // Ensure this field matches your backend expectations
+        productId: item.id,
         title: item.product.title,
         quantity: item.quantity,
         price: item.product.price,
         size: item.size
       })),
       paymentMethod: formData.paymentMethod,
-      totalAmount: calculateTotal() - (shippingCharge || 0), // Ensure these are numbers
-      grandTotal: calculateTotal(),  // Ensure these are numbers
+      totalAmount: calculateTotal() - (shippingCharge || 0),
+      grandTotal: calculateTotal(),
       orderStatus: 'Pending',
-      userId: userId || 'guest',  // Handle potential null value
+      userId: userId || 'guest',
     };
 
     console.log('Form Data:', orderData);
@@ -84,7 +101,6 @@ export default function Checkout() {
       const response = await axios.post(`${baseUrl}/api/orders`, orderData);
       alert('Order placed successfully!');
       console.log(response.data);
-      // Redirect to the invoice page (adjust according to your actual routing)
       router.push(`/product/invoice/${response.data.order._id}`);
     } catch (error) {
       console.error('There was an error placing the order!', error);
@@ -96,8 +112,8 @@ export default function Checkout() {
       <div className="flex flex-col md:flex-row gap-6">
         <div className="flex-1 p-4 lg:px-16 py-8 border rounded-lg bg-white shadow-lg">
           <h2 className="text-2xl font-bold mb-4">Checkout</h2>
-          <form className="" onSubmit={handleSubmit}>
-            <div className="">
+          <form onSubmit={handleSubmit}>
+            <div>
               <div className="mb-4">
                 <label className="block text-sm font-bold mb-2" htmlFor="name">Name:</label>
                 <label className="input input-bordered flex items-center gap-2">
@@ -133,7 +149,7 @@ export default function Checkout() {
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-bold mb-2" htmlFor="area">Area:</label>
-                <div className="">
+                <div>
                   <label className="inline-flex items-center">
                     <input className="radio checked:bg-blue-500" type="radio" name="area" value="Inside Dhaka" onChange={handleAreaChange} required />
                     <span className="ml-2">Inside Dhaka</span>
@@ -148,7 +164,7 @@ export default function Checkout() {
               <div className="mb-4">
                 <label className="block text-sm font-bold mb-2" htmlFor="address">Address:</label>
                 <input
-                  className=" input input-bordered w-full "
+                  className="input input-bordered w-full"
                   type="text"
                   id="address"
                   name="address"
@@ -199,16 +215,32 @@ export default function Checkout() {
           <h2 className="text-2xl font-bold mb-4 bg-gray-200 p-2 rounded text-center">Your order</h2>
           <div className="mb-4">
             {cartItems.map(item => (
-              <div key={item.id} className="grid grid-cols-2 justify-between items-center">
+              <div key={item.id} className="flex flex-row justify-between items-center">
                 <div className='flex gap-2 items-center'>
                   <span><img className='w-12' src={item?.product?.colors[0]?.images[0]?.url} alt="" /></span>
-                  <span>{item.product.title} - {item.quantity} pcs</span>
+                  <div className='flex flex-col'>
+                    <span>{item.product.title} - {item.quantity} pcs</span>
+                    <span>
+                    {item.size && (
+                                        <p className="text-sm">Your Size: {item.size}</p>
+                                    )}
+                    </span>
+                    <div className='flex items-center gap-2 mt-1'>
+                      <span>Qty:</span>
+                      <button onClick={() => handleDecrease(item.id)} className="bg-gray-300  w-6 h-6 flex items-center justify-center">-</button>
+                      <span>{item.quantity}</span>
+                      <button onClick={() => handleIncrease(item.id)} className="bg-gray-300  w-6 h-6 flex items-center justify-center">+</button>
+                    </div>
+                  </div>
                 </div>
-                <span className='place-self-end'>৳ {item.product.price * item.quantity}</span>
+                <div className='lg:ml-80 '>
+                <span className=''>৳ {item.product.price * item.quantity}</span>
+                <button onClick={() => handleRemoveItem(item.id)} className=" flex items-center justify-center underline">Remove</button>
+                </div>
                 <hr className='col-span-2 my-2' />
               </div>
             ))}
-            <div className="flex justify-between">
+            <div className="flex justify-between ">
               <span>Subtotal</span>
               <span className="text-red-700">৳ {calculateSubtotal().toFixed(2)}</span>
             </div>
