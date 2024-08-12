@@ -10,12 +10,13 @@ import Image from 'next/image';
 import bank_payment_logo from "../../public/images/payment-gateway.eb02d190.png";
 import pic from '../../public/images/1707379719303-manfare_bd-id-13.jpeg';
 import logo from '../../public/images/LOGO 1.png';
+import footer from '../../public/images/footer.jpg'
 export default function Footer() {
   return (
     <div
       className="bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: `url('https://i.ibb.co/hKfMqp4/photo-2024-08-11-23-25-37.jpg')`,
+        backgroundImage:  `url(${footer.src})`,
         backgroundBlendMode: "overlay",
         opacity: 0.9, // Adjust opacity as needed
       }}
