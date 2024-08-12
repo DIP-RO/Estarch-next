@@ -12,7 +12,7 @@ const ContactCard = () => {
             </div>
             <div className='mt-5'>
             <a href="tel:01781813939">
-        <Image src={callIcon} width={300} height={20} alt='Call' />
+        <Image src={call} width={300} height={20} alt='Call' />
       </a>
             </div>
             <div className='flex flex-row  items-center gap-3'>
