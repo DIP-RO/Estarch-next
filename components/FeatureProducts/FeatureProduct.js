@@ -64,43 +64,41 @@ export default function FeatureProduct() {
         </div>
         <Slider {...settings}>
           {products.map(product => (
-            <div key={product._id} className="card card-compact bg-base-100 w-96 shadow-md rounded-none ">
-                <figure className='relative'>
-                  <Image src={product.images[0]} width={500} height={0} alt={product.productName} />
-                </figure>
-                <div className="pt-1 px-6">
-                  <h2 className="md:text-[18px] text-[16px] font-bold text-center">
-                    {product.productName.length > 22
-                      ? `${product.productName.slice(0, 22)}...`
-                      : product.productName
-                    }</h2>
-                  <div className='text-center'>
-
-                    <>
-                      <p className={`bg-black text-white mt-2 w-[40%] mx-auto mb-2 ${product.regularPrice - product.salePrice > 0 ? 'visible' : 'invisible'}`}>
-                        Save Tk. {product.regularPrice - product.salePrice}
-                      </p>
-                      {
-                        product.regularPrice - product.salePrice > 0 && (
-                          <p className='my-1 text-[20px] text-black text-center'>
-                            <span className=''>TK.</span>{product.salePrice}
-                            <span className='md:text-[17px] line-through text-red-500'> Tk.{product.regularPrice}</span>
-                          </p>
-                        )
-                      }
-                    </>
-
-                    {product.regularPrice - product.salePrice <= 0 && (
-                      <p className='my-1 text-[20px] text-black text-center'>
-                        <span className=''>TK.</span>{product.salePrice}
-                      </p>
-                    )}
+            <div key={product._id} className="card card-compact bg-base-100 w-96 shadow-md rounded-none h-[350px] md:h-full relative ">
+              <figure className='relative'>
+                <Image src={product.images[0]} width={500} height={0} alt={product.productName} />
+              </figure>
+              <div className="pt-1 lg:px-6 px-2">
+                <h2 className="md:text-[18px] text-[14px] font-bold text-center">
+                  {product.productName.length > 22
+                    ? `${product.productName.slice(0, 22)}...`
+                    : product.productName
+                  }</h2>
+                <div className='text-center'>
+                  <div className="absolute md:relative bottom-10 md:bottom-0 left-6 md:left-0">
+                    <p className={`bg-black text-white text-sm md:text-[16px] mt-2 w-full md:w-[50%] mx-auto mb-2 ${product.regularPrice - product.salePrice > 0 ? 'visible' : 'invisible'}`}>
+                      Save Tk. {product.regularPrice - product.salePrice}
+                    </p>
+                    {
+                      product.regularPrice - product.salePrice > 0 && (
+                        <p className='my-1 text-[16px] md:text-[20px] text-black text-center'>
+                          <span>TK.</span>{product.salePrice}
+                          <span className='md:text-[17px] text-sm line-through text-red-500'> Tk.{product.regularPrice}</span>
+                        </p>
+                      )
+                    }
                   </div>
+
+                  {product.regularPrice - product.salePrice <= 0 && (
+                    <p className='my-1 text-[17px] md:text-[20px] text-black text-center absolute md:relative bottom-10 md:bottom-0 left-12 md:left-0'>
+                      <span className=''>TK.</span>{product.salePrice}
+                    </p>
+                  )}
                 </div>
-             
-              <div className='text-center'>
+              </div>
+              <div className='text-center shadow-lg absolute w-full bottom-0 md:relative '>
                 <Link href={`/product/${product._id}`}>
-                  <button className=" bg-black text-white w-full py-2">BUY NOW</button>
+                  <button className=" bg-black text-white w-full md:py-2 py-1">BUY NOW</button>
                 </Link>
               </div>
             </div>
