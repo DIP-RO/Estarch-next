@@ -5,7 +5,6 @@ import { BiMessageAltDots } from "react-icons/bi";
 import { FaCaretDown, FaGooglePlay } from "react-icons/fa";
 import { FaApple } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
-import { FaSearch } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { IoIosArrowDown } from "react-icons/io";
 import logo from '../../public/images/LOGO 1.png';
@@ -147,9 +146,10 @@ export default function NavBar() {
               </svg>
             </label>
           </div>
-          <div className="flex gap-4 justify-center  items-center">
+          <div className="flex gap-4 justify-center items-center overflow-x-auto">
 
-            <Link href='/'><button >HOME</button></Link>
+            <Link href='/'><button className='uppercase'>HOME</button></Link>
+            <Link href='/'><button className='uppercase'>New Arrival</button></Link>
             {
               types.map(t =>
                 <Link key={t._id} className='text uppercase' href={`/${t.name}`}>{t.name}</Link>
