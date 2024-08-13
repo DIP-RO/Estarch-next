@@ -215,9 +215,15 @@ export default function Checkout() {
             {cartItems.map(item => (
               <div key={item.id} className="flex flex-row justify-between items-center">
                 <div className='flex gap-2 items-center'>
-                  <span><img className='w-12' src={item?.product?.colors[0]?.images[0]?.url} alt="" /></span>
+                <Image
+    className=' object-cover'
+    src={item?.product?.colors[0]?.images[0]?.url}
+    alt=""
+    width={56} // Width in pixels
+    height={56} // Height in pixels
+/>
                   <div className='flex flex-col'>
-                    <span>{item.product.title} - {item.quantity} pcs</span>
+                    <p className='block whitespace-nowrap overflow-hidden text-ellipsis'>{item.product.title} - {item.quantity} pcs</p>
                     <span>
                     {item.size && (
                                         <p className="text-sm">Your Size: {item.size}</p>
