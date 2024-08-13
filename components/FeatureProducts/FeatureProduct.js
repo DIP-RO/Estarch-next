@@ -60,7 +60,7 @@ export default function FeatureProduct() {
       <div className="slider-container mx-0 lg:mx-20">
         <h1 className='text-center mt-8 font-bold md:text-2xl text-xl'>OUR FEATURE PRODUCTS</h1>
         <div className='text-center mb-4'>
-          <Link className='text-xl font-normal text-orange-500' href={''}>View All</Link>
+          <Link className='text-xl font-normal text-orange-500' href={'/feature-products'}>View All</Link>
         </div>
         <Slider {...settings}>
           {products.map(product => (
