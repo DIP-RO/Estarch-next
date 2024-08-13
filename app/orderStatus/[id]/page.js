@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import truck from '../../../public/images/delivery-truck-box-Av8vKM7-600.jpg';
 import baseUrl from '@/components/services/baseUrl';
+import Link from 'next/link';
 
 export default function OrderStatus() {
   const { id } = useParams();
@@ -56,6 +57,7 @@ export default function OrderStatus() {
         
           <div className='sm:pl-4'>
             <h1 className='font-semibold  mb-2'>Shipping Address</h1>
+            <p className='text-sm font-medium'>Name: <span className='font-normal'>{order.name}</span></p>
             <p className='text-sm font-medium'>Mobile No:<span className='font-normal'> {order.phone}</span></p>
             <p className='text-sm font-medium'>Address: <span className='font-normal'>{order.address}</span></p>
           </div>
@@ -77,7 +79,7 @@ export default function OrderStatus() {
               <tbody className="bg-white divide-y divide-gray-200">
                 {order.cartItems.map((item, index) => (
                   <tr key={index}>
-                    <td className="px-4 py-2 text-left text-sm text-black">{item.title}</td>
+                    <td className="px-4 py-2 text-left text-sm text-black">{item.title} ({item.size}) </td>
                     <td className="px-4 py-2 text-center text-sm text-black">{item.quantity}</td>
                     <td className="px-4 py-2 text-right text-sm text-black">৳ {item.price * item.quantity}</td>
                   </tr>
@@ -105,11 +107,17 @@ export default function OrderStatus() {
           </div>
         </div>
 
-        <div className="text-center mt-10">
-        <a href="tel:01781813939">
+        <div className="flex justify-center items-center gap-3 text-center mt-10">
+        <Link href="/">
           <button className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition">
-            📞 CALL US
+            Shopping Again
             </button>
+          </Link>
+        <a href="https://m.me/estarch.com.bd">
+        <button className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition">
+  💬 MESSAGE US
+</button>
+
           </a>
         </div>
       </div>
