@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 
 import baseUrl from '@/components/services/baseUrl';
- // Example for importing a local image
 
 const InvoiceDetail = () => {
   const { id } = useParams();
@@ -69,18 +68,18 @@ const InvoiceDetail = () => {
           }
         `}
       </style>
-      <div className="page-content">
+      <div className="page-content max-w-screen-lg mx-auto mt-10 px-4 md:px-8 lg:px-10">
         <div className="container mx-auto p-4">
           <div className="mb-4">
-            <h2 className="text-2xl font-bold">Invoices / Invoice Detail</h2>
+            <h2 className="text-xl md:text-2xl font-bold">Invoices / Invoice Detail</h2>
           </div>
           <div className="flex flex-col">
             <div className="w-full">
-              <div className="bg-white shadow-md rounded-lg p-6">
+              <div className="bg-white shadow-md rounded-lg p-4 md:p-6">
                 <div className="flex justify-between items-center mb-4">
-                  <h4 className="text-xl font-semibold">{order.invoice}</h4>
+                  <h4 className="text-lg md:text-xl font-semibold">{order.invoice}</h4>
                   <div>
-                    <Image src='' alt="logo" className="w-24" />
+                    <Image src='' alt="logo" className="w-16 md:w-24" />
                   </div>
                 </div>
                 <div className="text-gray-600">
@@ -96,7 +95,7 @@ const InvoiceDetail = () => {
                     <p className="mb-1">{order.address}</p>
                     <p>{order.phone}</p>
                   </div>
-                  <div className="text-gray-600 text-right">
+                  <div className="text-gray-600 text-left md:text-right">
                     <div>
                       <h5 className="text-lg font-semibold mb-1">Invoice No:</h5>
                       <p>{order.invoice}</p>
@@ -117,45 +116,45 @@ const InvoiceDetail = () => {
                     <table className="min-w-full divide-y divide-gray-200">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No.</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
-                          <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                          <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No.</th>
+                          <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item</th>
+                          <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                          <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+                          <th className="px-4 md:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
                         {order.cartItems.map((item, key) => (
                           <tr key={key}>
-                            <td className="px-6 py-4 whitespace-nowrap">{key + 1}</td>
-                            <td className="px-6 py-4 whitespace-nowrap">
+                            <td className="px-4 md:px-6 py-4 whitespace-nowrap">{key + 1}</td>
+                            <td className="px-4 md:px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">{item.title}</div>
                               <div className="text-sm text-gray-500">Size: <span className="font-medium">{item.size}</span></div>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap">{item.price}</td>
-                            <td className="px-6 py-4 whitespace-nowrap">{item.quantity}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right">{item.price}</td>
+                            <td className="px-4 md:px-6 py-4 whitespace-nowrap">{item.price}</td>
+                            <td className="px-4 md:px-6 py-4 whitespace-nowrap">{item.quantity}</td>
+                            <td className="px-4 md:px-6 py-4 whitespace-nowrap text-right">{item.price}</td>
                           </tr>
                         ))}
                         <tr>
-                          <th colSpan="4" className="px-6 py-4 text-right">Sub Total</th>
-                          <td className="px-6 py-4 text-right">{order.totalAmount}</td>
+                          <th colSpan="4" className="px-4 md:px-6 py-4 text-right">Sub Total</th>
+                          <td className="px-4 md:px-6 py-4 text-right">{order.totalAmount}</td>
                         </tr>
                         <tr>
-                          <th colSpan="4" className="px-6 py-4 text-right">Discount :</th>
-                          <td className="px-6 py-4 text-right">- {order.discount}</td>
+                          <th colSpan="4" className="px-4 md:px-6 py-4 text-right">Discount :</th>
+                          <td className="px-4 md:px-6 py-4 text-right">- {order.discount}</td>
                         </tr>
                         <tr>
-                          <th colSpan="4" className="px-6 py-4 text-right">Shipping Charge :</th>
-                          <td className="px-6 py-4 text-right">{order.deliveryCharge}</td>
+                          <th colSpan="4" className="px-4 md:px-6 py-4 text-right">Shipping Charge :</th>
+                          <td className="px-4 md:px-6 py-4 text-right">{order.deliveryCharge}</td>
                         </tr>
                         <tr>
-                          <th colSpan="4" className="px-6 py-4 text-right">Tax</th>
-                          <td className="px-6 py-4 text-right">00</td>
+                          <th colSpan="4" className="px-4 md:px-6 py-4 text-right">Tax</th>
+                          <td className="px-4 md:px-6 py-4 text-right">00</td>
                         </tr>
                         <tr>
-                          <th colSpan="4" className="px-6 py-4 text-right">Total</th>
-                          <td className="px-6 py-4 text-right"><h4 className="text-lg font-semibold">{order.grandTotal}</h4></td>
+                          <th colSpan="4" className="px-4 md:px-6 py-4 text-right">Total</th>
+                          <td className="px-4 md:px-6 py-4 text-right"><h4 className="text-lg font-semibold">{order.grandTotal}</h4></td>
                         </tr>
                       </tbody>
                     </table>
