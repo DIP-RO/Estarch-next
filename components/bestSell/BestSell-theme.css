@@ -37,11 +37,13 @@
     .slick-prev {
         left: 8% !important;
         top: -65px !important;
+        display: none !important;
     }
 
     .slick-next {
         right: 8% !important;
         top: -65px !important;
+        display: none !important;
     }
 }
 
@@ -49,9 +51,11 @@
     .slick-prev {
         left: 25% !important;
         top: -38px !important;
+        display: none !important;
     }
     .slick-next {
         right: 25% !important;
         top: -38px !important;
+        display: none !important;
     }
 }

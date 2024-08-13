@@ -16,7 +16,7 @@ const NewArrivalAllProducts = () => {
     const [uniqueSizes, setUniqueSizes] = useState([]);
     const [selectedSizes, setSelectedSizes] = useState([]);
     const [sortBy, setSortBy] = useState('Sort by Latest');
-    const [index, setIndex] = useState(4)
+    const [index, setIndex] = useState(20)
 
     const allRanges = [
         { min: 100, max: 300 },
@@ -215,7 +215,7 @@ const NewArrivalAllProducts = () => {
                             </div>
                         ))}
                         <div className="place-self-center md:col-span-4 col-span-2 ">
-                            <button onClick={() => setIndex(index + 4)} className={`btn flex items-center gap-1 btn-sm btn-primary text-white ${products.length <= index ? "hidden" : 'grid'}`}>
+                            <button onClick={() => setIndex(index + 20)} className={`btn flex items-center gap-1 btn-sm btn-primary text-white ${products.length <= index ? "hidden" : 'grid'}`}>
                                 SEE MORE 
                             </button>
                         </div>
