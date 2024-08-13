@@ -1,27 +1,22 @@
 'use client'
-import { useContext, useEffect, useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Image from 'next/image';
-import axios from 'axios';
-import cod from '../../../../../public/images/cash-on-delivery-icon.png';
-import baseUrl from '@/components/services/baseUrl';
-import { useParams, useRouter } from 'next/navigation';
-import { AuthContext } from '@/components/context/AuthProvider';
 import { FaPhoneAlt } from "react-icons/fa";
-import Link from 'next/link';
-import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
-import { useSelector, useDispatch } from 'react-redux';
+import { useParams, useRouter } from 'next/navigation';
+import axios from 'axios';
+import baseUrl from '@/components/services/baseUrl';
+import cod from '../../../../../public/images/cash-on-delivery-icon.png';
+import { AuthContext } from '@/components/context/AuthProvider';
 
 export default function Checkout() {
     const [product, setProduct] = useState(null);
-    const { id } = useParams();
-    const { size } = useParams();
+    const [quantity, setQuantity] = useState(1);
+    const { id, size } = useParams();
     const router = useRouter();
-    const cartItems = useSelector((state) => state.cart.items);
     const { authUser } = useContext(AuthContext);
     const userId = authUser ? authUser?._id : null;
-    const dispatch = useDispatch();
 
-    const [shippingCharge, setShippingCharge] = useState(null); 
+    const [shippingCharge, setShippingCharge] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
@@ -62,8 +57,8 @@ export default function Checkout() {
 
     const calculateTotal = () => {
         if (!product) return 0;
-        const subtotal = product.salePrice;
-        return subtotal + (shippingCharge || 0); 
+        const subtotal = product.salePrice * quantity;
+        return subtotal + (shippingCharge || 0);
     };
 
     const handleChange = (e) => {
@@ -71,20 +66,18 @@ export default function Checkout() {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleDecrease = (id) => {
-        dispatch(decreaseQuantity(id));
+    const handleDecrease = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+        }
     };
 
-    const handleIncrease = (id) => {
-        dispatch(increaseQuantity(id));
+    const handleIncrease = () => {
+        setQuantity(quantity + 1);
     };
 
-    const handleRemoveItem = (id) => {
-        dispatch(removeItem(id));
-    };
-
-    const calculateSubtotal = () => {
-        return cartItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
+    const handleRemoveItem = () => {
+        setProduct(null);
     };
 
     const handleSubmit = async (e) => {
@@ -103,7 +96,7 @@ export default function Checkout() {
                 productId: product._id,
                 title: product.productName,
                 price: product.salePrice,
-                quantity: 1,
+                quantity: quantity,
                 size: size
             }],
             paymentMethod: formData.paymentMethod,
@@ -116,7 +109,8 @@ export default function Checkout() {
         try {
             const response = await axios.post(`${baseUrl}/api/orders`, orderData);
             alert('Order placed successfully!');
-            window.location.href = `/product/invoice/${response.data.order._id}`
+            // window.location.href = `/product/invoice/${response.data.order._id}`
+            window.location.href = `/orderStatus/${response.data.order._id}`
         } catch (error) {
             console.error('There was an error placing the order!', error);
         }
@@ -240,7 +234,7 @@ export default function Checkout() {
 
                         <div className='mb-4'>
                             <p className='font-bold lg:text-xl border p-2'>
-                                Your Total Payable Amount: {product?.salePrice} ৳
+                                Your Total Payable Amount: {calculateTotal()} ৳
                             </p>
                         </div>
 
@@ -261,45 +255,57 @@ export default function Checkout() {
                         <>
                             <div className="mb-4">
                                 <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-2">
-                                    <div className='flex items-center gap-2'>
-                                        <span>
-                                            <img className='w-12' src={product?.images[0]} alt="" />
-                                        </span>
-                                        <div>
-                                        <span>{product.productName} - 1 pcs</span>
-                                        <span>
-                                            {product.size && (
-                                                <p className="text-sm">Your Size: {product.size}</p>
-                                            )}
-                                        </span>
-                                        <div className='flex items-center gap-2 mt-1'>
-                                            <span>Qty:</span>
-                                            <button 
-                                                onClick={() => handleDecrease(product._id)} 
-                                                className="bg-gray-300 w-6 h-6 flex items-center justify-center"
+                                    <div className='flex justify-between items-center'>
+                                        <div className='flex items-center gap-8'>
+                                            
+                                                <Image
+                                                    src={product?.images[0]}
+                                                    alt={product.productName}
+                                                    width={50}
+                                                    height={50}
+                                                    objectFit='cover'
+                                                    className='rounded'
+                                                />
+                                           
+                                            <div className='flex flex-col gap-1'>
+                                                <p className='block whitespace-nowrap overflow-hidden text-ellipsis'>{product.productName} - {quantity} pcs</p>
+                                                {size && (
+                                                    <p className="text-sm">Your Size: {size}</p>
+                                                )}
+                                                <div className='flex items-center gap-2 mt-1'>
+                                                    <span>Qty:</span>
+                                                    <button
+                                                        onClick={handleDecrease}
+                                                        className="bg-gray-300 w-6 h-6 flex items-center justify-center"
+                                                    >
+                                                        -
+                                                    </button>
+                                                    <span>{quantity}</span>
+                                                    <button
+                                                        onClick={handleIncrease}
+                                                        className="bg-gray-300 w-6 h-6 flex items-center justify-center"
+                                                    >
+                                                        +
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='lg:ml-80 mt-10'>
+                                            <span className='place-self-end'>৳ {product?.salePrice}</span>
+                                            <button
+                                                onClick={handleRemoveItem}
+                                                className="flex items-center justify-center underline"
                                             >
-                                                -
-                                            </button>
-                                            <span>{product.quantity}</span>
-                                            <button 
-                                                onClick={() => handleIncrease(product._id)} 
-                                                className="bg-gray-300 w-6 h-6 flex items-center justify-center"
-                                            >
-                                                +
+                                                Remove
                                             </button>
                                         </div>
-                                        </div>
-                                    </div>
-                                    <div className='lg:ml-60'>
-                                    <span className='place-self-end'>৳ {product?.salePrice}</span>
-                                    <button onClick={() => handleRemoveItem(product.id)} className=" flex items-center justify-center underline">Remove</button>
                                     </div>
                                 </div>
                             </div>
                             <hr />
                             <div className="flex justify-between mt-2">
                                 <span>Subtotal</span>
-                                <span className='text-red-700'>৳ {product.salePrice.toFixed(2)}</span>
+                                <span className='text-red-700'>৳ {(product.salePrice * quantity).toFixed(2)}</span>
                             </div>
                             <hr className='my-2' />
                             {shippingCharge !== null && (

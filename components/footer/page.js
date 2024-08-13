@@ -35,15 +35,17 @@ export default function Footer() {
               className="text-3xl mt-2"
               style={{ color: "rgb(184, 149, 121)", "--tw-text-opacity": "1" }}
             >
-              +880 9606999695
+              +8801781813939
             </p>
 
-            <p className="text-white mt-2"> Worktime: SAT - FRI, 10AM - 11PM</p>
+            <p className="text-white mt-2"> SUN - SAT, 10:30 AM - 10 PM</p>
             <div className="flex flex-row gap-3 mt-4">
+            <a href='https://wa.me/01781813939'>
               <div
                 className="border rounded-full h-10 w-10 px-2 py-1 flex justify-center items-center"
                 style={{ borderColor: "rgb(184, 149, 121)" }}
               >
+                
                 <FontAwesomeIcon
                   size="2x"
                   style={{
@@ -52,7 +54,10 @@ export default function Footer() {
                   }}
                   icon={faWhatsapp}
                 />
-              </div>
+              
+                </div>
+              </a>
+              <a href='https://www.instagram.com/estarch.com.bd'>
               <div
                 className="border rounded-full h-10 w-10 px-2 py-1 flex justify-center items-center"
                 style={{ borderColor: "rgb(184, 149, 121)" }}
@@ -66,6 +71,8 @@ export default function Footer() {
                   icon={faInstagram}
                 />
               </div>
+              </a>
+              <a href='https://www.facebook.com/Estarch.com.bd '>
               <div
                 className="border rounded-full h-10 w-10 py-1 p-2 flex justify-center items-center"
                 style={{ borderColor: "rgb(184, 149, 121)" }}
@@ -77,7 +84,9 @@ export default function Footer() {
                   }}
                   icon={faFacebook}
                 />
-              </div>
+                </div>
+              </a>
+              <a href='https://m.me/estarch.com.bd'>
               <div
                 className="border rounded-full h-10 w-10 px-2 py-1 flex justify-center items-center"
                 style={{ borderColor: "rgb(184, 149, 121)" }}
@@ -90,7 +99,8 @@ export default function Footer() {
                   }}
                   icon={faFacebookMessenger}
                 />
-              </div>
+                </div>
+                </a>
             </div>
           </aside>
           <nav className="mb-8 lg:mb-0 lg:w-1/4">
@@ -115,17 +125,13 @@ export default function Footer() {
               Contact Info
             </h6>
             <p className="text-white mb-2">
-              Bashundhara City Shopping Complex,
-              <br />
-              Level-3, Block-D, Shop 45, 46,
-              <br />
-              Panthapath, Dhaka.
+            Shop Address - 19/A (Front gate of Masjid E Noor) , Near Abul Hotel, Chowdhury Para,Malibag,Dhaka-1219
+              
             </p>
-            <p className="text-white mb-2">manfarebd@gmail.com</p>
+            <p className="text-white mb-2">Estarchbd@gmail.com</p>
             <p className="text-white">
-              09606999695 | 01948-898198
-              <br />
-              01730-642262 | 01845-813237
+            01781813939 | 01779994888
+              
             </p>
           </nav>
           <nav className="lg:w-1/4">

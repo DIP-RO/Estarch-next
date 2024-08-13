@@ -127,15 +127,16 @@ const ProductDetails = () => {
             </div>
 
           </div>
-          <div className="w-full md:w-1/2 p-4">
+          <div className="w-full md:w-1/2 lg:p-4">
             <h1 className="text-2xl font-bold">{product.productName}</h1>
             <p className="text-sm text-gray-600 ">SKU: {product.sku}</p>
-            <p className="text-red-600 text-xl ">
-              <span className="line-through text-gray-500 mr-2">৳ {product.regularPrice}</span>
+            <p className="text-red-600 text-xl font-semibold">
+            <span className="line-through font-normal text-gray-500 mr-2" style={{ fontSize: "0.8em" }}>৳ {product.regularPrice}</span>
+
               ৳ {product.salePrice}
             </p>
             <div className="flex gap-1 items-center">
-              <p className="text-lg">Jeans Size</p>
+              <p className="text-sm font-bold">Select Size :</p>
               <div className='w-48 h-[40px] rounded-md flex justify-between '>
                 <p className="flex gap-2 items-center" onClick={() => dispatch(openSize())}>
                   (<PiCoatHanger /> Size guide )
@@ -147,7 +148,7 @@ const ProductDetails = () => {
               {product.selectedSizes && product.selectedSizes.map(size => (
                 <button
                   key={size}
-                  className={`border px-4  mr-2 ${selectedSize === size ? 'bg-gray-300' : ''}`}
+                  className={`border px-3   mr-2 ${selectedSize === size ? 'bg-gray-300' : ''}`}
                   onClick={() => handleSizeClick(size)}
                 >
                   {size}
@@ -156,17 +157,17 @@ const ProductDetails = () => {
             </div>
 
             <div className="flex flex-row gap-2  items-center">
-              <p className="text-lg mb-2">Quantity:</p>
+              <p className="text-sm font-bold mb-2">Quantity:</p>
               <div className="flex items-center ">
                 <button
-                  className="border px-4 py-1"
+                  className="border px-3 h-8"
                   onClick={decrementQuantity}
                 >
                   -
                 </button>
                 <p className="mx-4">{quantity}</p>
                 <button
-                  className="border px-4 py-1"
+                  className="border px-3 h-8"
                   onClick={incrementQuantity}
                 >
                   +
