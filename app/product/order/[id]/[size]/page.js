@@ -223,7 +223,7 @@ export default function Checkout() {
                                         value="Cash on Delivery" 
                                         onChange={handleChange} 
                                         required 
-                                        checked={paymentMethod === 'Cash on Delivery'} 
+                                        defaultChecked
                                     />
                                     <div className='flex items-center gap-3 ml-2'>
                                         <span>Cash on delivery</span>

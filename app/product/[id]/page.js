@@ -206,7 +206,7 @@ const ProductDetails = () => {
             <SizeChart />
             <div className="divider"></div>
             
-            <div className="mt-[-35px] hidden md:block lg:block">
+            <div className="hidden md:block lg:block">
             <DeliveryAndDescription />
             </div>
                    

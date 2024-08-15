@@ -26,7 +26,7 @@ export default function Home() {
     <main className="overflow-x-hidden">
       <HeaderBanner />
       <div className="hidden md:grid"><ServiceMoto /></div>
-      <div className="mx-6 md:mx-0"><SellingCategory /></div>
+      <SellingCategory />
       <NewArrival />
       <VideoGallery/>
       <FeatureProduct />

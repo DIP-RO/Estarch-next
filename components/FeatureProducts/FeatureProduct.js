@@ -75,7 +75,7 @@ export default function FeatureProduct() {
                     : product.productName
                   }</h2>
                 <div className='text-center'>
-                  <div className="absolute md:relative bottom-10 md:bottom-0 left-6 md:left-0">
+                  <div className="absolute md:relative bottom-8 md:bottom-0 left-6 md:left-0">
                     <p className={`bg-black text-white text-sm md:text-[16px] mt-2 w-full md:w-[50%] mx-auto mb-2 ${product.regularPrice - product.salePrice > 0 ? 'visible' : 'invisible'}`}>
                       Save Tk. {product.regularPrice - product.salePrice}
                     </p>
