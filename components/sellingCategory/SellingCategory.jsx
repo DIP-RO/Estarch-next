@@ -19,7 +19,7 @@ const SellingCategory = () => {
             });
     }, []);
     return (
-        <div className='mx-0 md:mx-12 lg:mx-20'>
+        <div className='mx-4 md:mx-12 lg:mx-20'>
             <h1 className='text-center mt-4 md:mt-8 lg:mt-8 font-bold md:text-2xl text-xl pb-5'>BROWSE OUR CATEGORY</h1>
             <Swiper
                 slidesPerView={4}
@@ -57,7 +57,7 @@ const SellingCategory = () => {
                         <Link href={`${cat.type.name}/${cat._id}`}>
                             <div className='relative'>
                                 <Image className='rounded-md' width={500} height={0} src={cat.image} alt="" />
-                                <p className='cursor-pointer rounded-lg font-medium md:font-semibold text-xs md:text-sm py-1 bg-base-200 px-2 lg:px-8 absolute bottom-1 md:bottom-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20'>{cat.name}</p>
+                                <p className='cursor-pointer rounded-lg font-medium md:font-semibold text-xs md:text-sm py-1 bg-base-200 absolute bottom-1 left-1/2 md:bottom-4 transform -translate-x-1/2 z-20 w-[90%]'>{cat.name}</p>
                                 <div className="absolute top-0 bg-[#1111112f] z-10 w-full min-h-full">
                                     {/* This div is use for a overlay on background image */}
                                 </div>

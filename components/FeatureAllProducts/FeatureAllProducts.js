@@ -173,7 +173,7 @@ const FeatureAllProducts = () => {
                         {products.slice(0, index).map((product) => (
                             <div
                                 key={product._id}
-                                className="card card-compact bg-base-200 shadow-lg rounded-none h-[350px] md:h-full relative"
+                                className="card card-compact bg-base-200 shadow-lg rounded-none h-[350px] md:h-[500px] relative"
                             >
                                 <figure>
                                     <Image src={product.images[0]} alt={product.productName} width={500}
@@ -181,33 +181,33 @@ const FeatureAllProducts = () => {
                                 </figure>
                                 <div className="pt-1 lg:px-6 px-2">
                                     <h2 className="md:text-[18px] text-[14px] font-bold text-center">
-                                        {product.productName.length > 22
-                                            ? `${product.productName.slice(0, 22)}...`
+                                        {product.productName.length > 25
+                                            ? `${product.productName.slice(0, 25)}...`
                                             : product.productName
                                         }</h2>
                                     <div className='text-center'>
-                                        <div className="absolute md:relative bottom-10 md:bottom-0 left-6 md:left-0">
-                                            <p className={`bg-black text-white text-sm md:text-[16px] mt-2 w-full md:w-[50%] mx-auto mb-2 ${product.regularPrice - product.salePrice > 0 ? 'visible' : 'invisible'}`}>
+                                        <div className="absolute bottom-10 md:bottom-10 left-6 md:left-16">
+                                            <p className={`bg-black text-white text-sm md:text-[16px] mt-2 w-full mx-auto  px-2 ${product.regularPrice - product.salePrice > 0 ? 'visible' : 'invisible'}`}>
                                                 Save Tk. {product.regularPrice - product.salePrice}
                                             </p>
                                             {
                                                 product.regularPrice - product.salePrice > 0 && (
-                                                    <p className='my-1 text-[16px] md:text-[20px] text-black text-center'>
+                                                    <p className='my-1 text-[16px] md:text-[20px] text-black text-center '>
                                                         <span>TK.</span>{product.salePrice}
                                                         <span className='md:text-[17px] text-sm line-through text-red-500'> Tk.{product.regularPrice}</span>
                                                     </p>
                                                 )
-                                            }
+                                            } 
                                         </div>
 
                                         {product.regularPrice - product.salePrice <= 0 && (
-                                            <p className='my-1 text-[17px] md:text-[20px] text-black text-center absolute md:relative bottom-10 md:bottom-0 left-12 md:left-0'>
+                                            <p className='my-1 text-[17px] md:text-[20px] text-black text-center absolute bottom-10 md:bottom-10 left-12 md:left-24'>
                                                 <span className=''>TK.</span>{product.salePrice}
                                             </p>
                                         )}
                                     </div>
                                 </div>
-                                <div className='text-center shadow-lg absolute w-full bottom-0 md:relative '>
+                                <div className='text-center shadow-lg absolute w-full bottom-0'>
                                     <Link href={`/product/${product._id}`}>
                                         <button className=" bg-black text-white w-full md:py-2 py-1">BUY NOW</button>
                                     </Link>

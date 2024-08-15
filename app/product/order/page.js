@@ -145,6 +145,7 @@ export default function Checkout() {
                     value={formData.phone}
                     onChange={handleChange}
                     required className="grow" placeholder="Your Phone Number" />
+                    
                 </label>
               </div>
               <div className="mb-4">
@@ -188,7 +189,7 @@ export default function Checkout() {
                 <label className="block text-sm font-bold mb-2">Payment Method:</label>
                 <div className="mb-2">
                   <label className="inline-flex items-center">
-                    <input className='radio checked:bg-red-500' type="radio" name="paymentMethod" value="Cash on Delivery" onChange={handleChange} required />
+                    <input className='radio checked:bg-red-500'defaultChecked  type="radio" name="paymentMethod" value="Cash on Delivery" onChange={handleChange} required />
                     <div className='flex items-center gap-3 ml-2'>
                       <span>Cash on delivery</span>
                       <Image src={cod} alt='Cash on delivery' width={80} height={40} />

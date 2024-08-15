@@ -203,9 +203,7 @@ const ProductDetails = () => {
             <div className="divider"></div>
             <ContactCard />
             <div className="divider"></div>
-            <SizeChart />
-            <div className="divider"></div>
-            
+            <SizeChart />            
             <div className="hidden md:block lg:block">
             <DeliveryAndDescription />
             </div>

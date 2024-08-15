@@ -129,41 +129,34 @@ export default function NavBar() {
             </div>
           </div>}
       </div>
-      <div className=''>
-        <div className="grid md:grid-cols-3 lg:grid-cols-3 grid-cols-1 px-10 mt-20 lg:mt-5 bg-base-100">
+      <div className="">
+        <div className="grid  md:grid-cols-3 lg:grid-cols-3 grid-cols-1 px-2 mt-20 lg:mt-5 bg-base-100 border-b-2 lg:border-0  pb-2 lg:pb-0">
           <div className="lg:flex md:flex w-fit items-center justify-center hidden">
             <label className="input input-bordered flex items-center gap-2">
               <input type="text" className="grow border-0" placeholder="Search" />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                className="h-4 w-4 opacity-70">
-                <path
-                  fillRule="evenodd"
-                  d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-                  clipRule="evenodd" />
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4 opacity-70">
+                <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd"></path>
               </svg>
             </label>
           </div>
-          <div className="flex gap-4 justify-center  items-center">
-
-            <Link href='/'><button className='uppercase'>HOME</button></Link>
+          <div className="flex gap-4 justify-center items-center overflow-x-auto whitespace-nowrap px-2 scrollbar-hide ">
+            <a href="/">
+              <button className="uppercase whitespace-nowrap text-sm md:text-[16px]">HOME</button>
+            </a>
+            <a href="/new-arrival">
+              <button className="uppercase whitespace-nowrap text-sm md:text-[16px]">New Arrival</button>
+            </a>
             {
               types.map(t =>
-                <Link key={t._id} className='text uppercase' href={`/${t.name}`}>{t.name}</Link>
+                <Link key={t._id} className='text uppercase text-sm md:text-[16px]' href={`/${t.name}`}>{t.name}</Link>
               )
             }
           </div>
-          <div className='lg:flex md:flex justify-end items-center hidden'>
-            <CiSearch size={25} />
-            <div className="relative w-[40px] cursor-pointer" onClick={() => dispatch(openCardSlide())}>
-              <HiOutlineShoppingBag className="relative text-2xl" />
-              {totalQuantity > 0 && (
-                <span className="bg-red-600 text-white rounded-full absolute -top-1 -right-1 w-4 h-4 text-xs flex items-center justify-center">
-                  {totalQuantity}
-                </span>
-              )}
+          <div className="lg:flex md:flex justify-end items-center hidden">
+            <div className="relative w-[40px] cursor-pointer">
+              <svg stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true" className="relative text-2xl" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"></path>
+              </svg>
             </div>
           </div>
         </div>
