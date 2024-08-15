@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,6 +19,7 @@ import ContactCard from "@/components/WishlistPhone/page";
 import DeliveryAndDescription from "@/components/DeliveryAndDescription/page";
 
 
+
 const ProductDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -26,6 +27,8 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [mainImage, setMainImage] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
+  const [warning, setWarning] = useState(false);
+  const router = useRouter();
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -33,9 +36,9 @@ const ProductDetails = () => {
 
         setProduct(response.data);
         setMainImage(response.data.images[0]);
-        if (response.data.selectedSizes.length > 0) {
-          setSelectedSize(response.data.selectedSizes[0]);
-        }
+        // if (response.data.selectedSizes.length > 0) {
+        //   setSelectedSize(response.data.selectedSizes[0]);
+        // }
       } catch (error) {
         console.error("Error fetching product details:", error);
       }
@@ -47,20 +50,33 @@ const ProductDetails = () => {
   }, [id]);
 
   const handleAddToCart = () => {
-    dispatch(addToCart({
-      id: product._id,
-      product: {
-        title: product.productName,
-        price: product.salePrice,
-        colors: [{ images: [{ url: mainImage }] }],
-        stock: { quantity: 10 }, // Adjust based on actual product details
-      },
-      quantity,
-      color: 'Blue', // Add actual color if available
-      size: selectedSize,
-    }));
+    if (selectedSize) {
+      setWarning(false)
+      dispatch(openCardSlide())
+      dispatch(addToCart({
+        id: product._id,
+        product: {
+          title: product.productName,
+          price: product.salePrice,
+          colors: [{ images: [{ url: mainImage }] }],
+          stock: { quantity: 10 }, // Adjust based on actual product details
+        },
+        quantity,
+        color: 'Blue', // Add actual color if available
+        size: selectedSize,
+      }));
+    } else {
+      setWarning(true)
+    }
   };
+  const buyNowButton = () => {
+    if (selectedSize) {
+      router.push(`/product/order/${product._id}/${selectedSize}`);
+    } else {
+      setWarning(true)
+    }
 
+  }
   const incrementQuantity = () => {
     setQuantity(quantity + 1);
   };
@@ -114,14 +130,14 @@ const ProductDetails = () => {
             <div className="flex mt-2 gap-2">
               {product.images && product.images.map((img, index) => (
                 <Image
-                key={index}
-                width={120} // Set the maximum size for larger screens
-                height={120} // Set the maximum size for larger screens
-                src={img}
-                alt={product.productName}
-                className="w-20 h-30  md:w-30 md:h-30 lg:w-30 lg:h-30 object-cover cursor-pointer"
-                onClick={() => handleThumbnailClick(img)}
-              />   
+                  key={index}
+                  width={120} // Set the maximum size for larger screens
+                  height={120} // Set the maximum size for larger screens
+                  src={img}
+                  alt={product.productName}
+                  className="w-20 h-30  md:w-30 md:h-30 lg:w-30 lg:h-30 object-cover cursor-pointer"
+                  onClick={() => handleThumbnailClick(img)}
+                />
               ))}
             </div>
 
@@ -130,7 +146,7 @@ const ProductDetails = () => {
             <h1 className="text-2xl font-bold">{product.productName}</h1>
             <p className="text-sm text-gray-600 ">SKU: {product.sku}</p>
             <p className="text-red-600 text-xl font-semibold">
-            <span className="line-through font-normal text-gray-500 mr-2" style={{ fontSize: "0.8em" }}>৳ {product.regularPrice}</span>
+              <span className="line-through font-normal text-gray-500 mr-2" style={{ fontSize: "0.8em" }}>৳ {product.regularPrice}</span>
 
               ৳ {product.salePrice}
             </p>
@@ -148,13 +164,16 @@ const ProductDetails = () => {
                 <button
                   key={size}
                   className={`border px-3   mr-2 ${selectedSize === size ? 'bg-gray-300' : ''}`}
-                  onClick={() => handleSizeClick(size)}
+                  onClick={() => {handleSizeClick(size) , setWarning(false)}}
                 >
                   {size}
                 </button>
               ))}
             </div>
+            {
+              warning && <h1 className='text-red-500'>Please select a size</h1>
 
+            }
             <div className="flex flex-row gap-2  items-center">
               <p className="text-sm font-bold mb-2">Quantity:</p>
               <div className="flex items-center ">
@@ -178,17 +197,16 @@ const ProductDetails = () => {
               <div onClick={handleAddToCart} className="flex-1 sm:flex-initial">
                 <button
                   className="w-full sm:w-auto bg-blue-500 text-white px-4 py-2"
-                  onClick={() => { dispatch(openCardSlide()) }}
                 >
                   Add to cart
                 </button>
               </div>
 
-              <Link href={`/product/order/${id}/${selectedSize}`} className="flex-1 sm:flex-initial">
-                <button className="w-full sm:w-auto bg-black text-white px-4 py-2">
+              <div  className="flex-1 sm:flex-initial">
+                <button onClick={buyNowButton} className="w-full sm:w-auto bg-black text-white px-4 py-2">
                   Order now
                 </button>
-              </Link>
+              </div>
 
               <div className="flex-1 sm:flex-initial">
                 <button
@@ -204,11 +222,11 @@ const ProductDetails = () => {
             <div className="divider"></div>
             <SizeChart />
             <div className="divider"></div>
-            
+
             <div className="hidden md:block lg:block">
-            <DeliveryAndDescription />
+              <DeliveryAndDescription />
             </div>
-                   
+
           </div>
         </div>
         <div className="border-t pt-4 bg-gray-200 rounded-lg mt-4 md:mt-0 md:ml-4">
@@ -228,7 +246,7 @@ const ProductDetails = () => {
         </div>
       </div>
       <div className="lg:hidden">
-      <DeliveryAndDescription /> 
+        <DeliveryAndDescription />
       </div>
       <div className="lg:flex  lg:items-center lg:justify-center  mt-10">
         <h1 className="text center">Related Products</h1>

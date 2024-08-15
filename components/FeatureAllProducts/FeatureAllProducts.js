@@ -165,7 +165,7 @@ const FeatureAllProducts = () => {
                 Filter
             </label>
 
-            <div className="drawer lg:drawer-open">
+            <div className="drawer lg:drawer-open z-[100]">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content flex flex-col items-start justify-start">
                     {/* Products */}
