@@ -127,7 +127,7 @@ const ProductDetails = () => {
             </div>
 
           </div>
-          <div className="w-full md:w-1/2 lg:p-4">
+          <div className="w-full md:w-1/2  lg:p-4">
             <h1 className="text-2xl font-bold">{product.productName}</h1>
             <p className="text-sm text-gray-600 ">SKU: {product.sku}</p>
             <p className="text-red-600 text-xl font-semibold">
@@ -206,7 +206,7 @@ const ProductDetails = () => {
             <SizeChart />
             <div className="divider"></div>
             
-            <div className="hidden md:block lg:block">
+            <div className="mt-[-35px] hidden md:block lg:block">
             <DeliveryAndDescription />
             </div>
                    

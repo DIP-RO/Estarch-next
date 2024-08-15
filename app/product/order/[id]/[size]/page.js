@@ -15,7 +15,7 @@ export default function Checkout() {
     const router = useRouter();
     const { authUser } = useContext(AuthContext);
     const userId = authUser ? authUser?._id : null;
-
+    const [paymentMethod, setPaymentMethod] = useState('Cash on Delivery');
     const [shippingCharge, setShippingCharge] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
@@ -99,7 +99,7 @@ export default function Checkout() {
                 quantity: quantity,
                 size: size
             }],
-            paymentMethod: formData.paymentMethod,
+            paymentMethod: paymentMethod,
             totalAmount: calculateTotal() - shippingCharge,
             orderStatus: 'Pending',
             userId: userId,
@@ -223,6 +223,7 @@ export default function Checkout() {
                                         value="Cash on Delivery" 
                                         onChange={handleChange} 
                                         required 
+                                        checked={paymentMethod === 'Cash on Delivery'} 
                                     />
                                     <div className='flex items-center gap-3 ml-2'>
                                         <span>Cash on delivery</span>
@@ -241,7 +242,7 @@ export default function Checkout() {
                         <div className="flex justify-center">
                             <button
                                 type="submit"
-                                className="bg-orange-400 text-white px-6 py-3 rounded-lg hover:bg-orange-800 transition duration-200"
+                                className="bg-black text-white px-6 py-3 rounded-lg hover:bg-orange-800 transition duration-200"
                             >
                                 Place Order
                             </button>

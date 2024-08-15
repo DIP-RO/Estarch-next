@@ -2,7 +2,7 @@
 import { useContext, useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
-import {useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import cod from '../../../public/images/cash-on-delivery-icon.png';
 import baseUrl from '@/components/services/baseUrl';
 import { AuthContext } from '@/components/context/AuthProvider';
@@ -13,6 +13,7 @@ export default function Checkout() {
   const router = useRouter();
   const { authUser } = useContext(AuthContext);
   const userId = authUser ? authUser._id : null;
+  const [paymentMethod, setPaymentMethod] = useState('Cash on Delivery');
   const [shippingCharge, setShippingCharge] = useState(null);
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ export default function Checkout() {
     } else {
       setShippingCharge(null);
     }
+    
   };
 
   const calculateSubtotal = () => {
@@ -54,21 +56,21 @@ export default function Checkout() {
     setFormData({ ...formData, [name]: value });
   };
 
-  
 
-    const handleDecrease = (id) => {
-        dispatch(decreaseQuantity(id));
-    };
 
-    const handleIncrease = (id) => {
-        dispatch(increaseQuantity(id));
-    };
+  const handleDecrease = (id) => {
+    dispatch(decreaseQuantity(id));
+  };
 
-    const handleRemoveItem = (id) => {
-        dispatch(removeItem(id));
-    };
+  const handleIncrease = (id) => {
+    dispatch(increaseQuantity(id));
+  };
 
-    
+  const handleRemoveItem = (id) => {
+    dispatch(removeItem(id));
+  };
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -88,7 +90,7 @@ export default function Checkout() {
         price: item.product.price,
         size: item.size
       })),
-      paymentMethod: formData.paymentMethod,
+      paymentMethod: paymentMethod,
       totalAmount: calculateTotal() - (shippingCharge || 0),
       grandTotal: calculateTotal(),
       orderStatus: 'Pending',
@@ -99,9 +101,9 @@ export default function Checkout() {
     try {
       const response = await axios.post(`${baseUrl}/api/orders`, orderData);
       alert('Order placed successfully!');
-       router.push(`/orderStatus/${response.data.order._id}`);
+      router.push(`/orderStatus/${response.data.order._id}`);
       // router.push(`/product/invoice/${response.data.order._id}`);
-    // window.location.href = `/product/orderStatus/${response.data.order._id}`
+      // window.location.href = `/product/orderStatus/${response.data.order._id}`
     } catch (error) {
       console.error('There was an error placing the order!', error);
     }
@@ -188,7 +190,7 @@ export default function Checkout() {
                 <label className="block text-sm font-bold mb-2">Payment Method:</label>
                 <div className="mb-2">
                   <label className="inline-flex items-center">
-                    <input className='radio checked:bg-red-500' type="radio" name="paymentMethod" value="Cash on Delivery" onChange={handleChange} required />
+                    <input className='radio checked:bg-red-500' type="radio" name="paymentMethod" value="Cash on Delivery" onChange={handleChange} checked={paymentMethod === 'Cash on Delivery'}  required />
                     <div className='flex items-center gap-3 ml-2'>
                       <span>Cash on delivery</span>
                       <Image src={cod} alt='Cash on delivery' width={80} height={40} />
@@ -202,7 +204,7 @@ export default function Checkout() {
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="bg-orange-400 text-white px-6 py-3 rounded-lg hover:bg-orange-800 transition duration-200"
+                  className="bg-black text-white px-6 py-3 rounded-lg hover:bg-orange-800 transition duration-200"
                 >
                   Place Order
                 </button>
@@ -217,19 +219,19 @@ export default function Checkout() {
             {cartItems.map(item => (
               <div key={item.id} className="flex flex-row justify-between items-center">
                 <div className='flex gap-2 items-center'>
-                <Image
-    className=' object-cover'
-    src={item?.product?.colors[0]?.images[0]?.url}
-    alt=""
-    width={56} // Width in pixels
-    height={56} // Height in pixels
-/>
+                  <Image
+                    className=' object-cover'
+                    src={item?.product?.colors[0]?.images[0]?.url}
+                    alt=""
+                    width={56} // Width in pixels
+                    height={56} // Height in pixels
+                  />
                   <div className='flex flex-col'>
                     <p className='block whitespace-nowrap overflow-hidden text-ellipsis'>{item.product.title} - {item.quantity} pcs</p>
                     <span>
-                    {item.size && (
-                                        <p className="text-sm">Your Size: {item.size}</p>
-                                    )}
+                      {item.size && (
+                        <p className="text-sm">Your Size: {item.size}</p>
+                      )}
                     </span>
                     <div className='flex items-center gap-2 mt-1'>
                       <span>Qty:</span>
@@ -240,8 +242,8 @@ export default function Checkout() {
                   </div>
                 </div>
                 <div className='lg:ml-80 '>
-                <span className=''>৳ {item.product.price * item.quantity}</span>
-                <button onClick={() => handleRemoveItem(item.id)} className=" flex items-center justify-center underline">Remove</button>
+                  <span className=''>৳ {item.product.price * item.quantity}</span>
+                  <button onClick={() => handleRemoveItem(item.id)} className=" flex items-center justify-center underline">Remove</button>
                 </div>
                 <hr className='col-span-2 my-2' />
               </div>

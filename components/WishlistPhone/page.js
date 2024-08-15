@@ -21,7 +21,7 @@ const ContactCard = () => {
                     <a href="https://www.facebook.com/Estarch.com.bd" className="text-blue-700 mx-2 hover:text-blue-900">
                         <FaFacebookF size={20} />
                     </a>
-                    <a href="https://wa.me/01781813939" className="text-green-500 mx-2 hover:text-green-700">
+                    <a href="https://wa.me/+8801781813939" className="text-green-500 mx-2 hover:text-green-700">
                         <FaWhatsapp size={20} />
                     </a>
                     <a href="https://m.me/estarch.com.bd" className="text-blue-500 mx-2 hover:text-blue-700">
