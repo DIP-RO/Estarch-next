@@ -5,15 +5,14 @@ import { IoIosArrowDown, IoMdClose } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
 import axios from 'axios';
-import Link from 'next/link'; 
-// import { useRouter } from 'next/router'; 
+import Link from 'next/link';
 import cupon from '../../public/images/banner2.jpeg';
 import { closeSlide } from '@/lib/slices/sliderSlice';
 import baseUrl from '../services/baseUrl';
 
 function Hambarger() {
     const [categories, setCategories] = useState({});
-    const [activeCategory, setActiveCategory] = useState(null); 
+    const [activeCategory, setActiveCategory] = useState(null);
     const isOpen = useSelector((state) => state.slide.isOpen);
     const dispatch = useDispatch();
 
@@ -32,7 +31,7 @@ function Hambarger() {
                     acc[typeName].push(category);
                     return acc;
                 }, {});
-                
+
                 setCategories(groupedCategories);
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -47,8 +46,21 @@ function Hambarger() {
     };
 
     return (
-        <div className={`lg:hidden md:hidden `}>
-            <div className={`bg-base-100 fixed top-0 left-0 w-80 min-h-screen z-[999] transition-right duration-500 ${isOpen ? 'right-0' : 'right-[-350px] hidden'}`}>
+        <div className={`lg:hidden md:hidden`}>
+            {/* Overlay */}
+            <div
+                className={`fixed inset-0 bg-black bg-opacity-50 z-[99998] transition-opacity duration-300 ${
+                    isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+                }`}
+                onClick={() => dispatch(closeSlide())}
+            ></div>
+
+            {/* Sidebar */}
+            <div
+                className={`bg-base-100 fixed top-0 left-0 w-72 min-h-screen z-[99999] transition-right duration-500 ${
+                    isOpen ? 'right-0' : 'right-[-350px] hidden'
+                }`}
+            >
                 <p className="cursor-pointer relative left-[80%] top-3 text-2xl">
                     <IoMdClose onClick={() => dispatch(closeSlide())} />
                 </p>

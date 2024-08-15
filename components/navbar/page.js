@@ -40,7 +40,7 @@ export default function NavBar() {
 
   return (
     <div className="">
-      <div className="md:px-10 lg:px-10 bg-base-100 shadow-lg md:shadow-none navbar border-b fixed lg:relative top-0 z-[99]">
+      <div className="md:px-10 lg:px-10 bg-base-100 shadow-sm md:shadow-none navbar border-b fixed lg:relative top-0 z-[99999]">
         <div className="navbar-start ">
           <div className='hidden lg:block md:block'>
             <div className='gap-4 flex'>
@@ -138,15 +138,17 @@ export default function NavBar() {
             </div>
             <div className='flex gap-2 ml-10 lg:hidden md:hidden'>
               {/* <CiSearch className="text-[30px]" /> */}
-              <HiOutlineShoppingBag onClick={() => dispatch(openCardSlide())} className="text-[30px]" />
+              <HiOutlineShoppingBag onClick={() => dispatch(openCardSlide())} className="text-[25px]" />
               <Link href={'/user'}>
-                <CgProfile className="text-[30px]" />
+                <CgProfile className="text-[25px]" />
               </Link>
             </div>
           </div>}
       </div>
-      <div className="">
-        <div className="grid  md:grid-cols-3 lg:grid-cols-3 grid-cols-1 px-2 mt-20 lg:mt-5 bg-base-100 border-b-2 lg:border-0  pb-2 lg:pb-0">
+      <div className="relative mx-12">
+        <div className="grid md:grid-cols-3 lg:grid-cols-3 grid-cols-1 px-2 pt-[88px] lg:pt-5 bg-base-100 border-b-2 lg:border-0  pb-2 lg:pb-0 ">
+          <Link href={'/new-arrival'} className='absolute left-[41%] top-[62%] lg:left-[47%] lg:top-[27%]  bg-yellow-300  px-2 text-[10px] lg:text-xs text-center rounded-sm' >New</Link>
+
           <div className="lg:flex md:flex w-fit items-center justify-center hidden">
             <label className="input input-bordered flex items-center gap-2">
               <input type="text" className="grow border-0" placeholder="Search" />
@@ -155,12 +157,12 @@ export default function NavBar() {
               </svg>
             </label>
           </div>
-          <div className="flex gap-4 justify-center items-center overflow-x-auto whitespace-nowrap px-2 scrollbar-hide ">
+          <div className="flex gap-4 justify-center items-center overflow-x-auto whitespace-nowrap px-2 scrollbar-hide">
             <a href="/">
               <button className="uppercase whitespace-nowrap text-sm md:text-[16px]">HOME</button>
             </a>
-            <a href="/new-arrival">
-              <button className="uppercase whitespace-nowrap text-sm md:text-[16px]">New Arrival</button>
+            <a href="/new-arrival" className='relative z-[9999]'>
+              <button className="uppercase whitespace-nowrap text-sm md:text-[16px]"><span className='absolute -top-10 bg-yellow-300  px-2 text-[10px] text-center rounded-sm'>New</span> Arrivals</button>
             </a>
             {
               types.map(t =>
@@ -169,10 +171,13 @@ export default function NavBar() {
             }
           </div>
           <div className="lg:flex md:flex justify-end items-center hidden">
-            <div className="relative w-[40px] cursor-pointer">
-              <svg stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true" className="relative text-2xl" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"></path>
-              </svg>
+            <div className="relative " onClick={() => dispatch(openCardSlide())}>
+              <HiOutlineShoppingBag className="relative text-2xl" />
+              {totalQuantity > 0 && (
+                <span className="bg-red-600 text-white rounded-full absolute -top-1 -right-1 w-4 h-4 text-xs flex items-center justify-center">
+                  {totalQuantity}
+                </span>
+              )}
             </div>
           </div>
         </div>

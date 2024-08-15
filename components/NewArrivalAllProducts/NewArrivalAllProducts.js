@@ -226,7 +226,7 @@ const NewArrivalAllProducts = () => {
                                 </Link>
                                 <div className='text-center shadow-lg absolute w-full bottom-0 md:relative '>
 
-                                    <button onClick={() => dispatch(openProductModal(product))}  className=" bg-black text-white w-full md:py-2 py-1">BUY NOW</button>
+                                    <button onClick={() => dispatch(openProductModal(product))}  className=" bg-[#1E201E] text-white w-full md:py-2 py-1">BUY NOW</button>
 
                                 </div>
                             </div>

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeProductModal } from '@/lib/slices/productModalSlice';
 import { addToCart } from '@/lib/slices/cartSlice';
@@ -63,17 +63,22 @@ const ProductModal = () => {
 
 
 
-
   return (
     <div>
-      <div className={`fixed lg:hidden md:hidden inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100] w-full h-screen`}>
+      {/* Overlay */}
+
+      {/* Mobile Modal */}
+      <div className={`fixed lg:hidden md:hidden inset-0 bg-black bg-opacity-50  flex items-center justify-center z-[100] w-full h-screen`}>
+
+        <div  onClick={() => dispatch(closeProductModal())} className={` fixed bottom-0 p-6 rounded-lg shadow-lg max-w-md h-screen w-full`}
+        ></div>
+
         <div
-          className={`fixed bottom-0 bg-white p-6 rounded-lg shadow-lg max-w-md w-full z-[10000] transform transition-all duration-300 ${isAnimating ? 'translate-y-0' : 'translate-y-full'
-            }`}
+          className={`fixed bottom-0 bg-white p-6 rounded-lg shadow-lg max-w-md w-full transform transition-all duration-300 ${isAnimating ? 'translate-y-0' : 'translate-y-full'}`}
         >
           <button
             onClick={() => dispatch(closeProductModal())}
-            className="absolute top-4 right-4 text-gray-800 hover:text-gray-500 text-2xl"
+            className="absolute top-4 right-4 text-gray-800 hover:text-gray-500 text-4xl"
           >
             &times;
           </button>
@@ -81,18 +86,17 @@ const ProductModal = () => {
           <h2 className="text-base font-semibold mb-1">SKU: {selectedProduct?.SKU}</h2>
           <h2 className="text-lg font-semibold mb-4">{selectedProduct?.productName}</h2>
           <div className='flex justify-center'>
-          <div className=" mb-4 w-36 aspect-[4/5]">
-            <Image width={300} height={300} src={selectedProduct?.images[0]} alt="Product" className="w-full h-full object-cover" />
+            <div className=" mb-4 w-36 aspect-[4/5]">
+              <Image width={300} height={300} src={selectedProduct?.images[0]} alt="Product" className="w-full h-full object-cover" />
+            </div>
           </div>
-          </div>
-          {
-            selectedProduct?.regularPrice - selectedProduct?.salePrice > 0 && (
-              <p className='my-1 text-[20px] text-black '>
-                <span className=''>TK.</span>{selectedProduct?.salePrice}
-                <span className='md:text-[17px] line-through text-red-500'> Tk.{selectedProduct?.regularPrice}</span>
-              </p>
-            )
-          } {selectedProduct?.regularPrice - selectedProduct?.salePrice <= 0 && (
+          {selectedProduct?.regularPrice - selectedProduct?.salePrice > 0 && (
+            <p className='my-1 text-[20px] text-black '>
+              <span className=''>TK.</span>{selectedProduct?.salePrice}
+              <span className='md:text-[17px] line-through text-red-500'> Tk.{selectedProduct?.regularPrice}</span>
+            </p>
+          )}
+          {selectedProduct?.regularPrice - selectedProduct?.salePrice <= 0 && (
             <p className='my-1 text-[20px] text-black '>
               <span className=''>TK.</span>{selectedProduct?.salePrice}
             </p>
@@ -100,25 +104,21 @@ const ProductModal = () => {
           <div className="mb-4">
             <div className='flex justify-between'>
               <h3 className="text-sm font-semibold mb-2">Select Size</h3>
-              <h3 onClick={() => dispatch(openSize())} className="text-sm text-cyan-700 mb-2 flex gap-2">Size Guide <svg width="4" height="4" viewBox="0 0 20 20" fill="none" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg"><path d="M18.3809 13.544L6.46212 1.6127C6.34603 1.49648 6.20817 1.40428 6.05642 1.34138C5.90468 1.27847 5.74202 1.24609 5.57775 1.24609C5.41348 1.24609 5.25082 1.27847 5.09907 1.34138C4.94733 1.40428 4.80947 1.49648 4.69337 1.6127L1.61837 4.69395C1.38556 4.92816 1.25488 5.24497 1.25488 5.5752C1.25488 5.90543 1.38556 6.22225 1.61837 6.45645L13.5371 18.3877C13.6539 18.5036 13.7924 18.5952 13.9447 18.6574C14.097 18.7196 14.2601 18.7512 14.4246 18.7502C14.7547 18.7505 15.0715 18.6202 15.3059 18.3877L18.3809 15.3065C18.6137 15.0722 18.7444 14.7554 18.7444 14.4252C18.7444 14.095 18.6137 13.7782 18.3809 13.544ZM14.4246 17.5002L2.49962 5.5752L5.57462 2.5002L7.94337 4.86895L6.53712 6.2502L7.41837 7.13145L8.82462 5.7502L11.4059 8.33145L9.99962 9.7377L10.8871 10.6252L12.2934 9.21895L14.8746 11.8002L13.4684 13.2065L14.3746 14.0877L15.7809 12.6815L17.4996 14.4252L14.4246 17.5002Z" fill="#5B9BBE"></path></svg></h3>
+              <h3 onClick={() => dispatch(openSize())} className="text-sm text-cyan-700 mb-2 flex gap-2">Size Guide <svg width="4" height="4" viewBox="0 0 20 20" fill="none" className="h-4 w-4" xmlns="http://www.w3.org/2000/svg"><path d="M18.3809 13.544L6.46212 1.6127C6.34603 1.49648 6.20817 1.40428 6.05642 1.34138C5.90468 1.27847 5.74202 1.24609 5.57775 1.24609C5.41348 1.24609 5.25082 1.27847 5.09907 1.34138C4.94733 1.40428 4.80947 1.49648 4.69337 1.6127L1.61837 4.69395C1.38556 4.92816 1.25488 5.24497 1.25488 5.5752C1.25488 5.90543 1.38556 6.22225 1.61837 6.45645L13.5371 18.3877C13.6539 18.5036 13.7924 18.5952 13.9447 18.6574C14.097 18.7196 14.2601 18.7512 14.4246 18.7502C14.7547 18.7505 15.0715 18.6202 15.3059 18.3877L18.3809 15.3065C18.6137 15.0722 18.7444 14.7554 18.7444 14.4252C18.7444 14.095 18.6137 13.7782 18.3809 13.544ZM14.4246 17.5002L2.49962 5.5752L5.57462 2.5002L7.94337 4.86895L6.53712 6.2502L7.41837 7.13145L8.82462 5.7502L11.4059 8.33145L9.99962 9.7377L10.8871 10.6252L12.2934 9.21895L14.8746 11.8002L13.4684 13.2065L14.3746 14.0877L15.7809 12.6815L17.4996 14.4252L14.4246 17.5002Z" fill="#5B9BBE"></path></svg></h3>
             </div>
             <div className="flex space-x-2">
               {sizes?.map((size) => (
                 <button
                   key={size}
-                  className={`px-4 py-2 border rounded-lg ${selectedSize === size ? 'bg-gray-800 text-white' : 'bg-gray-100'
-                    }`}
-                  onClick={() => { setSelectedSize(size), setWarning(false) }}
+                  className={`px-4 py-2 border rounded-lg ${selectedSize === size ? 'bg-gray-800 text-white' : 'bg-gray-100'}`}
+                  onClick={() => { setSelectedSize(size); setWarning(false); }}
                 >
                   {size}
                 </button>
               ))}
             </div>
           </div>
-          {
-            warning && <h1 className='text-red-500'>Please select a size</h1>
-
-          }
+          {warning && <h1 className='text-red-500'>Please select a size</h1>}
           <div className='flex gap-3'>
             <button onClick={handleAddToCart} className="bg-gray-800 text-white w-full py-3 rounded-lg mt-4">
               ADD TO CART
@@ -129,57 +129,51 @@ const ProductModal = () => {
           </div>
         </div>
       </div>
+
+      {/* Desktop Modal */}
       <div className="fixed inset-0 bg-black bg-opacity-50 md:flex lg:flex  justify-center z-[100] hidden">
+        <div onClick={() => dispatch(closeProductModal())} className={`rounded-lg w-11/12 md:w-2/3 lg:w-full p-6 absolute h-screen`}></div>
         <div className={`bg-white rounded-lg w-11/12 md:w-2/3 lg:w-1/2 p-6 relative h-fit mt-5 transform transition-all duration-300 ${isAnimating ? 'translate-y-0' : '-translate-y-full'}`}>
           <button
             onClick={() => dispatch(closeProductModal())}
-            className="absolute top-3 right-3 text-gray-500 hover:text-black text-2xl"
+            className="absolute top-4 right-4 text-gray-800 hover:text-gray-500 text-4xl"
           >
             &times;
           </button>
-          <h2 className="text-center text-2xl font-semibold mb-6">Price Details</h2>
-          <div className="flex flex-col md:flex-row items-center">
-            <div className="w-full md:w-1/3 flex justify-center mb-6 md:mb-0">
-              <Image
-                height={300}
-                src={selectedProduct?.images[0]} // Replace with your image source
-                width={300}
-                alt="Product"
-                className="w-3/4 md:w-full  rounded-md"
-              />
+
+          <h2 className="text-lg font-semibold mb-4 text-center">{selectedProduct?.productName}</h2>
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <Image width={300} height={300} src={selectedProduct?.images[0]} alt="Product" className="rounded-lg object-cover w-48 h-60" />
             </div>
-            <div className="w-full md:w-2/3 md:ml-6">
-              <h3 className="text-sm font-medium mb-4">SKU:{selectedProduct?.SKU}</h3>
-              <h3 className="text-lg font-medium mb-4">{selectedProduct?.productName}</h3>
-              {
-                selectedProduct?.regularPrice - selectedProduct?.salePrice > 0 && (
-                  <p className='my-1 text-[20px] text-black '>
-                    <span className=''>TK.</span>{selectedProduct?.salePrice}
-                    <span className='md:text-[17px] line-through text-red-500'> Tk.{selectedProduct?.regularPrice}</span>
-                  </p>
-                )
-              } {selectedProduct?.regularPrice - selectedProduct?.salePrice <= 0 && (
+            <div className="ml-4 flex-grow">
+              <h2 className="text-base font-semibold mb-1">SKU: {selectedProduct?.SKU}</h2>
+              {selectedProduct?.regularPrice - selectedProduct?.salePrice > 0 && (
+                <p className='my-1 text-[20px] text-black '>
+                  <span className=''>TK.</span>{selectedProduct?.salePrice}
+                  <span className='md:text-[17px] line-through text-red-500'> Tk.{selectedProduct?.regularPrice}</span>
+                </p>
+              )}
+              {selectedProduct?.regularPrice - selectedProduct?.salePrice <= 0 && (
                 <p className='my-1 text-[20px] text-black '>
                   <span className=''>TK.</span>{selectedProduct?.salePrice}
                 </p>
               )}
-              <h4 className="text-md font-semibold mb-3">Choose Size</h4>
-              <div className="flex gap-4 mb-6">
-                {sizes?.map(size => (
+
+              <h3 className="text-sm font-semibold mb-2">Select Size</h3>
+              <div className="flex space-x-2">
+                {sizes?.map((size) => (
                   <button
                     key={size}
-                    onClick={() => { setSelectedSize(size), setWarning(false) }}
-                    className="px-5 py-2 border border-gray-300 rounded-md text-lg hover:bg-gray-200 focus:bg-gray-200"
+                    className={`px-4 py-2 border rounded-lg ${selectedSize === size ? 'bg-gray-800 text-white' : 'bg-gray-100'}`}
+                    onClick={() => { setSelectedSize(size); setWarning(false); }}
                   >
                     {size}
                   </button>
                 ))}
               </div>
-              {
-                warning && <h1 className='text-red-500'>Please select a size</h1>
-
-              }
-              <div className='flex gap-3'>
+              {warning && <h1 className='text-red-500'>Please select a size</h1>}
+              <div className='flex gap-3 mt-10'>
                 <button onClick={handleAddToCart} className="bg-gray-800 text-white w-full py-3 rounded-lg mt-4">
                   ADD TO CART
                 </button>

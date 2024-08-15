@@ -54,10 +54,8 @@ export default function Man() {
                                 className="rounded-lg"
                             />
                             <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-center items-center text-white">
-                                <h2 className="text-base lg:text-4xl font-bold  ">{cat.name}</h2>
-                                <button className="mt-4 hidden lg:block md:block px-4  py-2 bg-green-500 text-white btn-sm md:btn-md lg:btn-md rounded">
-                                    Shop Now
-                                </button>
+                                <h2 className="bg-[#0000005e] lg:text-lg rounded-md  text-[8px] border-2 py-1 px-2">{cat.name}</h2>
+                              
                             </div>
 
                         </Link>

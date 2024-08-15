@@ -2,12 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, FreeMode, Autoplay } from 'swiper/modules';
-import Image from 'next/image';
-
-import './styles.css';
 import axios from 'axios';
 import Link from 'next/link';
 import baseUrl from '../services/baseUrl';
+
+import './styles.css';
 
 const SellingCategory = () => {
     const [categories, setCategories] = useState([]);
@@ -18,9 +17,10 @@ const SellingCategory = () => {
                 setCategories(res.data);
             });
     }, []);
+
     return (
         <div className='mx-4 md:mx-12 lg:mx-20'>
-            <h1 className='text-center mt-4 md:mt-8 lg:mt-8 font-bold md:text-2xl text-xl pb-5'>BROWSE OUR CATEGORY</h1>
+            <h1 className='text-center mt-4 md:mt-8 lg:mt-8 font-bold md:text-2xl lg:text-2xl pb-5'>BROWSE OUR CATEGORY</h1>
             <Swiper
                 slidesPerView={4}
                 navigation={true}
@@ -55,11 +55,10 @@ const SellingCategory = () => {
                 {categories.map(cat => (
                     <SwiperSlide key={cat._id}>
                         <Link href={`${cat.type.name}/${cat._id}`}>
-                            <div className='relative'>
-                                <Image className='rounded-md' width={500} height={0} src={cat.image} alt="" />
-                                <p className='cursor-pointer rounded-lg font-medium md:font-semibold text-xs md:text-sm py-1 bg-base-200 absolute bottom-1 left-1/2 md:bottom-4 transform -translate-x-1/2 z-20 w-[90%]'>{cat.name}</p>
-                                <div className="absolute top-0 bg-[#1111112f] z-10 w-full min-h-full">
-                                    {/* This div is use for a overlay on background image */}
+                            <div className='relative text-center rounded-md bg-cover bg-center h-[100px] lg:h-[180px]' style={{ backgroundImage: `url(${cat.image})` }}>
+                                <button className='relative text-[8px] md:text-sm top-14 lg:top-32 px-3 cursor-pointer text-white rounded-lg py-1 bg-[#00000058] z-20 border-2'>{cat.name}</button>
+                                <div className=" bg-[#1111112f] z-10 w-full h-full rounded-md">
+                                    {/* This div is used for an overlay on the background image */}
                                 </div>
                             </div>
                         </Link>

@@ -165,7 +165,7 @@ const FeatureAllProducts = () => {
                 Filter
             </label>
 
-            <div className="drawer lg:drawer-open z-[100]">
+            <div className="drawer lg:drawer-open ">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content flex flex-col items-start justify-start">
                     {/* Products */}
@@ -209,7 +209,7 @@ const FeatureAllProducts = () => {
                                 </div>
                                 <div className='text-center shadow-lg absolute w-full bottom-0'>
                                     <Link href={`/product/${product._id}`}>
-                                        <button className=" bg-black text-white w-full md:py-2 py-1">BUY NOW</button>
+                                        <button className=" bg-[#1E201E] text-white w-full md:py-2 py-1">BUY NOW</button>
                                     </Link>
                                 </div>
                             </div>
@@ -222,7 +222,7 @@ const FeatureAllProducts = () => {
                     </div>
                 </div>
 
-                <div className="drawer-side h-full lg:h-screen z-20">
+                <div className="drawer-side h-full lg:h-screen z-[9999]">
                     <label
                         htmlFor="my-drawer-2"
                         aria-label="close sidebar"

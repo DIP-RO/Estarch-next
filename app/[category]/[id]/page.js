@@ -168,27 +168,27 @@ const Page = () => {
             </div>
             {/* filter button */}
             <div className="flex gap-3">
-            <label
-                htmlFor="my-drawer-2"
-                className="btn btn-sm drawer-button lg:hidden mb-4"
-            >
-                <span>
-                    <p>
-                        <CiFilter />
-                    </p>
-                </span>{" "}
-                Filter
-            </label>
-            <label
-                className="btn btn-sm drawer-button lg:hidden mb-4"
-            >
-                <span>
-                    <p>
-                        {products.length}
-                    </p>
-                </span>{" "}
-                items
-            </label>
+                <label
+                    htmlFor="my-drawer-2"
+                    className="btn btn-sm drawer-button lg:hidden mb-4"
+                >
+                    <span>
+                        <p>
+                            <CiFilter />
+                        </p>
+                    </span>{" "}
+                    Filter
+                </label>
+                <label
+                    className="btn btn-sm drawer-button lg:hidden mb-4"
+                >
+                    <span>
+                        <p>
+                            {products.length}
+                        </p>
+                    </span>{" "}
+                    items
+                </label>
             </div>
 
             <div className="drawer lg:drawer-open">
@@ -198,10 +198,9 @@ const Page = () => {
                     <div className="col-span-10 gap-6 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
                         {products.map((product) => (
                             <div
-                                key={product.id}
-                                className="card card-compact bg-base-100 shadow-md rounded-none h-[350px] md:h-[500px] relative"
-                            >
-                                <Link href={`/product/${product._id}`}>
+                                key={product._id}
+                                className="card card-compact bg-base-200 shadow-lg rounded-none h-[350px] md:h-full relative"
+                            ><Link href={`/product/${product._id}`}>
                                     <figure>
                                         <Image src={product.images[0]} alt={product.productName} width={500}
                                             height={700} />
@@ -236,14 +235,16 @@ const Page = () => {
                                     </div>
                                 </Link>
                                 <div className='text-center shadow-lg absolute w-full bottom-0 md:relative '>
-                                    <button onClick={() => dispatch(openProductModal(product))} className=" bg-black text-white w-full md:py-2 py-1">BUY NOW</button>
+
+                                    <button onClick={() => dispatch(openProductModal(product))} className=" bg-[#1E201E] text-white w-full md:py-2 py-1">BUY NOW</button>
+
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className="drawer-side h-full lg:h-screen z-20">
+                <div className="drawer-side h-full lg:h-screen z-[9999]">
                     <label
                         htmlFor="my-drawer-2"
                         aria-label="close sidebar"

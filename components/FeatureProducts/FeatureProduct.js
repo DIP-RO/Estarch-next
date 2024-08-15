@@ -13,6 +13,8 @@ import { useDispatch } from 'react-redux';
 import ProductModal from '../ProductModal/page';
 import { openProductModal } from '@/lib/slices/productModalSlice';
 export default function FeatureProduct() {
+
+
   const dispatch = useDispatch();
   var settings = {
     dots: false,
@@ -62,9 +64,9 @@ export default function FeatureProduct() {
   return (
     <div>
       <div className="slider-container mx-0 lg:mx-20">
-        <h1 className='text-center mt-8 font-bold md:text-2xl text-xl'>OUR FEATURE PRODUCTS</h1>
+        <h1 className='text-center mt-8 font-bold md:text-2xl lg:text-2xl text-lg'>OUR FEATURE PRODUCTS</h1>
         <div className='text-center mb-4'>
-          <Link className='text-xl font-normal text-orange-500' href={'/feature-products'}>View All</Link>
+          <Link className='lg:text-xl font-normal text-orange-500' href={'/feature-products'}>View All</Link>
         </div>
         <Slider {...settings}>
           {products.map(product => (
@@ -80,13 +82,13 @@ export default function FeatureProduct() {
                       : product.productName
                     }</h2>
                   <div className='text-center'>
-                    <div className="absolute md:relative bottom-10 md:bottom-0 left-6 md:left-0">
-                      <p className={`bg-black text-white text-sm md:text-[16px] mt-2 w-full md:w-[50%] mx-auto mb-2 ${product.regularPrice - product.salePrice > 0 ? 'visible' : 'invisible'}`}>
+                    <div className="absolute md:relative bottom-8 md:bottom-0 left-7 md:left-0">
+                      <p className={`bg-[#000]  text-white text-sm md:text-[16px] mt-2 w-full md:w-[50%] mx-auto mb-2 ${product.regularPrice - product.salePrice > 0 ? 'visible' : 'invisible'}`}>
                         Save Tk. {product.regularPrice - product.salePrice}
                       </p>
                       {
                         product.regularPrice - product.salePrice > 0 && (
-                          <p className='my-1 text-[16px] md:text-[20px] text-black text-center'>
+                          <p className='my-1 text-[16px] md:text-[20px] text-black text-center '>
                             <span>TK.</span>{product.salePrice}
                             <span className='md:text-[17px] text-sm line-through text-red-500'> Tk.{product.regularPrice}</span>
                           </p>
@@ -103,13 +105,20 @@ export default function FeatureProduct() {
                 </div>
               </Link>
               <div className='text-center shadow-lg absolute w-full bottom-0 md:relative '>
-                <button onClick={()=>dispatch(openProductModal(product))} className=" bg-black text-white w-full md:py-2 py-1">BUY NOW</button>
+                <button onClick={() => dispatch(openProductModal(product))} className=" bg-[#1E201E] text-white w-full md:py-2 py-1">BUY NOW</button>
               </div>
             </div>
           ))}
         </Slider>
-        <ProductModal/>
+        <ProductModal />
       </div>
+      <style jsx>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rancho&display=swap');
+
+        .font-pop {
+          font-family: "Poppins", sans-serif;
+        }
+      `}</style>
     </div>
   )
 }

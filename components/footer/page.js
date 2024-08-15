@@ -23,16 +23,16 @@ export default function Footer() {
     >
       <div className="bg-black bg-opacity-70">
         <footer className="footer text-base-content p-10 flex flex-col lg:flex-row justify-between">
-          <aside className="mb-8 lg:mb-0 lg:w-1/4">
+          <aside className="md:mb-8 mb-2 lg:mb-0 lg:w-1/4">
             <Image
               src={logo}
               alt="Logo"
               width={280}
               height={300}
-              className="bg-white"
+              className="bg-white w-3/4"
             />
             <p
-              className="text-3xl mt-2"
+              className="text-xl md:text-3xl mt-2"
               style={{ color: "rgb(184, 149, 121)", "--tw-text-opacity": "1" }}
             >
               +8801781813939
@@ -103,7 +103,7 @@ export default function Footer() {
                 </a>
             </div>
           </aside>
-          <nav className="mb-8 lg:mb-0 lg:w-1/4">
+          <nav className="mb-4 lg:mb-0 lg:w-1/4">
             <h6
               className="font-bold uppercase text-3xl mb-4"
               style={{ color: "rgb(184, 149, 121)", "--tw-text-opacity": "1" }}

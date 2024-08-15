@@ -66,9 +66,9 @@ export default function NewArrival() {
   return (
     <div>
       <div className="slider-container mx-0 lg:mx-20">
-        <h1 className='text-center mt-12 font-bold md:text-2xl text-xl'>NEW ARRIVAL PRODUCTS</h1>
+        <h1 className='text-center mt-12 font-bold md:text-2xl lg:text-2xl text-lg'>NEW ARRIVAL PRODUCTS</h1>
         <div className='text-center mb-4'>
-          <Link className='text-xl font-normal text-orange-500' href={'/new-arrival'}>View All</Link>
+          <Link className='lg:text-xl font-normal text-orange-500' href={'/new-arrival'}>View All</Link>
         </div>
         <Slider {...settings}>
           {products.map(product => (
@@ -111,7 +111,7 @@ export default function NewArrival() {
                 </div>
               </Link>
               <div className='text-center'>
-                <button onClick={()=>dispatch(openProductModal(product))} className=" bg-black text-white w-full py-2">BUY NOW</button>
+                <button onClick={()=>dispatch(openProductModal(product))} className=" bg-[#1E201E] text-white w-full py-2">BUY NOW</button>
               </div>
             </div>
 
