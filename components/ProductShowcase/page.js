@@ -1,28 +1,51 @@
+'use client'
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import baseUrl from '../services/baseUrl'; // Ensure this points to your backend URL
 
 const ProductShowcase = () => {
+  const [homeImages, setHomeImages] = useState([]);
+  useEffect(() => {
+    const fetchHomeImageData = async () => {
+      try {
+        const response = await fetch(`${baseUrl}/api/home-image`);
+        const data = await response.json();
+        setHomeImages(data);
+      } catch (error) {
+        console.error('Error fetching home image data:', error);
+      }
+    };
+  
+    fetchHomeImageData();
+  }, []);
+  
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 lg:mx-24 gap-5 mt-10 mx-4">
-      <div className="relative w-full">
-        <Image width={300} height={300} src="https://fabrilife.com/image-gallery/638a77dc9c88d-square.jpg" alt="Printed Short Sleeve" className="w-full h-auto" />
-        <div className="absolute inset-0 flex items-end mb-5  justify-center text-white text-sm font-semibold">
-          <p className="font-semibold bg-black bg-opacity-50 px-4 py-2 rounded">Printed Short Sleeve</p>
-        </div>
-      </div>
-      <div className="relative w-full">
-        <Image width={300} height={300} src="https://fabrilife.com/image-gallery/638a77dc9c88d-square.jpg" alt="Designer Edition" className="w-full h-auto" />
-        <div className="absolute inset-0 flex items-end mb-5  justify-center text-white text-sm font-semibold">
-          <p className="font-semibold bg-black bg-opacity-50 px-4 py-2 rounded">Designer Edition</p>
-        </div>
-      </div>
-      <div className="relative w-full">
-        <Image width={300} height={300} src="https://fabrilife.com/image-gallery/638a77dc9c88d-square.jpg" alt="Short Sleeve Blanks" className="w-full h-auto" />
-        <div className="absolute inset-0 flex items-end mb-5 justify-center text-white text-sm font-semibold">
-          <p className="font-semibold bg-black bg-opacity-50 px-4 py-2 rounded">Short Sleeve Blanks</p>
-        </div>
-      </div>
+      {homeImages.length > 0 ? (
+        homeImages.map((item, index) => (
+          <div key={index} className="relative w-full">
+            <Link href={item.link || '#'}>
+              <Image
+                width={300}
+                height={300}
+                src={item.images[0] ? `${baseUrl}/${item.images[0].replace(/\\/g, '/')}` : '/fallback-image.jpg'} // Use baseUrl here to ensure it's a valid URL
+                alt={item.name}
+                className="w-full h-auto"
+              />
+              <div className="absolute inset-0 flex items-end mb-5 justify-center text-white text-sm font-semibold">
+                <p className="font-semibold bg-black bg-opacity-50 px-4 py-2 rounded">
+                  {item.name}
+                </p>
+              </div>
+            </Link>
+          </div>
+        ))
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
-}
+};
 
 export default ProductShowcase;

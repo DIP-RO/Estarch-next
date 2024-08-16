@@ -1,18 +1,33 @@
-'use client'
+'use client';  // Ensure it's a client component
 
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { Autoplay } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from 'swiper/modules';
-import './styles.css'
-import img1 from "../../public/images/banner1.jpeg";
-import img2 from "../../public/images/banner2.jpeg";
-import img3 from "../../public/images/banner3.jpeg";
+import { Autoplay, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import Image from 'next/image';
+import baseUrl from '../services/baseUrl';  // Adjust this path based on your project structure
+import './styles.css';  // Ensure you have the correct styles for Swiper
+import Link from 'next/link';
+
 export default function HeaderBanner() {
+  const [carousels, setCarousels] = useState([]);
+
+  useEffect(() => {
+    const fetchCarousels = async () => {
+      try {
+        const response = await fetch(`${baseUrl}/api/carosul`);
+        const data = await response.json();
+        setCarousels(data);
+      } catch (error) {
+        console.error('Error fetching carousels:', error);
+      }
+    };
+
+    fetchCarousels();
+  }, []);  // Empty dependency array to fetch once on mount
+
   return (
     <div className="max-h-[600px] mt-4 lg:mt-8 md:mt-8">
       <div className="relative">
@@ -30,17 +45,29 @@ export default function HeaderBanner() {
           modules={[Pagination, Autoplay]}
           className="mySwiper"
         >
-          <SwiperSlide className="w-[20px] ">
-            <Image className="overflow-hidden md:max-h-[600px]" src={img1} alt="" />
-          </SwiperSlide>
-          <SwiperSlide className="w-[20px] ">
-            <Image className="overflow-hidden md:max-h-[600px]" src={img2} alt="" />
-          </SwiperSlide>
-          <SwiperSlide className="w-[20px] ">
-            <Image className="overflow-hidden md:max-h-[600px]" src={img3} alt="" />
-          </SwiperSlide>
+          {carousels.length > 0 ? (
+            carousels.map((carousel, index) => (
+              <SwiperSlide key={index} className="w-full">
+                <Link href={carousel.link}>
+                <Image
+                  className="overflow-hidden md:max-h-[600px]"
+                  src={`${baseUrl}/${carousel.images[0]}`}
+                  alt={carousel.name}
+                  width={1200}
+                  height={600}
+                  layout="responsive"
+                  objectFit="cover"
+                />
+                </Link>
+              </SwiperSlide>
+            ))
+          ) : (
+            <SwiperSlide className="w-full">
+              <p>Loading...</p>
+            </SwiperSlide>
+          )}
         </Swiper>
       </div>
     </div>
-  )
+  );
 }
