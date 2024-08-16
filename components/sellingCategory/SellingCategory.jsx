@@ -37,7 +37,7 @@ const SellingCategory = () => {
                         spaceBetween: 10,
                     },
                     '@0.75': {
-                        slidesPerView: 3,
+                        slidesPerView: 2,
                         spaceBetween: 20,
                     },
                     '@1.00': {
@@ -55,7 +55,7 @@ const SellingCategory = () => {
                 {categories.map(cat => (
                     <SwiperSlide key={cat._id}>
                         <Link href={`${cat.type.name}/${cat._id}`}>
-                            <div className='relative text-center rounded-md bg-cover bg-center h-[100px] lg:h-[180px]' style={{ backgroundImage: `url(${cat.image})` }}>
+                            <div className='relative text-center rounded-md bg-cover bg-center w-[162px]  lg:w-[302px]  h-[100px] lg:h-[180px]' style={{ backgroundImage: `url(${cat.image})` }}>
                                 <button className='relative text-[8px] md:text-sm top-14 lg:top-32 px-3 cursor-pointer text-white rounded-lg py-1 bg-[#00000058] z-20 border-2'>{cat.name}</button>
                                 <div className=" bg-[#1111112f] z-10 w-full h-full rounded-md">
                                     {/* This div is used for an overlay on the background image */}

@@ -90,9 +90,9 @@ function Hambarger() {
 
                             {/* Subcategories */}
                             <ul
-                                className={`ml-3 space-y-5 text-[18px] transition-opacity ease-in-out duration-300 ${
-                                    activeCategory === typeName ? 'grid' : 'hidden'
-                                }`}
+                                className={`ml-3 space-y-1 text-[18px] transition-opacity ease-in-out duration-300 
+                                    grid
+                                `}
                             >
                                 {categories[typeName].map((category) => (
                                     <li key={category._id}>

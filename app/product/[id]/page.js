@@ -98,6 +98,21 @@ const ProductDetails = () => {
   if (!product) {
     return <div>Loading...</div>;
   }
+  const handleShare = () => {
+    if (selectedSize) {
+      const phoneNumber = "8801610362077"; // Replace with the recipient's phone number in international format
+      const productName = product.productName
+      const price = product.regularPrice > product.salePrice ? product.salePrice : product.regularPrice
+      const productUrl = "https://next.estarch.online/product/66ae8bd4b900359962f13056";
+      const message = `Hello. I want to buy this product:\n\n${productName}\nPrice: ${price} \nSize: ${selectedSize}\nURL: ${productUrl}`;
+
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+      window.open(whatsappUrl, "_blank");
+    } else {
+      setWarning(true)
+    }
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -164,7 +179,7 @@ const ProductDetails = () => {
                 <button
                   key={size}
                   className={`border px-3   mr-2 ${selectedSize === size ? 'bg-gray-300' : ''}`}
-                  onClick={() => {handleSizeClick(size) , setWarning(false)}}
+                  onClick={() => { handleSizeClick(size), setWarning(false) }}
                 >
                   {size}
                 </button>
@@ -202,14 +217,14 @@ const ProductDetails = () => {
                 </button>
               </div>
 
-              <div  className="flex-1 sm:flex-initial">
+              <div className="flex-1 sm:flex-initial">
                 <button onClick={buyNowButton} className="w-full sm:w-auto bg-black text-white px-4 py-2">
                   Order now
                 </button>
               </div>
 
               <div className="flex-1 sm:flex-initial">
-                <button
+                <button onClick={handleShare}
                   className="w-full sm:w-auto flex justify-center items-center text-white px-4 py-2"
                   style={{ backgroundColor: 'rgb(30, 170, 72)' }}
                 >
