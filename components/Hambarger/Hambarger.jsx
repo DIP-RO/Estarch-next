@@ -90,12 +90,12 @@ function Hambarger() {
 
                             {/* Subcategories */}
                             <ul
-                                className={`ml-3 space-y-1 text-[18px] transition-opacity ease-in-out duration-300 
+                                className={`ml-3 space-y-1 text-[16px]  transition-opacity ease-in-out duration-300 
                                     grid
                                 `}
                             >
                                 {categories[typeName].map((category) => (
-                                    <li key={category._id}>
+                                    <li className='border-b' key={category._id}>
                                         <Link href={`/${typeName.toLowerCase()}/${category._id}`}>
                                             {category.name}
                                         </Link>

@@ -1,11 +1,9 @@
 'use client'
 import { useState } from "react";
 import Image from "next/image";
-import img from '../../public/images/c_boxer.jpeg';
 import { useDispatch } from "react-redux";
 import { openCardSlide } from "@/lib/slices/cardSlideSlice";
 import { addToCart } from "@/lib/slices/cartSlice";
-
 const ProductCard = (product) => {
   const [selectedSize, setSelectedSize] = useState("");
   console.log(product.product);

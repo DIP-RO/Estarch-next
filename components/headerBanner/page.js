@@ -29,7 +29,7 @@ export default function HeaderBanner() {
   }, []);  // Empty dependency array to fetch once on mount
 
   return (
-    <div className="max-h-[600px] mt-4 lg:mt-8 md:mt-8">
+    <div className="max-h-[600px] mt-4 lg:mt-8 md:mt-4">
       <div className="relative">
         <Swiper
           pagination={{
