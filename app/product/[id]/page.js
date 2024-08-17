@@ -240,7 +240,6 @@ const ProductDetails = () => {
             <ContactCard />
             <div className="divider"></div>
             <SizeChart />
-            <div className="divider"></div>
 
             <div className="hidden md:block lg:block">
               <div className="w-full max-w-4xl mx-auto mt-8">
