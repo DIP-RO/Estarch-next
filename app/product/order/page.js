@@ -93,7 +93,7 @@ export default function Checkout() {
       paymentMethod: paymentMethod,
       totalAmount: calculateTotal() - (shippingCharge || 0),
       grandTotal: calculateTotal(),
-      orderStatus: 'Pending',
+      orderStatus: 'new',
       userId: userId || 'guest',
     };
 
