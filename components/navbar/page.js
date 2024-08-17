@@ -18,6 +18,7 @@ import { AuthContext } from '../context/AuthProvider';
 import baseUrl from '../services/baseUrl';
 import axios from 'axios';
 import { CiSearch } from 'react-icons/ci';
+import { useRouter } from 'next/navigation';
 
 
 export default function NavBar() {
@@ -27,12 +28,12 @@ export default function NavBar() {
   const [types, setTypes] = useState([])
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-
   const [isSearchVisible, setIsSearchVisible] = useState(false);  // State to toggle search input visibility
   const [searchQuery, setSearchQuery] = useState('');
   const [products, setProducts] = useState([]); // State to hold all products
   const [filteredProduct, setFilteredProduct] = useState([]); // State to hold filtered products
   const [productValue, setProductValue] = useState('');
+  const router = useRouter()
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -78,6 +79,11 @@ export default function NavBar() {
       })
 
   }, [])
+
+  const clickProduct=(p)=>{
+    router.push(`/product/${p._id}`)
+    setProductValue('')
+  }
 
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
@@ -249,16 +255,16 @@ export default function NavBar() {
       )}
       {isSearchOpen && (
         <div className="grid grid-cols-2 relative gap-5">
-          <div>
+          <div className='relative left-[40%]'>
             <input
               value={productValue}
               onChange={(e) => setProductValue(e.target.value)}
               type="text"
               placeholder="Type Name"
-              className="input input-bordered  w-screen mt-1"
+              className="input input-bordered mt-3 md:hidden grid"
             />
             {productValue && (
-              <div className=" w-screen bg-white border absolute z-[1000000] border-gray-300 rounded shadow-md">
+              <div className="w-56 mt-1 bg-white border absolute z-[1000000] border-gray-300 rounded shadow-md">
                 {filteredProduct.length > 0 ? (
                   filteredProduct.map((product, index) => (
                     <div
