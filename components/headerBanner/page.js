@@ -10,6 +10,7 @@ import Image from 'next/image';
 import baseUrl from '../services/baseUrl';  // Adjust this path based on your project structure
 import './styles.css';  // Ensure you have the correct styles for Swiper
 import Link from 'next/link';
+import { PropagateLoader } from 'react-spinners';
 
 export default function HeaderBanner() {
   const [carousels, setCarousels] = useState([]);
@@ -63,7 +64,7 @@ export default function HeaderBanner() {
             ))
           ) : (
             <SwiperSlide className="w-full">
-              <p>Loading...</p>
+              <p className='flex justify-center'><PropagateLoader color="#060101" /></p>
             </SwiperSlide>
           )}
         </Swiper>

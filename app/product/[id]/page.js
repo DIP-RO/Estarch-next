@@ -17,6 +17,7 @@ import ProductCard from "@/components/productLike/page";
 import RelatedProductsSinglePage from "@/components/RelatedProducts/page";
 import ContactCard from "@/components/WishlistPhone/page";
 import parse from 'html-react-parser';
+import { PropagateLoader } from "react-spinners";
 
 
 
@@ -99,7 +100,8 @@ const ProductDetails = () => {
   };
 
   if (!product) {
-    return <div>Loading...</div>;
+    return <div className="flex justify-center
+    items-center"><PropagateLoader color="#060101" /></div>;
   }
   const handleShare = () => {
     if (selectedSize) {
