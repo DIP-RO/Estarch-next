@@ -18,11 +18,13 @@ import { AuthContext } from '../context/AuthProvider';
 import baseUrl from '../services/baseUrl';
 import axios from 'axios';
 import { CiSearch } from 'react-icons/ci';
+import { useParams } from 'next/navigation';
 
 
 export default function NavBar() {
   const totalQuantity = useSelector(state => state.cart.totalQuantity);
   const dispatch = useDispatch();
+  const { id } = useParams();
   const { authUser } = useContext(AuthContext)
   const [types, setTypes] = useState([])
   const [isOpen, setIsOpen] = useState(false);
