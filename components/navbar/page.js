@@ -256,19 +256,14 @@ export default function NavBar() {
                 </div>
               )}
             </div>
-
-
-
           </div>
-
-
 
           <div className="flex gap-4 justify-center items-center overflow-x-auto whitespace-nowrap px-2 scrollbar-hide">
             <a href="/">
               <button className="uppercase whitespace-nowrap text-sm md:text-[16px]">HOME</button>
             </a>
             <a href="/new-arrival" className='relative z-[9999]'>
-              <button className="uppercase whitespace-nowrap text-sm md:text-[16px]"><span className='absolute -top-10 bg-yellow-300  px-2 text-[10px] text-center rounded-sm'>New</span> Arrivals</button>
+              <button className="uppercase whitespace-nowrap text-sm md:text-[16px]">Arrivals</button>
             </a>
             {
               types.map(t =>

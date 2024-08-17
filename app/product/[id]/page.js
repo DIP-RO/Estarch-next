@@ -16,6 +16,8 @@ import SizeChart from "@/components/sizes/page";
 import ProductCard from "@/components/productLike/page";
 import RelatedProductsSinglePage from "@/components/RelatedProducts/page";
 import ContactCard from "@/components/WishlistPhone/page";
+import parse from 'html-react-parser';
+
 
 
 
@@ -264,11 +266,11 @@ const ProductDetails = () => {
                 {/* Tab Content */}
                 <div className="mt-4">
                   {activeTab === 'description' && (
-                    <div>{product.content}</div>
+                    <div>{product.content ? <p>{parse(product.content)}</p> : <p>No content available.</p>}</div>
                   )}
 
                   {activeTab === 'delivery' && (
-                    <div>{product.guideContent}</div>
+                    <div> {product.guideContent ? <p>{parse(product.guideContent)}</p> : <p>No content available.</p>}</div>
                   )}
                 </div>
               </div>
@@ -319,12 +321,13 @@ const ProductDetails = () => {
           <div className="mt-4">
             {activeTab === 'description' && (
 
-              <div>{product.content}</div>
+              <div> {product.content ? <p>{parse(product.content)}</p> : <p>No content available.</p>}</div>
 
             )}
 
             {activeTab === 'delivery' && (
-              <div>{product.guideContent}</div>
+              <div> {product.guideContent ? <p>{parse(product.guideContent)}</p> : <p>No content available.</p>}</div>
+
             )}
           </div>
         </div>
