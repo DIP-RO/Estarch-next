@@ -1,5 +1,3 @@
-
-
 import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "../components/navbar/page";
@@ -8,7 +6,6 @@ import Providers from "./providers";
 import SlideCard from "@/components/SlideCard/SlideCard";
 import Size from "@/components/Size/Size";
 import Hambarger from "@/components/Hambarger/Hambarger";
-
 
 
 const inter = Inter({ subsets: ["latin"] });

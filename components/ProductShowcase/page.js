@@ -29,7 +29,7 @@ const ProductShowcase = () => {
               <Image
                 width={300}
                 height={300}
-                src={item.images[0] ? `${baseUrl}/${item.images[0].replace(/\\/g, '/')}` : '/fallback-image.jpg'} // Use baseUrl here to ensure it's a valid URL
+                src={item.images[0] ? `${baseUrl}/${item.images[0]}` : '/fallback-image.jpg'} // Use baseUrl here to ensure it's a valid URL
                 alt={item.name}
                 className="w-full h-auto"
               />

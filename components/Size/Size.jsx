@@ -9,7 +9,7 @@ function Size() {
     const isOpen = useSelector((state) => state.size.isOpen);
     const dispatch = useDispatch();
     return (
-        <div>  <div className={`container mx-auto px-4 py-8 h-full  z-[1000] bg-white w-full lg:w-[30%] md:w-[30%] ${isOpen ? 'fixed right-0 top-0 ' : 'hidden'}`}>
+        <div>  <div className={`container mx-auto px-4 py-8 h-full  z-[100000] bg-white w-full lg:w-[30%] md:w-[30%] ${isOpen ? 'fixed right-0 top-0 ' : 'hidden'}`}>
             <h1 onClick={() => dispatch(closeSize())}  className="flex justify-end text-2xl cursor-pointer"><RxCross1 /> </h1>
             <h2 className="text-2xl font-bold text-center mb-4 mt-3">FIND YOUR FIT</h2>
             <h1 className=" font-semibold  mt-3">SIZE GUIDE</h1>

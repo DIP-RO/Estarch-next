@@ -99,7 +99,21 @@ const ProductDetails = () => {
   if (!product) {
     return <div>Loading...</div>;
   }
+  const handleShare = () => {
+    if (selectedSize) {
+      const phoneNumber = "8801610362077"; // Replace with the recipient's phone number in international format
+      const productName = product.productName
+      const price = product.regularPrice > product.salePrice ? product.salePrice : product.regularPrice
+      const productUrl = "https://next.estarch.online/product/66ae8bd4b900359962f13056";
+      const message = `Hello. I want to buy this product:\n\n${productName}\nPrice: ${price} \nSize: ${selectedSize}\nURL: ${productUrl}`;
 
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+      window.open(whatsappUrl, "_blank");
+    } else {
+      setWarning(true)
+    }
+  };
   return (
     <div className="container mx-auto p-4">
       <div className="breadcrumbs text-xs md:my-6 my-3 md:pl-8 pl-2">
@@ -210,7 +224,7 @@ const ProductDetails = () => {
               </div>
 
               <div className="flex-1 sm:flex-initial">
-                <button
+                <button onClick={handleShare}
                   className="w-full sm:w-auto flex justify-center items-center text-white px-4 py-2"
                   style={{ backgroundColor: 'rgb(30, 170, 72)' }}
                 >
@@ -229,8 +243,8 @@ const ProductDetails = () => {
                 <div className="flex border-b border-gray-200">
                   <button
                     className={`text-lg font-semibold px-4 py-2 focus:outline-none ${activeTab === 'description'
-                        ? 'text-black border-b-2 border-yellow-600'
-                        : 'text-gray-500'
+                      ? 'text-black border-b-2 border-yellow-600'
+                      : 'text-gray-500'
                       }`}
                     onClick={() => setActiveTab('description')}
                   >
@@ -238,8 +252,8 @@ const ProductDetails = () => {
                   </button>
                   <button
                     className={`text-lg font-semibold px-4 py-2 focus:outline-none ${activeTab === 'delivery'
-                        ? 'text-black border-b-2 border-yellow-600'
-                        : 'text-gray-500'
+                      ? 'text-black border-b-2 border-yellow-600'
+                      : 'text-gray-500'
                       }`}
                     onClick={() => setActiveTab('delivery')}
                   >
@@ -279,46 +293,51 @@ const ProductDetails = () => {
         </div>
       </div>
       <div className="lg:hidden">
-      <div className="w-full max-w-4xl mx-auto mt-8">
-                <div className="flex border-b border-gray-200">
-                  <button
-                    className={`text-lg font-semibold px-4 py-2 focus:outline-none ${activeTab === 'description'
-                        ? 'text-black border-b-2 border-yellow-600'
-                        : 'text-gray-500'
-                      }`}
-                    onClick={() => setActiveTab('description')}
-                  >
-                    DESCRIPTION
-                  </button>
-                  <button
-                    className={`text-lg font-semibold px-4 py-2 focus:outline-none ${activeTab === 'delivery'
-                        ? 'text-black border-b-2 border-yellow-600'
-                        : 'text-gray-500'
-                      }`}
-                    onClick={() => setActiveTab('delivery')}
-                  >
-                    Guide Line
-                  </button>
-                </div>
+        <div className="w-full max-w-4xl mx-auto mt-8">
+          <div className="flex border-b border-gray-200">
+            <button
+              className={`text-lg font-semibold px-4 py-2 focus:outline-none ${activeTab === 'description'
+                ? 'text-black border-b-2 border-yellow-600'
+                : 'text-gray-500'
+                }`}
+              onClick={() => setActiveTab('description')}
+            >
+              DESCRIPTION
+            </button>
+            <button
+              className={`text-lg font-semibold px-4 py-2 focus:outline-none ${activeTab === 'delivery'
+                ? 'text-black border-b-2 border-yellow-600'
+                : 'text-gray-500'
+                }`}
+              onClick={() => setActiveTab('delivery')}
+            >
+              Guide Line
+            </button>
+          </div>
 
-                {/* Tab Content */}
-                <div className="mt-4">
-                  {activeTab === 'description' && (
-                    <div>{product.content}</div>
-                  )}
+          {/* Tab Content */}
+          <div className="mt-4">
+            {activeTab === 'description' && (
 
-                  {activeTab === 'delivery' && (
-                    <div>{product.guideContent}</div>
-                  )}
-                </div>
-              </div>
+              <div>{product.content}</div>
+
+            )}
+
+            {activeTab === 'delivery' && (
+              <div>{product.guideContent}</div>
+            )}
+          </div>
+        </div>
       </div>
       <div className="lg:flex  lg:items-center lg:justify-center  mt-10">
         <h1 className="text center">Related Products</h1>
       </div>
-      <div className="lg:mx-20">
-        <ProductCard />
+      <div className="lg:mx-20 grid grid-cols-1 lg:grid-cols-2">
+        {product.relatedProducts.map((relatedProduct) => (
+          <ProductCard key={relatedProduct._id} product={relatedProduct?.product} />
+        ))}
       </div>
+
       <RelatedProductsSinglePage />
     </div>
   );

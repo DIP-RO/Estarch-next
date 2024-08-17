@@ -108,7 +108,6 @@ export default function Checkout() {
 
         try {
             const response = await axios.post(`${baseUrl}/api/orders`, orderData);
-            alert('Order placed successfully!');
             // window.location.href = `/product/invoice/${response.data.order._id}`
             window.location.href = `/orderStatus/${response.data.order._id}`
         } catch (error) {
