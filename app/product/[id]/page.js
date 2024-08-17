@@ -16,7 +16,7 @@ import SizeChart from "@/components/sizes/page";
 import ProductCard from "@/components/productLike/page";
 import RelatedProductsSinglePage from "@/components/RelatedProducts/page";
 import ContactCard from "@/components/WishlistPhone/page";
-import DeliveryAndDescription from "@/components/DeliveryAndDescription/page";
+
 
 
 
@@ -28,6 +28,7 @@ const ProductDetails = () => {
   const [mainImage, setMainImage] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
   const [warning, setWarning] = useState(false);
+  const [activeTab, setActiveTab] = useState('description');
   const router = useRouter();
   useEffect(() => {
     const fetchProduct = async () => {
@@ -113,7 +114,6 @@ const ProductDetails = () => {
       setWarning(true)
     }
   };
-
   return (
     <div className="container mx-auto p-4">
       <div className="breadcrumbs text-xs md:my-6 my-3 md:pl-8 pl-2">
@@ -239,7 +239,39 @@ const ProductDetails = () => {
             <div className="divider"></div>
 
             <div className="hidden md:block lg:block">
-              <DeliveryAndDescription />
+              <div className="w-full max-w-4xl mx-auto mt-8">
+                <div className="flex border-b border-gray-200">
+                  <button
+                    className={`text-lg font-semibold px-4 py-2 focus:outline-none ${activeTab === 'description'
+                      ? 'text-black border-b-2 border-yellow-600'
+                      : 'text-gray-500'
+                      }`}
+                    onClick={() => setActiveTab('description')}
+                  >
+                    DESCRIPTION
+                  </button>
+                  <button
+                    className={`text-lg font-semibold px-4 py-2 focus:outline-none ${activeTab === 'delivery'
+                      ? 'text-black border-b-2 border-yellow-600'
+                      : 'text-gray-500'
+                      }`}
+                    onClick={() => setActiveTab('delivery')}
+                  >
+                    Guide Line
+                  </button>
+                </div>
+
+                {/* Tab Content */}
+                <div className="mt-4">
+                  {activeTab === 'description' && (
+                    <div>{product.content}</div>
+                  )}
+
+                  {activeTab === 'delivery' && (
+                    <div>{product.guideContent}</div>
+                  )}
+                </div>
+              </div>
             </div>
 
           </div>
@@ -261,14 +293,51 @@ const ProductDetails = () => {
         </div>
       </div>
       <div className="lg:hidden">
-        <DeliveryAndDescription />
+        <div className="w-full max-w-4xl mx-auto mt-8">
+          <div className="flex border-b border-gray-200">
+            <button
+              className={`text-lg font-semibold px-4 py-2 focus:outline-none ${activeTab === 'description'
+                ? 'text-black border-b-2 border-yellow-600'
+                : 'text-gray-500'
+                }`}
+              onClick={() => setActiveTab('description')}
+            >
+              DESCRIPTION
+            </button>
+            <button
+              className={`text-lg font-semibold px-4 py-2 focus:outline-none ${activeTab === 'delivery'
+                ? 'text-black border-b-2 border-yellow-600'
+                : 'text-gray-500'
+                }`}
+              onClick={() => setActiveTab('delivery')}
+            >
+              Guide Line
+            </button>
+          </div>
+
+          {/* Tab Content */}
+          <div className="mt-4">
+            {activeTab === 'description' && (
+
+              <div>{product.content}</div>
+
+            )}
+
+            {activeTab === 'delivery' && (
+              <div>{product.guideContent}</div>
+            )}
+          </div>
+        </div>
       </div>
       <div className="lg:flex  lg:items-center lg:justify-center  mt-10">
         <h1 className="text center">Related Products</h1>
       </div>
-      <div className="lg:mx-20">
-        <ProductCard />
+      <div className="lg:mx-20 grid grid-cols-1 lg:grid-cols-2">
+        {product.relatedProducts.map((relatedProduct) => (
+          <ProductCard key={relatedProduct._id} product={relatedProduct?.product} />
+        ))}
       </div>
+
       <RelatedProductsSinglePage />
     </div>
   );
