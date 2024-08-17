@@ -19,13 +19,29 @@ import baseUrl from '../services/baseUrl';
 import axios from 'axios';
 import { CiSearch } from 'react-icons/ci';
 
+
 export default function NavBar() {
   const totalQuantity = useSelector(state => state.cart.totalQuantity);
   const dispatch = useDispatch();
   const { authUser } = useContext(AuthContext)
   const [types, setTypes] = useState([])
   const [isOpen, setIsOpen] = useState(false);
-
+  
+  const [results, setResults] = useState([]);
+  const [error, setError] = useState('');
+  const [isSearchVisible, setIsSearchVisible] = useState(false);  // State to toggle search input visibility
+  const [searchQuery, setSearchQuery] = useState('');
+  const handleSearch = async () => {
+    try {
+      setError('');
+      const response = await axios.get(`http://localhost:5000/api/products/search`, {
+        params: { productName: searchQuery }
+      });
+      setResults(response.data);
+    } catch (err) {
+      setError(err.response ? err.response.data.message : 'An error occurred');
+    }
+  };
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -37,7 +53,11 @@ export default function NavBar() {
 
   }, [])
 
-
+  const toggleSearchInput = () => {
+    setIsSearchVisible(!isSearchVisible);
+    setResults([]);
+    setSearchQuery('');  
+  };
   return (
     <div className="">
       <div className="md:px-10 lg:px-10 bg-base-100 shadow-sm md:shadow-none navbar border-b fixed lg:relative top-0 z-[99999]">
@@ -86,8 +106,53 @@ export default function NavBar() {
             </div>
           </div>
           <div className='flex  gap-3 ml-10 lg:hidden md:hidden'>
-            {/* <CiSearch className="text-[30px]" /> */}
-            <CiSearch size={25} />
+
+            <div className="lg:flex md:flex w-fit items-center justify-center hidden">
+              <div className="flex flex-col gap-2 w-full">
+                {/* Search Icon */}
+                <CiSearch
+                  className="text-[30px] cursor-pointer opacity-70"
+                  onClick={toggleSearchInput}  // Toggle search input visibility
+                />
+
+                {/* Input Container */}
+                {isSearchVisible && (
+                  <label className="input input-bordered flex items-center gap-2 mt-2">
+                    <div className="flex items-center gap-2 w-full">
+                      <input
+                        type="text"
+                        className="p-2 rounded-lg w-full"
+                        placeholder="Search for a product"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                      />
+                      <button
+                        className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition"
+                        onClick={handleSearch}
+                      >
+                        Search
+                      </button>
+                    </div>
+                  </label>
+                )}
+
+                {/* Error Message */}
+                {error && <p className="text-red-500 mt-2">{error}</p>}
+
+                {/* Results - Displayed directly under the search box */}
+                {results.length > 0 && (
+                  <div className="bg-white border border-gray-200 rounded-lg shadow-md p-2 max-h-48 overflow-y-auto w-full mt-2">
+                    <ul className="list-disc pl-6">
+                      {results.map((product) => (
+                        <li key={product._id} className="mt-1">
+                          {product.productName}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
             <div className="relative " onClick={() => dispatch(openCardSlide())}>
               <HiOutlineShoppingBag className="relative text-2xl" />
               {totalQuantity > 0 && (
@@ -150,13 +215,61 @@ export default function NavBar() {
           <Link href={'/new-arrival'} className='absolute left-[41%] top-[62%] lg:left-[47%] lg:top-[27%]  bg-yellow-300  px-2 text-[10px] lg:text-xs text-center rounded-sm' >New</Link>
 
           <div className="lg:flex md:flex w-fit items-center justify-center hidden">
-            <label className="input input-bordered flex items-center gap-2">
-              <input type="text" className="grow border-0" placeholder="Search" />
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4 opacity-70">
-                <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd"></path>
-              </svg>
-            </label>
+            <div className="flex flex-col  w-full">
+              <label className="input input-bordered flex items-center gap-2">
+                {/* Input Container */}
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    className="p-2 rounded-lg w-full"
+                    placeholder="Search for a product"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    className="h-6 w-6 opacity-70 cursor-pointer"
+                    onClick={handleSearch}
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </label>
+
+              {/* Error Message */}
+              {error && <p className="text-red-500 mt-2">{error}</p>}
+
+              {/* Results - Displayed directly under the search box */}
+              {results.length > 0 || searchQuery ? (
+                <div className="bg-white border border-gray-200 rounded-lg shadow-md p-2 max-h-48 overflow-y-auto w-full">
+                  {results.length > 0 ? (
+                    <ul className="">
+                      {results.map((product) => (
+                        <li key={product._id} className="mt-1">
+                          <div className='flex gap-2 items-center'>
+                          <Image src={product.images[0]} alt='' width={20} height={20}/>
+                          {product.productName}
+                          
+                         </div>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>No products found</p>
+                  )}
+                </div>
+              ) : null}
+            </div>
           </div>
+
+
+
           <div className="flex gap-4 justify-center items-center overflow-x-auto whitespace-nowrap px-2 scrollbar-hide">
             <a href="/">
               <button className="uppercase whitespace-nowrap text-sm md:text-[16px]">HOME</button>
