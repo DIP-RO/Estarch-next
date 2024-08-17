@@ -19,6 +19,7 @@ import baseUrl from '../services/baseUrl';
 import axios from 'axios';
 import { CiSearch } from 'react-icons/ci';
 import { useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 
 export default function NavBar() {
