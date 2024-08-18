@@ -27,9 +27,6 @@ export default function NavBar() {
   const [types, setTypes] = useState([])
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-
-  const [isSearchVisible, setIsSearchVisible] = useState(false);  // State to toggle search input visibility
-  const [searchQuery, setSearchQuery] = useState('');
   const [products, setProducts] = useState([]); // State to hold all products
   const [filteredProduct, setFilteredProduct] = useState([]); // State to hold filtered products
   const [productValue, setProductValue] = useState('');

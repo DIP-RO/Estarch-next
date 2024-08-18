@@ -21,6 +21,8 @@ export default function OrderStatus() {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
+        console.log(data);
+
         setOrder(data);
         setLoading(false);
       } catch (error) {
@@ -37,6 +39,16 @@ export default function OrderStatus() {
 
   document.title = "Invoice Detail";
 
+  const handleShare = () => {
+    const phoneNumber = "+8801781813939"; // Replace with the recipient's phone number in international format
+    const message = `Hello Estarch,
+\n I've just placed an order on your website. My invoice number is [${order.invoice}]. I'm looking forward to receiving my order soon!
+\n Thank you`;
+
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+    window.open(whatsappUrl, "_blank");
+  };
   return (
     <div className="bg-gray-100 mt-10 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
       <Head>
@@ -50,11 +62,11 @@ export default function OrderStatus() {
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-6 p-4 bg-gray-200 rounded-lg'>
           <div className='sm:pr-4 border-b-2 sm:border-b-0 sm:border-r-2 border-gray-400'>
             <h1 className='font-semibold  mb-2'>Summary</h1>
-            <p className='text-sm font-medium'>Order: #<span className='font-normal'>{order.orderNumber}</span></p>
+            <p className='text-sm font-medium'>Invoice: #<span className='font-normal'>{order.invoice}</span></p>
             <p className='text-sm font-medium'>Order Date: <span className='font-normal'>{new Date(order.createdAt).toLocaleDateString()}</span></p>
             <p className='text-sm font-medium'>Order Total: ৳ <span className='font-normal'>{order.grandTotal}</span></p>
           </div>
-        
+
           <div className='sm:pl-4'>
             <h1 className='font-semibold  mb-2'>Shipping Address</h1>
             <p className='text-sm font-medium'>Name: <span className='font-normal'>{order.name}</span></p>
@@ -108,15 +120,15 @@ export default function OrderStatus() {
         </div>
 
         <div className="flex justify-center items-center gap-3 text-center mt-10">
-        <Link href="/">
-          <button className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition">
-            Shopping Again
+          <Link href="/">
+            <button className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition">
+              Shopping Again
             </button>
           </Link>
-        <a href="https://m.me/estarch.com.bd">
-        <button className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition">
-  💬 MESSAGE US
-</button>
+          <a >
+            <button onClick={handleShare} className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition">
+              💬 MESSAGE US
+            </button>
 
           </a>
         </div>

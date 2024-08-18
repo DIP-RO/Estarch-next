@@ -6,7 +6,6 @@ import { openCardSlide } from "@/lib/slices/cardSlideSlice";
 import { addToCart } from "@/lib/slices/cartSlice";
 const ProductCard = (product) => {
   const [selectedSize, setSelectedSize] = useState("");
-  console.log(product.product);
   const dispatch = useDispatch();
   const handleSizeChange = (e) => {
     setSelectedSize(e.target.value);

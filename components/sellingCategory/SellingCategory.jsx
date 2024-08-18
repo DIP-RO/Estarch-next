@@ -10,11 +10,16 @@ import './styles.css';
 
 const SellingCategory = () => {
     const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         axios.get(`${baseUrl}/api/categories/categories`)
             .then(res => {
                 setCategories(res.data);
+                setLoading(false);
+            })
+            .catch(() => {
+                setLoading(false); // Set loading to false even if there is an error
             });
     }, []);
 
@@ -52,21 +57,42 @@ const SellingCategory = () => {
                 modules={[FreeMode, Navigation, Autoplay]}
                 className="mySwiper"
             >
-                {categories.map(cat => (
-                    <SwiperSlide key={cat._id}>
-                        <Link href={`${cat.type.name}/${cat._id}`}>
-                            <div className='relative text-center rounded-md bg-cover bg-center w-[162px]  lg:w-[302px]  h-[100px] lg:h-[180px]' style={{ backgroundImage: `url(${cat.image})` }}>
-                                <button className='relative text-[8px] md:text-sm top-14 lg:top-32 px-3 cursor-pointer text-white rounded-lg py-1 bg-[#00000058] z-20 border-2'>{cat.name}</button>
-                                <div className=" bg-[#1111112f] z-10 w-full h-full rounded-md">
-                                    {/* This div is used for an overlay on the background image */}
+                {loading ? (
+                    // Render 4 skeletons (or more, depending on your design)
+                    Array.from({ length: 4 }).map((_, index) => (
+                        <SwiperSlide key={index}>
+                            <CategorySkeleton />
+                        </SwiperSlide>
+                    ))
+                ) : (
+                    categories.map(cat => (
+                        <SwiperSlide key={cat._id}>
+                            <Link href={`${cat.type.name}/${cat._id}`}>
+                                <div className='relative text-center rounded-md bg-cover bg-center w-[162px] lg:w-[302px] h-[100px] lg:h-[180px]' style={{ backgroundImage: `url(${cat.image})` }}>
+                                    <button className='relative text-[8px] md:text-sm top-14 lg:top-32 px-3 cursor-pointer text-white rounded-lg py-1 bg-[#00000058] z-20 border-2'>{cat.name}</button>
+                                    <div className="bg-[#1111112f] z-10 w-full h-full rounded-md">
+                                        {/* This div is used for an overlay on the background image */}
+                                    </div>
                                 </div>
-                            </div>
-                        </Link>
-                    </SwiperSlide>
-                ))}
+                            </Link>
+                        </SwiperSlide>
+                    ))
+                )}
             </Swiper>
         </div>
     );
 };
+
+function CategorySkeleton() {
+    return (
+        <div className='relative text-center rounded-md bg-gray-300 animate-pulse w-[162px] lg:w-[302px] h-[100px] lg:h-[180px]'>
+            <div className='absolute inset-0 bg-gray-300'></div>
+            <div className="absolute inset-0 bg-gray-400 rounded-md opacity-50"></div>
+            <div className='relative text-[8px] md:text-sm top-14 lg:top-32 px-3 text-white rounded-lg py-1 bg-[#00000058] z-20 border-2'>
+                <div className='h-3 w-3/4 bg-gray-300 rounded-md mx-auto'></div>
+            </div>
+        </div>
+    );
+}
 
 export default SellingCategory;

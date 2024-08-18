@@ -39,6 +39,8 @@ const ProductDetails = () => {
 
         setProduct(response.data);
         setMainImage(response.data.images[0]);
+        console.log(response.data);
+        
         // if (response.data.selectedSizes.length > 0) {
         //   setSelectedSize(response.data.selectedSizes[0]);
         // }
@@ -103,11 +105,11 @@ const ProductDetails = () => {
   }
   const handleShare = () => {
     if (selectedSize) {
-      const phoneNumber = "8801610362077"; // Replace with the recipient's phone number in international format
+      const phoneNumber = "8801781813939"; // Replace with the recipient's phone number in international format
       const productName = product.productName
       const price = product.regularPrice > product.salePrice ? product.salePrice : product.regularPrice
-      const productUrl = "https://next.estarch.online/product/66ae8bd4b900359962f13056";
-      const message = `Hello. I want to buy this product:\n\n${productName}\nPrice: ${price} \nSize: ${selectedSize}\nURL: ${productUrl}`;
+      const currentUrl = window.location.href
+      const message = `Hello. I want to buy this product:\n\n${productName}\nPrice: ${price} \nSize: ${selectedSize}\nURL: ${currentUrl}`;
 
       const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
@@ -170,7 +172,7 @@ const ProductDetails = () => {
             <div className="flex gap-1 items-center">
               <p className="text-sm font-bold">Select Size :</p>
               <div className='w-48 h-[40px] rounded-md flex justify-between '>
-                <p className="flex gap-2 items-center" onClick={() => dispatch(openSize())}>
+                <p className="flex gap-2 items-center" onClick={() => dispatch(openSize(product.charts))}>
                   (<PiCoatHanger /> Size guide )
                 </p>
               </div>
@@ -237,7 +239,7 @@ const ProductDetails = () => {
             <div className="divider"></div>
             <ContactCard />
             <div className="divider"></div>
-            <SizeChart />
+            <SizeChart   charts={product.charts}  />
             <div className="divider"></div>
 
             <div className="hidden md:block lg:block">
