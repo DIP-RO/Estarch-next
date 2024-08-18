@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'next/navigation';
 import baseUrl from '@/components/services/baseUrl';
+import { PropagateLoader } from 'react-spinners';
 export default function Man() {
 
     const [categories, setCategories] = useState([])
@@ -20,6 +21,12 @@ export default function Man() {
             })
     }, [category])
 
+    
+    if (categories.length <= 0) {
+        return (<div className="flex justify-center
+        items-center"><PropagateLoader color="#060101" />{console.log("Loader")}</div>);
+      }
+
     return (
         <div className="bg-white ">
             <div className="relative flex justify-center items-center h-[150px] lg:h-[500px] md:h-[500px] mt-5 bg-gray-100">
@@ -32,6 +39,8 @@ export default function Man() {
                         className="opacity-80"
                     />
                 </div>
+
+                {console.log("main")}
 
                 <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-center items-center text-white">
                     <div className="absolute text-center">

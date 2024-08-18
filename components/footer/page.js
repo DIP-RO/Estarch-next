@@ -14,7 +14,7 @@ import footer from '../../public/images/footer.jpg'
 export default function Footer() {
   return (
     <div
-      className="bg-cover bg-center bg-no-repeat"
+      className="bg-cover bg-center bg-no-repeat mt-[300px]"
       style={{
         backgroundImage:  `url(${footer.src})`,
         backgroundBlendMode: "overlay",

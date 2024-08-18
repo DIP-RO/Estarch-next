@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 import baseUrl from "@/components/services/baseUrl";
 import axios from "axios";
 import { FaCircleArrowDown } from "react-icons/fa6";
+import { PropagateLoader } from "react-spinners";
 
 const FeatureAllProducts = () => {
     const [selectedRanges, setSelectedRanges] = useState([]);
@@ -127,6 +128,11 @@ const FeatureAllProducts = () => {
         });
         setUniqueSizes(Array.from(sizes));
     };
+
+    if (products.length <= 0) {
+        return (<div className="flex justify-center
+        items-center"><PropagateLoader color="#060101" />{console.log("Loader")}</div>);
+      }
 
 
     return (

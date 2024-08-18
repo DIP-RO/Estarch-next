@@ -179,13 +179,15 @@ const ProductDetails = () => {
             </div>
 
             <div className="flex mb-4">
-              {product.selectedSizes && product.selectedSizes.map(size => (
+              {product.sizeDetails && product.sizeDetails.map(size => (
+                
                 <button
-                  key={size}
-                  className={`border px-3   mr-2 ${selectedSize === size ? 'bg-gray-300' : ''}`}
-                  onClick={() => { handleSizeClick(size), setWarning(false) }}
+                   key={size.size}
+                   className={`border px-3 ${size.openingStock <= 0 ? 'btn-disabled': ''}  btn btn-sm   mr-2 ${selectedSize === size.size ? 'bg-gray-500 text-white' : ''}`}
+                   onClick={() => { handleSizeClick(size.size), setWarning(false) }} 
                 >
-                  {size}
+                  {size.size}
+
                 </button>
               ))}
             </div>

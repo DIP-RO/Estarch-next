@@ -12,6 +12,7 @@ import baseUrl from '../services/baseUrl';
 import { useDispatch } from 'react-redux';
 import ProductModal from '../ProductModal/page';
 import { openProductModal } from '@/lib/slices/productModalSlice';
+import { PropagateLoader } from 'react-spinners';
 export default function FeatureProduct() {
 
 
@@ -60,6 +61,13 @@ export default function FeatureProduct() {
         setProducts(res.data)
       })
   }, [])
+
+
+  if (products.length <= 0) {
+    return (<div className="flex justify-center
+    items-center"><PropagateLoader color="#060101" />{console.log("Loader")}</div>);
+  }
+
 
   return (
     <div>

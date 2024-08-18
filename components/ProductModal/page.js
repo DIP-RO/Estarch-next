@@ -70,7 +70,7 @@ const ProductModal = () => {
       {/* Mobile Modal */}
       <div className={`fixed lg:hidden md:hidden inset-0 bg-black bg-opacity-50  flex items-center justify-center z-[100] w-full h-screen`}>
 
-        <div  onClick={() => dispatch(closeProductModal())} className={` fixed bottom-0 p-6 rounded-lg shadow-lg max-w-md h-screen w-full`}
+        <div onClick={() => dispatch(closeProductModal())} className={` fixed bottom-0 p-6 rounded-lg shadow-lg max-w-md h-screen w-full`}
         ></div>
 
         <div
@@ -107,13 +107,15 @@ const ProductModal = () => {
               <h3 onClick={() => dispatch(openSize())} className="text-sm text-cyan-700 mb-2 flex gap-2">Size Guide <svg width="4" height="4" viewBox="0 0 20 20" fill="none" className="h-4 w-4" xmlns="http://www.w3.org/2000/svg"><path d="M18.3809 13.544L6.46212 1.6127C6.34603 1.49648 6.20817 1.40428 6.05642 1.34138C5.90468 1.27847 5.74202 1.24609 5.57775 1.24609C5.41348 1.24609 5.25082 1.27847 5.09907 1.34138C4.94733 1.40428 4.80947 1.49648 4.69337 1.6127L1.61837 4.69395C1.38556 4.92816 1.25488 5.24497 1.25488 5.5752C1.25488 5.90543 1.38556 6.22225 1.61837 6.45645L13.5371 18.3877C13.6539 18.5036 13.7924 18.5952 13.9447 18.6574C14.097 18.7196 14.2601 18.7512 14.4246 18.7502C14.7547 18.7505 15.0715 18.6202 15.3059 18.3877L18.3809 15.3065C18.6137 15.0722 18.7444 14.7554 18.7444 14.4252C18.7444 14.095 18.6137 13.7782 18.3809 13.544ZM14.4246 17.5002L2.49962 5.5752L5.57462 2.5002L7.94337 4.86895L6.53712 6.2502L7.41837 7.13145L8.82462 5.7502L11.4059 8.33145L9.99962 9.7377L10.8871 10.6252L12.2934 9.21895L14.8746 11.8002L13.4684 13.2065L14.3746 14.0877L15.7809 12.6815L17.4996 14.4252L14.4246 17.5002Z" fill="#5B9BBE"></path></svg></h3>
             </div>
             <div className="flex space-x-2">
-              {sizes?.map((size) => (
+              {selectedProduct?.sizeDetails && selectedProduct?.sizeDetails?.map(size => (
+
                 <button
-                  key={size}
-                  className={`px-4 py-2 border rounded-lg ${selectedSize === size ? 'bg-gray-800 text-white' : 'bg-gray-100'}`}
-                  onClick={() => { setSelectedSize(size); setWarning(false); }}
+                  key={size.size}
+                  className={`border px-3 ${size.openingStock <= 0 ? 'btn-disabled' : ''}  btn btn-sm   mr-2 ${selectedSize === size.size ? 'bg-gray-500 text-white' : ''}`}
+                  onClick={() => { setSelectedSize(size.size), setWarning(false) }}
                 >
-                  {size}
+                  {size.size}
+
                 </button>
               ))}
             </div>
@@ -162,13 +164,15 @@ const ProductModal = () => {
 
               <h3 className="text-sm font-semibold mb-2">Select Size</h3>
               <div className="flex space-x-2">
-                {sizes?.map((size) => (
+                {selectedProduct?.sizeDetails && selectedProduct?.sizeDetails?.map(size => (
+
                   <button
-                    key={size}
-                    className={`px-4 py-2 border rounded-lg ${selectedSize === size ? 'bg-gray-800 text-white' : 'bg-gray-100'}`}
-                    onClick={() => { setSelectedSize(size); setWarning(false); }}
+                    key={size.size}
+                    className={`border px-3 ${size.openingStock <= 0 ? 'btn-disabled' : ''}  btn btn-sm   mr-2 ${selectedSize === size.size ? 'bg-gray-500 text-white' : ''}`}
+                    onClick={() => { setSelectedSize(size.size), setWarning(false) }}
                   >
-                    {size}
+                    {size.size}
+
                   </button>
                 ))}
               </div>

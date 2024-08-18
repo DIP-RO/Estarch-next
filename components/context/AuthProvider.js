@@ -1,5 +1,7 @@
 import {  createContext, useContext, useEffect, useState } from "react";
 import baseUrl from "../services/baseUrl";
+import { useDispatch } from "react-redux";
+import { setInitialState } from "@/lib/slices/cartSlice";
 
 
 export const AuthContext = createContext();
@@ -10,6 +12,17 @@ export const useAuthContext = () => {
 export const AuthContextProvider = ({ children }) => {
     const [authUser, setAuthUser] = useState(null);
     const [loadingUser, setLoadingUser] = useState(true);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const totalQuantity = JSON.parse(localStorage.getItem('totalQuantity')) || 0;
+      dispatch(setInitialState({ items: cartItems, totalQuantity }));
+    }
+  }, [dispatch]);
+
+  
 
     useEffect(() => {
         const fetchUserData = async (userId) => {
