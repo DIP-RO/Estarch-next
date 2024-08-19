@@ -53,7 +53,8 @@ export default function NavBar() {
   useEffect(() => {
     if (productValue) {
       const filtered = products.filter(product =>
-        product.productName.toLowerCase().includes(productValue.toLowerCase())
+        product.productName.toLowerCase().includes(productValue.toLowerCase()) ||
+        product.SKU.toLowerCase().includes(productValue.toLowerCase())
       );
       setFilteredProduct(filtered);
     } else {
@@ -82,15 +83,15 @@ export default function NavBar() {
 
   }, [])
 
-  const clickProduct=(p)=>{
+  const clickProduct = (p) => {
     router.push(`/product/${p._id}`)
     setProductValue('')
   }
 
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
-    setProductValue(''); // Reset input when opening/closing
-    setFilteredProduct([]); // Reset filtered results
+    setProductValue('');
+    setFilteredProduct([]);
   };
   return (
     <div className="">
@@ -209,7 +210,7 @@ export default function NavBar() {
           <div className='grid grid-cols-2 gap-5 '>
             <div className='hidden lg:block md:block'>
               <input value={productValue}
-                onChange={(e) => setProductValue(e.target.value)} type="text" placeholder="Type Product Name" className="input input-bordered w-full mt-4  " />
+                onChange={(e) => setProductValue(e.target.value)} type="text" placeholder="Product Name Or SKU" className="input input-bordered w-full mt-4  " />
 
             </div>
           </div>
@@ -262,7 +263,7 @@ export default function NavBar() {
               value={productValue}
               onChange={(e) => setProductValue(e.target.value)}
               type="text"
-              placeholder="Type Name"
+              placeholder="Product Name Or SKU"
               className="input input-bordered mt-3 md:hidden grid"
             />
             {productValue && (
