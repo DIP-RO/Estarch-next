@@ -133,10 +133,6 @@ const FeatureAllProducts = () => {
         setUniqueSizes(Array.from(sizes));
     };
 
-    if (products.length <= 0) {
-        return (<div className="flex justify-center
-        items-center"><PropagateLoader color="#060101" />{console.log("Loader")}</div>);
-      }
 
 
     return (

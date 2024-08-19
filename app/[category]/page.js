@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'next/navigation';
 import baseUrl from '@/components/services/baseUrl';
-import { PropagateLoader } from 'react-spinners';
 export default function Man() {
 
     const [categories, setCategories] = useState([])
@@ -21,11 +20,6 @@ export default function Man() {
             })
     }, [category])
 
-    
-    if (categories.length <= 0) {
-        return (<div className="flex justify-center
-        items-center"><PropagateLoader color="#060101" />{console.log("Loader")}</div>);
-      }
 
     return (
         <div className="bg-white ">

@@ -100,10 +100,6 @@ const ProductDetails = () => {
     setSelectedSize(size);
   };
 
-  if (!product) {
-    return <div className="flex justify-center
-    items-center"><PropagateLoader color="#060101" /></div>;
-  }
   const handleShare = () => {
     if (selectedSize) {
       const phoneNumber = "8801781813939"; // Replace with the recipient's phone number in international format
@@ -131,16 +127,16 @@ console.log("product:",product);
             <Link className="uppercase" href={'/'}>Home</Link>
           </li>
           <li>
-            <Link className="uppercase" href={`/${product.selectedType}`}>{product.selectedType}</Link>
+            <Link className="uppercase" href={`/${product?.selectedType}`}>{product?.selectedType}</Link>
           </li>
           <li>
-            <Link href={`/${product.selectedType}/${product.selectedCategory}`} className="uppercase ">{product.selectedCategoryName}</Link>
+            <Link href={`/${product?.selectedType}/${product?.selectedCategory}`} className="uppercase ">{product?.selectedCategoryName}</Link>
           </li>
           <li>
-            <Link href={`/${product.selectedType}/${product.selectedCategory}/${product.selectedSubCategory}`} className="uppercase ">{product.selectedSubCategory}</Link>
+            <Link href={`/${product?.selectedType}/${product?.selectedCategory}/${product?.selectedSubCategory}`} className="uppercase ">{product?.selectedSubCategory}</Link>
           </li>
           <li>
-            <Link href={`/product/${id}`} className="uppercase font-bold">{product.productName}</Link>
+            <Link href={`/product/${id}`} className="uppercase font-bold">{product?.productName}</Link>
           </li>
         </ul>
       </div>
@@ -151,17 +147,17 @@ console.log("product:",product);
               width={500}
               height={500}
               src={mainImage}
-              alt={product.productName}
+              alt={product?.productName}
               className="object-cover"
             />
             <div className="flex mt-2 gap-2">
-              {product.images && product.images.map((img, index) => (
+              {product?.images && product?.images.map((img, index) => (
                 <Image
                   key={index}
                   width={120} // Set the maximum size for larger screens
                   height={120} // Set the maximum size for larger screens
                   src={img}
-                  alt={product.productName}
+                  alt={product?.productName}
                   className="w-20 h-30  md:w-30 md:h-30 lg:w-30 lg:h-30 object-cover cursor-pointer"
                   onClick={() => handleThumbnailClick(img)}
                 />
@@ -170,31 +166,31 @@ console.log("product:",product);
 
           </div>
           <div className="w-full md:w-1/2  lg:p-4">
-            <h1 className="text-2xl font-bold">{product.productName}</h1>
-            <p className="text-sm text-gray-600 ">SKU: {product.SKU}</p>
+            <h1 className="text-2xl font-bold">{product?.productName}</h1>
+            <p className="text-sm text-gray-600 ">SKU: {product?.SKU}</p>
             <p className="text-red-600 text-xl font-semibold">
-              <span className="line-through font-normal text-gray-500 mr-2" style={{ fontSize: "0.8em" }}>৳ {product.regularPrice}</span>
+              <span className="line-through font-normal text-gray-500 mr-2" style={{ fontSize: "0.8em" }}>৳ {product?.regularPrice}</span>
 
-              ৳ {product.salePrice}
+              ৳ {product?.salePrice}
             </p>
             <div className="flex gap-1 items-center">
               <p className="text-sm font-bold">Select Size :</p>
               <div className='w-48 h-[40px] rounded-md flex justify-between '>
-                <p className="flex gap-2 items-center" onClick={() => dispatch(openSize(product.charts))}>
+                <p className="flex gap-2 items-center" onClick={() => dispatch(openSize(product?.charts))}>
                   (<PiCoatHanger /> Size guide )
                 </p>
               </div>
             </div>
 
             <div className="flex mb-4">
-              {product.sizeDetails && product.sizeDetails.map(size => (
+              {product?.sizeDetails && product?.sizeDetails.map(size => (
                 
                 <button
                    key={size.size}
-                   className={`border px-3 ${size.openingStock <= 0 ? 'btn-disabled': ''}  btn btn-sm   mr-2 ${selectedSize === size.size ? 'bg-black text-white' : ''}`}
-                   onClick={() => { handleSizeClick(size.size), setWarning(false) }} 
+                   className={`border px-3 ${size.openingStock <= 0 ? 'btn-disabled': ''}  btn btn-sm   mr-2 ${selectedSize === size?.size ? 'bg-black text-white' : ''}`}
+                   onClick={() => { handleSizeClick(size?.size), setWarning(false) }} 
                 >
-                  {size.size}
+                  {size?.size}
 
                 </button>
               ))}
@@ -249,7 +245,7 @@ console.log("product:",product);
             <div className="divider"></div>
             <ContactCard />
             <div className="divider"></div>
-            <SizeChart charts={product.charts}/>
+            <SizeChart charts={product?.charts}/>
 
             <div className="hidden md:block lg:block">
               <div className="w-full max-w-4xl mx-auto mt-8">
@@ -277,11 +273,11 @@ console.log("product:",product);
                 {/* Tab Content */}
                 <div className="mt-4">
                   {activeTab === 'description' && (
-                    <div>{product.content ? <p>{parse(product.content)}</p> : <p>No content available.</p>}</div>
+                    <div>{product?.content ? <p>{parse(product?.content)}</p> : <p>No content available.</p>}</div>
                   )}
 
                   {activeTab === 'delivery' && (
-                    <div> {product.guideContent ? <p>{parse(product.guideContent)}</p> : <p>No content available.</p>}</div>
+                    <div> {product?.guideContent ? <p>{parse(product?.guideContent)}</p> : <p>No content available.</p>}</div>
                   )}
                 </div>
               </div>
@@ -332,12 +328,12 @@ console.log("product:",product);
           <div className="mt-4">
             {activeTab === 'description' && (
 
-              <div> {product.content ? <p>{parse(product.content)}</p> : <p>No content available.</p>}</div>
+              <div> {product?.content ? <p>{parse(product?.content)}</p> : <p>No content available.</p>}</div>
 
             )}
 
             {activeTab === 'delivery' && (
-              <div> {product.guideContent ? <p>{parse(product.guideContent)}</p> : <p>No content available.</p>}</div>
+              <div> {product?.guideContent ? <p>{parse(product?.guideContent)}</p> : <p>No content available.</p>}</div>
 
             )}
           </div>
@@ -347,8 +343,8 @@ console.log("product:",product);
         <h1 className="text center">Related Products</h1>
       </div>
       <div className="lg:mx-20 grid grid-cols-1 lg:grid-cols-2">
-        {product.relatedProducts.map((relatedProduct) => (
-          <ProductCard key={relatedProduct._id} product={relatedProduct?.product} />
+        {product?.relatedProducts.map((relatedProduct) => (
+          <ProductCard key={relatedProduct?._id} product={relatedProduct?.product} />
         ))}
       </div>
 

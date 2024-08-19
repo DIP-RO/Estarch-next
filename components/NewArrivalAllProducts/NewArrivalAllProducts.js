@@ -10,7 +10,6 @@ import { FaCircleArrowDown } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import { openProductModal } from "@/lib/slices/productModalSlice";
 import ProductModal from "../ProductModal/page";
-import { PropagateLoader } from "react-spinners";
 
 const NewArrivalAllProducts = () => {
     const [selectedRanges, setSelectedRanges] = useState([]);
@@ -133,10 +132,6 @@ const NewArrivalAllProducts = () => {
         setUniqueSizes(Array.from(sizes));
     };
 
-    if (products.length <= 0) {
-        return (<div className="flex justify-center
-        items-center"><PropagateLoader color="#060101" />{console.log("Loader")}</div>);
-      }
 
 
 
@@ -246,13 +241,13 @@ const NewArrivalAllProducts = () => {
                     </div>
                 </div>
 
-                <div className="drawer-side h-full lg:h-screen z-[99999]">
+                <div className="drawer-side z-[99999]">
                     <label
                         htmlFor="my-drawer-2"
                         aria-label="close sidebar"
-                        className="drawer-overlay"
+                        className="drawer-overlay "
                     ></label>
-                    <ul className="menu lg:bg-white bg-base-200 min-h-full text-base-content lg:h-full w-60 p-4 sticky">
+                    <ul className="menu lg:bg-white bg-base-200  text-base-content l w-60 p-4 sticky ">
                         {/* Filter */}
                         <div className="mr-8">
                             <h1 className="text-xl">FILTER BY</h1>
