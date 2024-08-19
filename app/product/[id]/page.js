@@ -163,7 +163,7 @@ const ProductDetails = () => {
           </div>
           <div className="w-full md:w-1/2  lg:p-4">
             <h1 className="text-2xl font-bold">{product.productName}</h1>
-            <p className="text-sm text-gray-600 ">SKU: {product.sku}</p>
+            <p className="text-sm text-gray-600 ">SKU: {product.SKU}</p>
             <p className="text-red-600 text-xl font-semibold">
               <span className="line-through font-normal text-gray-500 mr-2" style={{ fontSize: "0.8em" }}>৳ {product.regularPrice}</span>
 
