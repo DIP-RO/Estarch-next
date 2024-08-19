@@ -17,10 +17,6 @@ import ProductCard from "@/components/productLike/page";
 import RelatedProductsSinglePage from "@/components/RelatedProducts/page";
 import ContactCard from "@/components/WishlistPhone/page";
 import parse from 'html-react-parser';
-import { PropagateLoader } from "react-spinners";
-
-
-
 
 
 const ProductDetails = () => {
@@ -37,11 +33,10 @@ const ProductDetails = () => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`${baseUrl}/api/products/products/product/${id}`);
-
         setProduct(response.data);
-        setMainImage(response.data.images[0]);
+        setMainImage(response.data?.images[0]);
         console.log(response.data);
-        
+
         // if (response.data.selectedSizes.length > 0) {
         //   setSelectedSize(response.data.selectedSizes[0]);
         // }
@@ -59,10 +54,10 @@ const ProductDetails = () => {
       setWarning(false)
       dispatch(openCardSlide())
       dispatch(addToCart({
-        id: product._id,
+        id: product?._id,
         product: {
-          title: product.productName,
-          price: product.salePrice,
+          title: product?.productName,
+          price: product?.salePrice,
           colors: [{ images: [{ url: mainImage }] }],
           stock: { quantity: 10 }, // Adjust based on actual product details
         },
@@ -76,7 +71,7 @@ const ProductDetails = () => {
   };
   const buyNowButton = () => {
     if (selectedSize) {
-      router.push(`/product/order/${product._id}/${selectedSize}`);
+      router.push(`/product/order/${product?._id}/${selectedSize}`);
     } else {
       setWarning(true)
     }
@@ -103,8 +98,8 @@ const ProductDetails = () => {
   const handleShare = () => {
     if (selectedSize) {
       const phoneNumber = "8801781813939"; // Replace with the recipient's phone number in international format
-      const productName = product.productName
-      const price = product.regularPrice > product.salePrice ? product.salePrice : product.regularPrice
+      const productName = product?.productName
+      const price = product?.regularPrice > product?.salePrice ? product?.salePrice : product?.regularPrice
       const currentUrl = window.location.href
       const message = `Hello. I want to buy this product:\n\n${productName}\nPrice: ${price} \nSize: ${selectedSize}\nURL: ${currentUrl}`;
 
@@ -116,7 +111,7 @@ const ProductDetails = () => {
     }
   };
 
-console.log("product:",product);
+  console.log("product:", product);
 
 
   return (
@@ -143,13 +138,17 @@ console.log("product:",product);
       <div className="flex flex-col md:flex-row justify-center">
         <div className="flex flex-col md:flex-row w-full md:w-2/3 border rounded-lg p-4">
           <div className="w-full md:w-1/2">
-            <Image
-              width={500}
-              height={500}
-              src={mainImage}
-              alt={product?.productName}
-              className="object-cover"
-            />
+            {mainImage ? (
+              <Image
+                width={500}
+                height={500}
+                src={mainImage}
+                alt={product?.productName || "Product Image"}
+                className="object-cover"
+              />
+            ) : (
+              <p>Loading image...</p>
+            )}
             <div className="flex mt-2 gap-2">
               {product?.images && product?.images.map((img, index) => (
                 <Image
@@ -183,12 +182,12 @@ console.log("product:",product);
             </div>
 
             <div className="flex mb-4">
-              {product?.sizeDetails && product?.sizeDetails.map(size => (
-                
+              {product?.sizeDetails && product?.sizeDetails?.map(size => (
+
                 <button
-                   key={size.size}
-                   className={`border px-3 ${size.openingStock <= 0 ? 'btn-disabled': ''}  btn btn-sm   mr-2 ${selectedSize === size?.size ? 'bg-black text-white' : ''}`}
-                   onClick={() => { handleSizeClick(size?.size), setWarning(false) }} 
+                  key={size.size}
+                  className={`border px-3 ${size.openingStock <= 0 ? 'btn-disabled' : ''}  btn btn-sm   mr-2 ${selectedSize === size.size ? 'bg-black text-white' : ''}`}
+                  onClick={() => { handleSizeClick(size.size), setWarning(false) }}
                 >
                   {size?.size}
 
@@ -245,7 +244,7 @@ console.log("product:",product);
             <div className="divider"></div>
             <ContactCard />
             <div className="divider"></div>
-            <SizeChart charts={product?.charts}/>
+            <SizeChart charts={product?.charts} />
 
             <div className="hidden md:block lg:block">
               <div className="w-full max-w-4xl mx-auto mt-8">
