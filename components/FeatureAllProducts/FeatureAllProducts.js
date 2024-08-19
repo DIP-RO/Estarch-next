@@ -6,7 +6,11 @@ import { CiFilter } from "react-icons/ci";
 import { useParams } from "next/navigation";
 import baseUrl from "@/components/services/baseUrl";
 import axios from "axios";
-
+import { FaCircleArrowDown } from "react-icons/fa6";
+import { PropagateLoader } from "react-spinners";
+import { openProductModal } from "@/lib/slices/productModalSlice";
+import { useDispatch } from "react-redux";
+import ProductModal from "../ProductModal/page";
 
 const FeatureAllProducts = () => {
     const [selectedRanges, setSelectedRanges] = useState([]);
@@ -17,6 +21,7 @@ const FeatureAllProducts = () => {
     const [selectedSizes, setSelectedSizes] = useState([]);
     const [sortBy, setSortBy] = useState('Sort by Latest');
     const [index, setIndex] = useState(20)
+    const dispatch = useDispatch();
 
     const allRanges = [
         { min: 100, max: 300 },
@@ -176,6 +181,7 @@ const FeatureAllProducts = () => {
                                 key={product._id}
                                 className="card card-compact bg-base-200 shadow-lg rounded-none h-[350px] md:h-[500px] relative"
                             >
+                                <Link href={`/product/${product._id}`}>
                                 <figure>
                                     <Image src={product.images[0]} alt={product.productName} width={500}
                                         height={700} />
@@ -208,10 +214,11 @@ const FeatureAllProducts = () => {
                                         )}
                                     </div>
                                 </div>
+                                </Link>
                                 <div className='text-center shadow-lg absolute w-full bottom-0'>
-                                    <Link href={`/product/${product._id}`}>
-                                        <button className=" bg-[#1E201E] text-white w-full md:py-2 py-1">BUY NOW</button>
-                                    </Link>
+                                    
+                                        <button onClick={() => dispatch(openProductModal(product))} className=" bg-[#1E201E] text-white w-full md:py-2 py-1">BUY NOW</button>
+                                  
                                 </div>
                             </div>
                         ))}
@@ -313,6 +320,7 @@ const FeatureAllProducts = () => {
                     </ul>
                 </div>
             </div>
+            <ProductModal />
         </div>
     );
 };

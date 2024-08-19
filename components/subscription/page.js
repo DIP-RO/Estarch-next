@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Subscription() {
   return (
-    <div className="bg-white shadow-md rounded-lg p-8 max-w-7xl mx-auto my-10">
+    <div className="bg-white shadow-md rounded-lg p-8 max-w-7xl mx-auto my-20">
       <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
         <div className="mb-4 mt-4 w-full md:w-auto md:mr-20 text-center md:text-left">
           <h2 className="lg:text-3xl text-xl font-bold">Join Our Newsletter To Get Offers</h2>

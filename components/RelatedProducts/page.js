@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -20,9 +20,13 @@ export default function RelatedProductsSinglePage() {
   useEffect(() => {
     axios.get(`${baseUrl}/api/products/feature-products`)
       .then(res => {
-        setProducts(res.data)
+        setProducts(res.data);
+        setLoading(false); // Set loading to false after data is fetched
       })
-  }, [])
+      .catch(() => {
+        setLoading(false); // Set loading to false even if there is an error
+      });
+  }, []);
 
   return (
     <div>
