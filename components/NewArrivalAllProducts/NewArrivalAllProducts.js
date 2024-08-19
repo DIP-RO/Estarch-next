@@ -149,7 +149,7 @@ const NewArrivalAllProducts = () => {
                         </li>
                     </ul>
                 </div>
-                <label className="form-control w-full max-w-[30%] md:max-w-[10%] flex">
+                <label className="form-control w-full max-w-[30%] md:max-w-[10%] lg:flex hidden">
                     <select className="select select-bordered select-sm" value={sortBy} onChange={handleSortChange}>
                         <option disabled>Sort By</option>
                         <option>Price High to Low</option>
@@ -181,6 +181,14 @@ const NewArrivalAllProducts = () => {
                     </span>{" "}
                     items
                 </label>
+                <label className="form-control w-full max-w-[40%] md:max-w-[15%] flex lg:hidden">
+                    <select className="select select-bordered select-sm" value={sortBy} onChange={handleSortChange}>
+                        <option disabled>Sort By</option>
+                        <option>Price High to Low</option>
+                        <option>Price Low to High</option>
+                        <option>Sort by Latest</option>
+                    </select>
+                </label>
             </div>
 
             <div className="drawer lg:drawer-open">
@@ -192,7 +200,7 @@ const NewArrivalAllProducts = () => {
                             <div
                                 key={product._id}
                                 className="card card-compact bg-base-200 shadow-lg rounded-none h-[350px] md:h-full relative"
-                            ><Link href={`/product/${product._id}`}>
+                            ><Link href={`/product/${product?.productName}`}>
                                     <figure>
                                         <Image src={product.images[0]} alt={product.productName} width={500}
                                             height={700} />

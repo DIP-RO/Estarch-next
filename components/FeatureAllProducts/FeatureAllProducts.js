@@ -149,7 +149,7 @@ const FeatureAllProducts = () => {
                         </li>
                     </ul>
                 </div>
-                <label className="form-control w-full max-w-[30%] md:max-w-[10%] flex">
+                <label className="form-control w-full max-w-[30%] md:max-w-[10%] lg:flex hidden">
                     <select className="select select-bordered select-sm" value={sortBy} onChange={handleSortChange}>
                         <option disabled>Sort By</option>
                         <option>Price High to Low</option>
@@ -158,18 +158,39 @@ const FeatureAllProducts = () => {
                     </select>
                 </label>
             </div>
-            {/* filter button */}
-            <label
-                htmlFor="my-drawer-2"
-                className="btn btn-sm drawer-button lg:hidden mb-4"
-            >
-                <span>
-                    <p>
-                        <CiFilter />
-                    </p>
-                </span>{" "}
-                Filter
-            </label>
+
+           {/* filter button */}
+           <div className="flex gap-3">
+                <label
+                    htmlFor="my-drawer-2"
+                    className="btn btn-sm drawer-button lg:hidden mb-4"
+                >
+                    <span>
+                        <p>
+                            <CiFilter />
+                        </p>
+                    </span>{" "}
+                    Filter
+                </label>
+                <label
+                    className="btn btn-sm drawer-button lg:hidden mb-4"
+                >
+                    <span>
+                        <p>
+                            {products.length}
+                        </p>
+                    </span>{" "}
+                    items
+                </label>
+                <label className="form-control w-full max-w-[40%] md:max-w-[15%] flex lg:hidden">
+                    <select className="select select-bordered select-sm" value={sortBy} onChange={handleSortChange}>
+                        <option disabled>Sort By</option>
+                        <option>Price High to Low</option>
+                        <option>Price Low to High</option>
+                        <option>Sort by Latest</option>
+                    </select>
+                </label>
+            </div>
 
             <div className="drawer lg:drawer-open ">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -181,7 +202,7 @@ const FeatureAllProducts = () => {
                                 key={product._id}
                                 className="card card-compact bg-base-200 shadow-lg rounded-none h-[350px] md:h-[500px] relative"
                             >
-                                <Link href={`/product/${product._id}`}>
+                                <Link href={`/product/${product?.productName}`}>
                                 <figure>
                                     <Image src={product.images[0]} alt={product.productName} width={500}
                                         height={700} />

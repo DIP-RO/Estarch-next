@@ -25,6 +25,9 @@ const Page = () => {
 
     const { id } = useParams();
     const { category } = useParams();
+    const {catName} = useParams();
+
+    console.log(subcategories);
 
     const allRanges = [
         { min: 100, max: 300 },
@@ -38,7 +41,7 @@ const Page = () => {
     // Fetch products from the backend
     useEffect(() => {
         const fetchProducts = async () => {
-            let url = `${baseUrl}/api/products/products/category/${id}`;
+            let url = `${baseUrl}/api/products/products/category/products/${encodeURIComponent(catName)}`;
 
             // Add ranges to the query string if there are selected ranges
             if (selectedRanges.length > 0) {
@@ -76,21 +79,23 @@ const Page = () => {
 
         const fetchSubcategories = async () => {
             try {
-                const response = await axios.get(`${baseUrl}/api/categories/subcategories/${id}`);
+                const response = await axios.get(`${baseUrl}/api/categories/subcategories/${products[0]?.selectedCategory}`);
                 setSubcategories(response.data);
             } catch (error) {
                 console.error("Error fetching subcategories:", error);
             }
         };
 
-        axios.get(`${baseUrl}/api/categories/find/${id}`)
+        console.log(subcategories);
+
+        axios.get(`${baseUrl}/api/categories/find/${products[0]?.selectedCategory}`)
             .then(res => {
                 setCategoryName(res.data.name);
             })
 
         fetchSubcategories();
         fetchProducts();
-    }, [id, selectedRanges, selectedSubcategories, selectedSizes, sortBy]);
+    }, [products[0]?.selectedCategory, selectedRanges, selectedSubcategories, selectedSizes, sortBy,catName]);
 
     // Sort
     const handleSortChange = (e) => {
@@ -157,11 +162,11 @@ const Page = () => {
                             <Link className="uppercase" href={`/${category}`}>{category}</Link>
                         </li>
                         <li>
-                            <Link href={`/${category}/${id}`} className="uppercase font-bold">{categoryName}</Link>
+                            <Link href={`/${category}/${categoryName}`} className="uppercase font-bold">{categoryName}</Link>
                         </li>
                     </ul>
                 </div>
-                <label className="form-control w-full max-w-[30%] md:max-w-[10%] flex">
+                <label className="form-control w-full max-w-[30%] md:max-w-[10%] lg:flex hidden">
                     <select className="select select-bordered select-sm" value={sortBy} onChange={handleSortChange}>
                         <option disabled>Sort By</option>
                         <option>Price High to Low</option>
@@ -193,6 +198,14 @@ const Page = () => {
                     </span>{" "}
                     items
                 </label>
+                <label className="form-control w-full max-w-[40%] md:max-w-[15%] flex lg:hidden">
+                    <select className="select select-bordered select-sm" value={sortBy} onChange={handleSortChange}>
+                        <option disabled>Sort By</option>
+                        <option>Price High to Low</option>
+                        <option>Price Low to High</option>
+                        <option>Sort by Latest</option>
+                    </select>
+                </label>
             </div>
 
             <div className="drawer lg:drawer-open">
@@ -204,7 +217,7 @@ const Page = () => {
                             <div
                                 key={product._id}
                                 className="card card-compact bg-base-200 shadow-lg rounded-none h-[350px] md:h-full relative"
-                            ><Link href={`/product/${product._id}`}>
+                            ><Link href={`/product/${product?.productName}`}>
                                     <figure className="relative">
                     {loading && (
                         <div className="flex justify-center items-center w-full h-full absolute top-0 left-0">

@@ -18,8 +18,6 @@ export default function Man() {
             })
     }, [category])
 
-    console.log("category",categories);
-
 
     return (
         <div className="bg-white ">
@@ -46,7 +44,7 @@ export default function Man() {
             <div className="grid lg:grid-cols-3  grid-cols-2 justify-center items-center px-2 py-2 lg:py-5 lg:px-5  gap-5">
                 {
                     categories.map(cat => <div key={cat._id} className="relative">
-                        <Link href={`/${category}/${cat._id}`}>
+                        <Link href={`/${category}/${cat.name}`}>
                             <Image
                                 width={500}
                                 height={0}

@@ -32,7 +32,7 @@ const ProductCard = (product) => {
         <img
           src={product.product.images[0]}
           alt="10 inch Regular Fit Shorts"
-          className="object-cover h-[150px] rounded-md"
+          className="object-cover w-28 rounded-md"
         />
         <div className="ml-0 mt-4 md:mt-0 md:ml-4 flex-grow">
           <h3 className="text-gray-800 text-lg font-semibold">

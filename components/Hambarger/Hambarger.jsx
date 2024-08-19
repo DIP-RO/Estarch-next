@@ -114,7 +114,7 @@ function Hambarger() {
                                                 onClick={() => handleCategoryToggle(category._id)}
                                                 className="flex items-center justify-between cursor-pointer"
                                             >
-                                                <Link href={`/${typeName.toLowerCase()}/${category._id}`}>
+                                                <Link href={`/${typeName.toLowerCase()}/${category.name}`}>
                                                     {category.name}
                                                 </Link>
                                                 {
@@ -132,7 +132,7 @@ function Hambarger() {
                                                 <ul className="ml-3 space-y-1 text-[15px]">
                                                     {category.subcategories.map((subcategory) => (
                                                         <li className='italic opacity-80' key={subcategory._id}>
-                                                            <Link href={`/${typeName.toLowerCase()}/${category._id}/${subcategory._id}`}>
+                                                            <Link href={`/${typeName.toLowerCase()}/${category.name}/${subcategory.name}`}>
                                                                 {subcategory.name}
                                                             </Link>
                                                         </li>

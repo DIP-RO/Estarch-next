@@ -36,7 +36,7 @@ export default function RelatedProductsSinglePage() {
             <div
               key={product?._id}
               className="card card-compact bg-base-200 shadow-lg rounded-none h-[350px] md:h-full relative"
-            ><a href={`/product/${product?._id}`}>
+            ><a href={`/product/${product?.productName}`}>
                 <figure>
                   <Image src={product?.images[0]} alt={product?.productName} width={500}
                     height={700} />

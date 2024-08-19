@@ -21,18 +21,19 @@ import parse from 'html-react-parser';
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
-  const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [mainImage, setMainImage] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
   const [warning, setWarning] = useState(false);
   const [activeTab, setActiveTab] = useState('description');
+
+  const { product_name } = useParams();
   const router = useRouter();
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/api/products/products/product/${id}`);
+        const response = await axios.get(`${baseUrl}/api/products/products/product-details/${encodeURIComponent(product_name)}`);
         setProduct(response.data);
         setMainImage(response.data?.images[0]);
         console.log(response.data);
@@ -44,10 +45,10 @@ const ProductDetails = () => {
         console.error("Error fetching product details:", error);
       }
     };
-    if (id) {
+    if (product_name) {
       fetchProduct();
     }
-  }, [id]);
+  }, [product_name]);
 
   const handleAddToCart = () => {
     if (selectedSize) {
@@ -125,13 +126,13 @@ const ProductDetails = () => {
             <Link className="uppercase" href={`/${product?.selectedType}`}>{product?.selectedType}</Link>
           </li>
           <li>
-            <Link href={`/${product?.selectedType}/${product?.selectedCategory}`} className="uppercase ">{product?.selectedCategoryName}</Link>
+            <Link href={`/${product?.selectedType}/${product?.selectedCategoryName}`} className="uppercase ">{product?.selectedCategoryName}</Link>
           </li>
           <li>
-            <Link href={`/${product?.selectedType}/${product?.selectedCategory}/${product?.selectedSubCategory}`} className="uppercase ">{product?.selectedSubCategory}</Link>
+            <Link href={`/${product?.selectedType}/${product?.selectedCategoryName}/${product?.selectedSubCategory}`} className="uppercase ">{product?.selectedSubCategory}</Link>
           </li>
           <li>
-            <Link href={`/product/${id}`} className="uppercase font-bold">{product?.productName}</Link>
+            <Link href={`/product/${product?._id}`} className="uppercase font-bold">{product?.productName}</Link>
           </li>
         </ul>
       </div>
