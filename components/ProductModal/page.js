@@ -83,8 +83,8 @@ const ProductModal = () => {
             &times;
           </button>
 
-          <h2 className="text-base font-semibold mb-1">SKU: {selectedProduct?.SKU}</h2>
-          <h2 className="text-lg font-semibold mb-4">{selectedProduct?.productName}</h2>
+          <h2 className="text-lg font-semibold mb-1">{selectedProduct?.productName}</h2>
+          <h2 className="text-base font-semibold mb-4 italic">SKU: {selectedProduct?.SKU}</h2>
           <div className='flex justify-center'>
             <div className=" mb-4 w-36 aspect-[4/5]">
               <Image width={300} height={300} src={selectedProduct?.images[0]} alt="Product" className="w-full h-full object-cover" />
@@ -133,7 +133,7 @@ const ProductModal = () => {
       </div>
 
       {/* Desktop Modal */}
-      <div className="fixed inset-0 bg-black bg-opacity-50 md:flex lg:flex  justify-center z-[100] hidden">
+      <div className="fixed inset-0 bg-black bg-opacity-50 md:flex lg:flex  justify-center z-[99999] hidden">
         <div onClick={() => dispatch(closeProductModal())} className={`rounded-lg w-11/12 md:w-2/3 lg:w-full p-6 absolute h-screen`}></div>
         <div className={`bg-white rounded-lg w-11/12 md:w-2/3 lg:w-1/2 p-6 relative h-fit mt-5 transform transition-all duration-300 ${isAnimating ? 'translate-y-0' : '-translate-y-full'}`}>
           <button

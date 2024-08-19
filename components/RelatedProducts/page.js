@@ -21,10 +21,8 @@ export default function RelatedProductsSinglePage() {
     axios.get(`${baseUrl}/api/products/feature-products`)
       .then(res => {
         setProducts(res.data);
-        setLoading(false); // Set loading to false after data is fetched
       })
       .catch(() => {
-        setLoading(false); // Set loading to false even if there is an error
       });
   }, []);
 
@@ -36,37 +34,37 @@ export default function RelatedProductsSinglePage() {
         <div className="col-span-10 gap-6 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
           {products.map((product) => (
             <div
-              key={product._id}
+              key={product?._id}
               className="card card-compact bg-base-200 shadow-lg rounded-none h-[350px] md:h-full relative"
-            ><a href={`/product/${product._id}`}>
+            ><a href={`/product/${product?._id}`}>
                 <figure>
-                  <Image src={product.images[0]} alt={product.productName} width={500}
+                  <Image src={product?.images[0]} alt={product?.productName} width={500}
                     height={700} />
                 </figure>
                 <div className="pt-1 lg:px-6 px-2">
                   <h2 className="md:text-[18px] text-[14px] font-bold text-center">
-                    {product.productName.length > 22
-                      ? `${product.productName.slice(0, 22)}...`
-                      : product.productName
+                    {product?.productName.length > 22
+                      ? `${product?.productName.slice(0, 22)}...`
+                      : product?.productName
                     }</h2>
                   <div className='text-center'>
                     <div className="absolute md:relative bottom-10 md:bottom-0 left-6 md:left-0">
-                      <p className={`bg-black text-white text-sm md:text-[16px] mt-2 w-full md:w-[50%] mx-auto mb-2 ${product.regularPrice - product.salePrice > 0 ? 'visible' : 'invisible'}`}>
-                        Save Tk. {product.regularPrice - product.salePrice}
+                      <p className={`bg-black text-white text-sm md:text-[16px] mt-2 w-full md:w-[50%] mx-auto mb-2 ${product?.regularPrice - product?.salePrice > 0 ? 'visible' : 'invisible'}`}>
+                        Save Tk. {product?.regularPrice - product?.salePrice}
                       </p>
                       {
-                        product.regularPrice - product.salePrice > 0 && (
+                        product?.regularPrice - product?.salePrice > 0 && (
                           <p className='my-1 text-[16px] md:text-[20px] text-black text-center'>
-                            <span>TK.</span>{product.salePrice}
-                            <span className='md:text-[17px] text-sm line-through text-red-500'> Tk.{product.regularPrice}</span>
+                            <span>TK.</span>{product?.salePrice}
+                            <span className='md:text-[17px] text-sm line-through text-red-500'> Tk.{product?.regularPrice}</span>
                           </p>
                         )
                       }
                     </div>
 
-                    {product.regularPrice - product.salePrice <= 0 && (
+                    {product?.regularPrice - product?.salePrice <= 0 && (
                       <p className='my-1 text-[17px] md:text-[20px] text-black text-center absolute md:relative bottom-10 md:bottom-0 left-12 md:left-0'>
-                        <span className=''>TK.</span>{product.salePrice}
+                        <span className=''>TK.</span>{product?.salePrice}
                       </p>
                     )}
                   </div>
