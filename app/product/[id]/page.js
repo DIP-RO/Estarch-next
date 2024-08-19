@@ -17,6 +17,7 @@ import ProductCard from "@/components/productLike/page";
 import RelatedProductsSinglePage from "@/components/RelatedProducts/page";
 import ContactCard from "@/components/WishlistPhone/page";
 import parse from 'html-react-parser';
+import { PropagateLoader } from "react-spinners";
 
 
 
@@ -101,7 +102,8 @@ const ProductDetails = () => {
   };
 
   if (!product) {
-    return <div>Loading...</div>;
+    return <div className="flex justify-center
+    items-center"><PropagateLoader color="#060101" /></div>;
   }
   const handleShare = () => {
     if (selectedSize) {
@@ -179,13 +181,15 @@ const ProductDetails = () => {
             </div>
 
             <div className="flex mb-4">
-              {product.selectedSizes && product.selectedSizes.map(size => (
+              {product.sizeDetails && product.sizeDetails.map(size => (
+                
                 <button
-                  key={size}
-                  className={`border px-3   mr-2 ${selectedSize === size ? 'bg-gray-300' : ''}`}
-                  onClick={() => { handleSizeClick(size), setWarning(false) }}
+                   key={size.size}
+                   className={`border px-3 ${size.openingStock <= 0 ? 'btn-disabled': ''}  btn btn-sm   mr-2 ${selectedSize === size.size ? 'bg-gray-500 text-white' : ''}`}
+                   onClick={() => { handleSizeClick(size.size), setWarning(false) }} 
                 >
-                  {size}
+                  {size.size}
+
                 </button>
               ))}
             </div>
@@ -239,8 +243,7 @@ const ProductDetails = () => {
             <div className="divider"></div>
             <ContactCard />
             <div className="divider"></div>
-            <SizeChart   charts={product.charts}  />
-            <div className="divider"></div>
+            <SizeChart charts={product.charts}/>
 
             <div className="hidden md:block lg:block">
               <div className="w-full max-w-4xl mx-auto mt-8">

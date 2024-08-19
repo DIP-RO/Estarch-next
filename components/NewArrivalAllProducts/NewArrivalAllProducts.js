@@ -10,6 +10,7 @@ import { FaCircleArrowDown } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import { openProductModal } from "@/lib/slices/productModalSlice";
 import ProductModal from "../ProductModal/page";
+import { PropagateLoader } from "react-spinners";
 
 const NewArrivalAllProducts = () => {
     const [selectedRanges, setSelectedRanges] = useState([]);
@@ -131,6 +132,12 @@ const NewArrivalAllProducts = () => {
         });
         setUniqueSizes(Array.from(sizes));
     };
+
+    if (products.length <= 0) {
+        return (<div className="flex justify-center
+        items-center"><PropagateLoader color="#060101" />{console.log("Loader")}</div>);
+      }
+
 
 
     return (

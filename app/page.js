@@ -83,13 +83,13 @@ export default function Home() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-      const totalQuantity = JSON.parse(localStorage.getItem('totalQuantity')) || 0;
-      dispatch(setInitialState({ items: cartItems, totalQuantity }));
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+  //     const totalQuantity = JSON.parse(localStorage.getItem('totalQuantity')) || 0;
+  //     dispatch(setInitialState({ items: cartItems, totalQuantity }));
+  //   }
+  // }, [dispatch]);
 
   return (
     <main className="overflow-x-hidden">

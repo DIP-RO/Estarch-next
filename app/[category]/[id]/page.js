@@ -9,6 +9,7 @@ import axios from "axios";
 import { openProductModal } from "@/lib/slices/productModalSlice";
 import { useDispatch } from "react-redux";
 import ProductModal from "@/components/ProductModal/page";
+import ScaleLoader from 'react-spinners/ScaleLoader';
 
 const Page = () => {
     const [selectedRanges, setSelectedRanges] = useState([]);
@@ -19,6 +20,7 @@ const Page = () => {
     const [selectedSizes, setSelectedSizes] = useState([]);
     const [sortBy, setSortBy] = useState('Sort by Latest');
     const [categoryName, setCategoryName] = useState('')
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
 
     const { id } = useParams();
@@ -201,10 +203,22 @@ const Page = () => {
                                 key={product._id}
                                 className="card card-compact bg-base-200 shadow-lg rounded-none h-[350px] md:h-full relative"
                             ><Link href={`/product/${product._id}`}>
-                                    <figure>
-                                        <Image src={product.images[0]} alt={product.productName} width={500}
-                                            height={700} />
-                                    </figure>
+                                    <figure className="relative">
+                    {loading && (
+                        <div className="flex justify-center items-center w-full h-full absolute top-0 left-0">
+                            <ScaleLoader color="#090909" />
+                        </div>
+                    )}
+                    <Image
+                        src={product.images[0]}
+                        alt={product.productName}
+                        width={500}
+                        height={700}
+                        onLoad={() => setLoading(false)} // Hide loader on successful load
+                        onError={() => setLoading(false)} // Hide loader on error
+                        className={`${loading ? 'hidden' : 'block'}`} // Hide image if loading
+                    />
+                </figure>
                                     <div className="pt-1 lg:px-6 px-2">
                                         <h2 className="md:text-[18px] text-[14px] font-bold text-center">
                                             {product.productName.length > 22

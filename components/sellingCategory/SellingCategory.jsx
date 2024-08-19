@@ -23,6 +23,7 @@ const SellingCategory = () => {
             });
     }, []);
 
+
     return (
         <div className='mx-4 md:mx-12 lg:mx-20'>
             <h1 className='text-center mt-4 md:mt-8 lg:mt-8 font-bold md:text-2xl lg:text-2xl pb-5'>BROWSE OUR CATEGORY</h1>

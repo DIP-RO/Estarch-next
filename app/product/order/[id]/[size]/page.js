@@ -101,7 +101,7 @@ export default function Checkout() {
             }],
             paymentMethod: paymentMethod,
             totalAmount: calculateTotal() - shippingCharge,
-            orderStatus: 'Pending',
+            orderStatus: 'new',
             userId: userId,
             grandTotal: calculateTotal()
         };

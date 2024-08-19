@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { openProductModal } from '@/lib/slices/productModalSlice';
 import ProductModal from '../ProductModal/page';
+import { PropagateLoader } from 'react-spinners';
 
 export default function NewArrival() {
   const [products, setProducts] = useState([]);
@@ -63,6 +64,14 @@ export default function NewArrival() {
       }
     ]
   };
+
+
+  if (products.length <= 0) {
+    return (<div className="flex justify-center
+    items-center"><PropagateLoader color="#060101" />{console.log("Loader")}</div>);
+  }
+
+
   return (
     <div>
       <div className="slider-container mx-0 lg:mx-20">
