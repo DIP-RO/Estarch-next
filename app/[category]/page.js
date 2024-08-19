@@ -1,7 +1,5 @@
 "use client";
 import Image from 'next/image'
-import menBanner from '../../public/images/banner1.jpeg'
-import womenBanner from '../../public/images/banner1.jpeg'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -29,7 +27,6 @@ export default function Man() {
                 <div className="relative w-full h-[150px] lg:h-[500px] md:h-[500px]">
                     <Image
                         src={categories[0]?.type?.image}
-                        // src={''}
                         alt="Main image"
                         layout="fill"
                         objectFit="cover"

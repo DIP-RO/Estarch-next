@@ -186,7 +186,7 @@ const ProductDetails = () => {
 
                 <button
                   key={size.size}
-                  className={`border px-3 ${size.openingStock <= 0 ? 'btn-disabled' : ''}  btn btn-sm   mr-2 ${selectedSize === size.size ? 'bg-black text-white' : ''}`}
+                  className={`border px-3 ${!size.available ? 'btn-disabled' : ''}  btn btn-sm   mr-2 ${selectedSize === size.size ? 'bg-black text-white' : ''}`}
                   onClick={() => { handleSizeClick(size.size), setWarning(false) }}
                 >
                   {size?.size}

@@ -71,14 +71,14 @@ console.log(selectedProduct?.charts);
       {/* Mobile Modal */}
       <div className={`fixed lg:hidden md:hidden inset-0 bg-black bg-opacity-50  flex items-center justify-center z-[100] w-full h-screen`}>
 
-        <div onClick={() => dispatch(closeProductModal())} className={` fixed bottom-0 p-6 rounded-lg shadow-lg max-w-md h-screen w-full`}
+        <div onClick={() => {dispatch(closeProductModal()), setSelectedSize(null)}} className={` fixed bottom-0 p-6 rounded-lg shadow-lg max-w-md h-screen w-full`}
         ></div>
 
         <div
           className={`fixed bottom-0 bg-white p-6 rounded-lg shadow-lg max-w-md w-full transform transition-all duration-300 ${isAnimating ? 'translate-y-0' : 'translate-y-full'}`}
         >
           <button
-            onClick={() => dispatch(closeProductModal())}
+            onClick={() => {dispatch(closeProductModal()), setSelectedSize(null)}}
             className="absolute top-4 right-4 text-gray-800 hover:text-gray-500 text-4xl"
           >
             &times;
@@ -112,7 +112,7 @@ console.log(selectedProduct?.charts);
 
                 <button
                   key={size.size}
-                  className={`border px-3 ${size.openingStock <= 0 ? 'btn-disabled' : ''}  btn btn-sm   mr-2 ${selectedSize === size.size ? 'bg-gray-500 text-white' : ''}`}
+                  className={`border px-3 ${!size.available? 'btn-disabled' : ''}  btn btn-sm   mr-2 ${selectedSize === size.size ? 'bg-black text-white' : ''}`}
                   onClick={() => { setSelectedSize(size.size), setWarning(false) }}
                 >
                   {size.size}
@@ -135,10 +135,10 @@ console.log(selectedProduct?.charts);
 
       {/* Desktop Modal */}
       <div className="fixed inset-0 bg-black bg-opacity-50 md:flex lg:flex  justify-center z-[99999] hidden">
-        <div onClick={() => dispatch(closeProductModal())} className={`rounded-lg w-11/12 md:w-2/3 lg:w-full p-6 absolute h-screen`}></div>
+        <div onClick={() => {dispatch(closeProductModal()), setSelectedSize(null)}} className={`rounded-lg w-11/12 md:w-2/3 lg:w-full p-6 absolute h-screen`}></div>
         <div className={`bg-white rounded-lg w-11/12 md:w-2/3 lg:w-1/2 p-6 relative h-fit mt-5 transform transition-all duration-300 ${isAnimating ? 'translate-y-0' : '-translate-y-full'}`}>
           <button
-            onClick={() => dispatch(closeProductModal())}
+            onClick={() => {dispatch(closeProductModal()), setSelectedSize(null)}}
             className="absolute top-4 right-4 text-gray-800 hover:text-gray-500 text-4xl"
           >
             &times;
@@ -169,7 +169,7 @@ console.log(selectedProduct?.charts);
 
                   <button
                     key={size.size}
-                    className={`border px-3 ${size.openingStock <= 0 ? 'btn-disabled' : ''}  btn btn-sm   mr-2 ${selectedSize === size.size ? 'bg-gray-500 text-white' : ''}`}
+                    className={`border px-3 ${!size.available ? 'btn-disabled' : ''}  btn btn-sm   mr-2 ${selectedSize === size.size ? 'bg-black text-white' : ''}`}
                     onClick={() => { setSelectedSize(size.size), setWarning(false) }}
                   >
                     {size.size}
