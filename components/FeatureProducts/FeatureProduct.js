@@ -12,7 +12,6 @@ import baseUrl from '../services/baseUrl';
 import { useDispatch } from 'react-redux';
 import ProductModal from '../ProductModal/page';
 import { openProductModal } from '@/lib/slices/productModalSlice';
-import { PropagateLoader } from 'react-spinners';
 export default function FeatureProduct() {
 
 

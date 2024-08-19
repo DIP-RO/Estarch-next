@@ -98,10 +98,6 @@ const ProductDetails = () => {
     setSelectedSize(size);
   };
 
-  if (!product) {
-    return <div className="flex justify-center
-    items-center"><PropagateLoader color="#060101" /></div>;
-  }
   const handleShare = () => {
     if (selectedSize) {
       const phoneNumber = "8801610362077"; // Replace with the recipient's phone number in international format
