@@ -168,10 +168,21 @@ const ProductDetails = () => {
             <h1 className="text-2xl font-bold">{product?.productName}</h1>
             <p className="text-sm text-gray-600 ">SKU: {product?.SKU}</p>
             <p className="text-red-600 text-xl font-semibold">
-              <span className="line-through font-normal text-gray-500 mr-2" style={{ fontSize: "0.8em" }}>৳ {product?.regularPrice}</span>
-
-              ৳ {product?.salePrice}
+              {product?.regularPrice === product?.salePrice ? (
+                <span>৳ {product?.regularPrice}</span>
+              ) : (
+                <>
+                  <span
+                    className="line-through font-normal text-gray-500 mr-2"
+                    style={{ fontSize: "0.8em" }}
+                  >
+                    ৳ {product?.regularPrice}
+                  </span>
+                  ৳ {product?.salePrice}
+                </>
+              )}
             </p>
+
             <div className="flex gap-1 items-center">
               <p className="text-sm font-bold">Select Size :</p>
               <div className='w-48 h-[40px] rounded-md flex justify-between '>
