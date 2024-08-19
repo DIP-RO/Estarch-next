@@ -94,7 +94,7 @@ export default function Checkout() {
             orderNotes: formData.orderNotes,
             cartItems: [{
                 productId: product._id,
-                discountAmount: product?.discount?.amount ,
+                discountAmount: product?.discount?.amount,
                 title: product.productName,
                 price: product.salePrice,
                 quantity: quantity,
@@ -251,86 +251,86 @@ export default function Checkout() {
                 </div>
 
                 <div className="w-full md:w-1/2 rounded-md mt-4 md:mt-0 p-4 lg:px-16 py-8 border shadow-lg">
-    <h2 className="text-xl md:text-2xl font-bold mb-4 bg-gray-200 p-2 rounded text-center">Your order</h2>
-    {product && (
-        <>
-            <div className="mb-4">
-                <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4 items-center">
-                    <div className="flex flex-col md:flex-row justify-between items-center md:gap-8">
-                        <div className="flex items-center gap-4 md:gap-8">
-                            <Image
-                                src={product?.images[0]}
-                                alt={product.productName}
-                                width={50}
-                                height={50}
-                                objectFit="cover"
-                                className="rounded"
-                            />
+                    <h2 className="text-xl md:text-2xl font-bold mb-4 bg-gray-200 p-2 rounded text-center">Your order</h2>
+                    {product && (
+                        <>
+                            <div className="mb-4">
+                                <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4 items-center">
+                                    <div className="flex flex-col md:flex-row justify-between items-center md:gap-8">
+                                        <div className="flex items-center gap-4 md:gap-8">
+                                            <Image
+                                                src={product?.images[0]}
+                                                alt={product.productName}
+                                                width={50}
+                                                height={50}
+                                                objectFit="cover"
+                                                className="rounded"
+                                            />
 
-                            <div className="flex flex-col gap-1 text-center md:text-left">
-                                <p className="whitespace-nowrap overflow-hidden text-ellipsis">
-                                    {product.productName}
-                                </p>
-                                {size && (
-                                    <p className="text-sm">Your Size: {size}</p>
-                                )}
-                                <div className="flex items-center gap-2 mt-1 justify-center md:justify-start">
-                                    <span>Qty:</span>
-                                    <button
-                                        onClick={handleDecrease}
-                                        className="bg-gray-300 w-6 h-6 flex items-center justify-center"
-                                    >
-                                        -
-                                    </button>
-                                    <span>{quantity}</span>
-                                    <button
-                                        onClick={handleIncrease}
-                                        className="bg-gray-300 w-6 h-6 flex items-center justify-center"
-                                    >
-                                        +
-                                    </button>
+                                            <div className="flex flex-col gap-1 text-center md:text-left">
+                                                <p className="whitespace-nowrap overflow-hidden text-ellipsis">
+                                                    {product.productName}
+                                                </p>
+                                                {size && (
+                                                    <p className="text-sm">Your Size: {size}</p>
+                                                )}
+                                                <div className="flex items-center gap-2 mt-1 justify-center md:justify-start">
+                                                    <span>Qty:</span>
+                                                    <button
+                                                        onClick={handleDecrease}
+                                                        className="bg-gray-300 w-6 h-6 flex items-center justify-center"
+                                                    >
+                                                        -
+                                                    </button>
+                                                    <span>{quantity}</span>
+                                                    <button
+                                                        onClick={handleIncrease}
+                                                        className="bg-gray-300 w-6 h-6 flex items-center justify-center"
+                                                    >
+                                                        +
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="mt-4 md:mt-0 md:ml-4 lg:ml-60 flex flex-col items-center md:items-end">
+                                            <p className="text-base lg:text-xl lg:font-semibold flex flex-col md:flex-row md:items-center">
+                                                <span className="text-red-600 line-through text-sm lg:text-base">
+                                                    ৳ {product.regularPrice * quantity}
+                                                </span>
+                                                <span className="ml-2 text-base lg:text-lg">
+                                                    ৳ {product.salePrice * quantity}
+                                                </span>
+                                            </p>
+                                            <span className="mt-2 md:mt-0">৳ {product?.discount?.amount * quantity}</span>
+                                            <button
+                                                onClick={handleRemoveItem}
+                                                className="mt-2 md:mt-4 text-sm underline"
+                                            >
+                                                Remove
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="mt-4 md:mt-0 md:ml-4 lg:ml-60 flex flex-col items-center md:items-end">
-                            <p className="text-base lg:text-xl lg:font-semibold flex flex-col md:flex-row md:items-center">
-                                <span className="text-red-600 line-through text-sm lg:text-base">
-                                    ৳ {product.regularPrice * quantity}
-                                </span>
-                                <span className="ml-2 text-base lg:text-lg">
-                                    ৳ {product.salePrice * quantity}
-                                </span>
-                            </p>
-                            <span className="mt-2 md:mt-0">৳ {product?.discount?.amount * quantity}</span>
-                            <button
-                                onClick={handleRemoveItem}
-                                className="mt-2 md:mt-4 text-sm underline"
-                            >
-                                Remove
-                            </button>
-                        </div>
-                    </div>
+                            <hr />
+                            <div className="flex justify-between mt-2">
+                                <span>Subtotal</span>
+                                <span className="text-red-700">৳ {(product.salePrice * quantity).toFixed(2)}</span>
+                            </div>
+                            <hr className="my-2" />
+                            {shippingCharge !== null && (
+                                <div className="flex justify-between">
+                                    <span>Delivery Charge</span>
+                                    <span>৳ {shippingCharge}</span>
+                                </div>
+                            )}
+                            <div className="flex justify-between font-bold text-xl">
+                                <span>Total</span>
+                                <span className="text-red-700">৳ {calculateTotal().toFixed(2)}</span>
+                            </div>
+                        </>
+                    )}
                 </div>
-            </div>
-            <hr />
-            <div className="flex justify-between mt-2">
-                <span>Subtotal</span>
-                <span className="text-red-700">৳ {(product.salePrice * quantity).toFixed(2)}</span>
-            </div>
-            <hr className="my-2" />
-            {shippingCharge !== null && (
-                <div className="flex justify-between">
-                    <span>Delivery Charge</span>
-                    <span>৳ {shippingCharge}</span>
-                </div>
-            )}
-            <div className="flex justify-between font-bold text-xl">
-                <span>Total</span>
-                <span className="text-red-700">৳ {calculateTotal().toFixed(2)}</span>
-            </div>
-        </>
-    )}
-</div>
 
             </div>
         </div>
