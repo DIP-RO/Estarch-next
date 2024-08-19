@@ -20,13 +20,16 @@ export default function Man() {
             })
     }, [category])
 
+    console.log("category",categories);
+
 
     return (
         <div className="bg-white ">
             <div className="relative flex justify-center items-center h-[150px] lg:h-[500px] md:h-[500px] mt-5 bg-gray-100">
                 <div className="relative w-full h-[150px] lg:h-[500px] md:h-[500px]">
                     <Image
-                        src={menBanner}
+                        src={categories[0]?.type?.image}
+                        // src={''}
                         alt="Main image"
                         layout="fill"
                         objectFit="cover"
@@ -34,7 +37,7 @@ export default function Man() {
                     />
                 </div>
 
-                {console.log("main")}
+       
 
                 <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-center items-center text-white">
                     <div className="absolute text-center">
