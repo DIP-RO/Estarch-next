@@ -29,12 +29,10 @@ const ProductCard = (product) => {
   return (
     <div className="flex flex-col md:flex-row mt-10 mx-4  p-4 border rounded-lg bg-white">
       <div className="flex flex-col md:flex-row md:items-center w-full">
-        <Image
+        <img
           src={product.product.images[0]}
           alt="10 inch Regular Fit Shorts"
           className="object-cover h-[150px] rounded-md"
-          width={180}
-          height={80}
         />
         <div className="ml-0 mt-4 md:mt-0 md:ml-4 flex-grow">
           <h3 className="text-gray-800 text-lg font-semibold">

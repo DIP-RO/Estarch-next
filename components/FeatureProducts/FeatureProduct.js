@@ -62,13 +62,6 @@ export default function FeatureProduct() {
       })
   }, [])
 
-
-  if (products.length <= 0) {
-    return (<div className="flex justify-center
-    items-center"><PropagateLoader color="#060101" />{console.log("Loader")}</div>);
-  }
-
-
   return (
     <div>
       <div className="slider-container mx-0 lg:mx-20">

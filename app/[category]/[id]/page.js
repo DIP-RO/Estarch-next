@@ -51,6 +51,8 @@ const Page = () => {
                 const subcategoriesQuery = JSON.stringify(selectedSubcategories);
                 const delimiter = url.includes('?') ? '&' : '?';
                 url += `${delimiter}subcategories=${encodeURIComponent(subcategoriesQuery)}`;
+                console.log(encodeURIComponent(subcategoriesQuery));
+
             }
 
             // Add sizes to the query string if there are selected sizes
@@ -258,7 +260,7 @@ const Page = () => {
                     </div>
                 </div>
 
-                <div className="drawer-side h-full lg:h-screen z-[9999]">
+                <div className="drawer-side h-full lg:h-screen z-[99999]">
                     <label
                         htmlFor="my-drawer-2"
                         aria-label="close sidebar"
