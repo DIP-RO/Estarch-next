@@ -1,7 +1,6 @@
 "use client";
 import Image from 'next/image'
 import menBanner from '../../public/images/banner1.jpeg'
-import womenBanner from '../../public/images/banner1.jpeg'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -19,7 +18,7 @@ export default function Man() {
                 setCategories(res.data)
             })
     }, [category])
-
+console.log(categories);
 
     return (
         <div className="bg-white ">
