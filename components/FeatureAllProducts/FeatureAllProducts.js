@@ -228,7 +228,7 @@ const FeatureAllProducts = () => {
                     </div>
                 </div>
 
-                <div className="drawer-side h-full lg:h-screen z-[9999]">
+                <div className="drawer-side h-full lg:h-screen z-[99999]">
                     <label
                         htmlFor="my-drawer-2"
                         aria-label="close sidebar"
