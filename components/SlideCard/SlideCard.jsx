@@ -61,6 +61,7 @@ const SlideCard = () => {
                                 </div>
                                 <div className="col-span-2 ml-1">
                                     <h1 className="text-base font-normal ">{item.product.title}</h1>
+                                    <h1 className="text-base font-normal ">{item.product.SKU}</h1>
                                     <h1 className="mt-2">TK: {item.product.price} tk</h1>
                                     {item.size && (
                                         <p className="text-sm">Size: {item.size}</p>
