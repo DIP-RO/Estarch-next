@@ -9,7 +9,7 @@ import {
 import Image from 'next/image';
 import bank_payment_logo from "../../public/images/payment-gateway.eb02d190.png";
 import pic from '../../public/images/1707379719303-manfare_bd-id-13.jpeg';
-import logo from '../../public/images/LOGO 1.png';
+import logo from '../../public/images/Logo Png 51.png';
 import footer from '../../public/images/footer.jpg'
 export default function Footer() {
   return (
@@ -23,16 +23,16 @@ export default function Footer() {
     >
       <div className="bg-black bg-opacity-70">
         <footer className="footer text-base-content p-10 flex flex-col lg:flex-row justify-between">
-          <aside className="md:mb-8 mb-2 lg:mb-0 lg:w-1/4">
+          <div className="md:mb-8 mb-2 lg:mb-0 lg:w-1/3 w-full items-center flex flex-col justify-center">
             <Image
               src={logo}
               alt="Logo"
               width={280}
               height={300}
-              className="bg-white w-3/4"
+              className="  w-3/4"
             />
             <p
-              className="text-xl md:text-3xl mt-2"
+              className="text-3xl md:text-3xl mt-2 font-bold"
               style={{ color: "rgb(184, 149, 121)", "--tw-text-opacity": "1" }}
             >
               +8801781813939
@@ -102,8 +102,8 @@ export default function Footer() {
                 </div>
                 </a>
             </div>
-          </aside>
-          <nav className="mb-4 lg:mb-0 lg:w-1/4">
+          </div>
+          <nav className="mb-4 lg:mb-0 lg:w-1/3 w-full items-center flex flex-col justify-center text-center">
             <h6
               className="font-bold uppercase text-3xl mb-4"
               style={{ color: "rgb(184, 149, 121)", "--tw-text-opacity": "1" }}
@@ -117,14 +117,14 @@ export default function Footer() {
               <li className="mb-2">Return Policy</li>
             </ul>
           </nav>
-          <nav className="mb-8 lg:mb-0 lg:w-1/4">
+          <nav className="mb-8 lg:mb-0 lg:w-1/3 w-full items-center text-center flex flex-col justify-center">
             <h6
               className="font-bold text-3xl uppercase mb-4"
               style={{ color: "rgb(184, 149, 121)", "--tw-text-opacity": "1" }}
             >
               Contact Info
             </h6>
-            <p className="text-white mb-2">
+            <p className="text-white mb-2 text-base">
             Shop Address - 19/A (Front gate of Masjid E Noor) , Near Abul Hotel, Chowdhury Para,Malibag,Dhaka-1219
               
             </p>
@@ -134,43 +134,7 @@ export default function Footer() {
               
             </p>
           </nav>
-          <nav className="lg:w-1/4">
-            <div className="relative w-full h-72 bg-black text-white rounded-lg overflow-hidden">
-              <Image
-                src={pic}
-                alt="Background"
-                layout="responsive"
-                width={720}
-                height={480}
-                className="object-cover opacity-60"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-              <div className="relative z-10 flex items-center p-4">
-                <Image
-                  src={pic}
-                  alt="Logo"
-                  layout="responsive"
-                  width={48}
-                  height={48}
-                  className="rounded-full"
-                />
-                <div className="ml-4">
-                  <h2 className="text-lg font-semibold uppercase">Estarch</h2>
-                  <p className="text-sm">597,707 followers</p>
-                </div>
-              </div>
-              <div className="absolute bottom-4 left-4 z-10">
-                <button className="flex justify-center items-center gap-2 text-xs bg-white text-black font-semibold px-4 py-2 rounded-full">
-                  <FontAwesomeIcon
-                    size="1x"
-                    className="text-blue-600"
-                    icon={faFacebook}
-                  />{" "}
-                  Follow Page
-                </button>
-              </div>
-            </div>
-          </nav>
+
         </footer>
 
         <div className="py-4">

@@ -61,6 +61,7 @@ const ProductModal = () => {
 
   }
 
+console.log(selectedProduct?.charts);
 
 
   return (
