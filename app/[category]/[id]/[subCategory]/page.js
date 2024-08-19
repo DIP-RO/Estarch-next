@@ -25,6 +25,18 @@ const Page = () => {
 
     const { id } = useParams();
     const { category } = useParams();
+    const { subCategory } = useParams();
+    const decodedSubcategory = decodeURIComponent(subCategory); // "Knit Denim"
+
+    // Step 2: Wrap the decoded string in an array
+    const arraySubcategory = [decodedSubcategory]; // ["Knit Denim"]
+
+    // Step 3: Convert the array to a JSON string
+    const jsonString = JSON.stringify(arraySubcategory); // '["Knit Denim"]'
+
+    // Step 4: Encode the JSON string
+    const encodedSubcategory = encodeURIComponent(jsonString); // '%5B%22Knit%20Denim%22%5D'
+
 
     const allRanges = [
         { min: 100, max: 300 },
@@ -38,12 +50,13 @@ const Page = () => {
     // Fetch products from the backend
     useEffect(() => {
         const fetchProducts = async () => {
-            let url = `${baseUrl}/api/products/products/category/${id}`;
+            let url = `${baseUrl}/api/products/products/category/${id}?subcategories=${encodedSubcategory}`;
 
             // Add ranges to the query string if there are selected ranges
             if (selectedRanges.length > 0) {
                 const rangesQuery = JSON.stringify(selectedRanges);
-                url += `?ranges=${encodeURIComponent(rangesQuery)}`;
+                const delimiter = url.includes('?') ? '&' : '?';
+                url += `${delimiter}ranges=${encodeURIComponent(rangesQuery)}`;
             }
 
             // Add subcategories to the query string if there are selected subcategories
@@ -52,7 +65,6 @@ const Page = () => {
                 const delimiter = url.includes('?') ? '&' : '?';
                 url += `${delimiter}subcategories=${encodeURIComponent(subcategoriesQuery)}`;
                 console.log(encodeURIComponent(subcategoriesQuery));
-
             }
 
             // Add sizes to the query string if there are selected sizes
@@ -157,7 +169,10 @@ const Page = () => {
                             <Link className="uppercase" href={`/${category}`}>{category}</Link>
                         </li>
                         <li>
-                            <Link href={`/${category}/${id}`} className="uppercase font-bold">{categoryName}</Link>
+                            <Link href={`/${category}/${id}`} className="uppercase">{categoryName}</Link>
+                        </li>
+                        <li>
+                            <Link href={`/${category}/${id}/${subCategory}`} className="uppercase font-bold">{decodedSubcategory}</Link>
                         </li>
                     </ul>
                 </div>
@@ -206,21 +221,21 @@ const Page = () => {
                                 className="card card-compact bg-base-200 shadow-lg rounded-none h-[350px] md:h-full relative"
                             ><Link href={`/product/${product._id}`}>
                                     <figure className="relative">
-                    {loading && (
-                        <div className="flex justify-center items-center w-full h-full absolute top-0 left-0">
-                            <ScaleLoader color="#090909" />
-                        </div>
-                    )}
-                    <Image
-                        src={product.images[0]}
-                        alt={product.productName}
-                        width={500}
-                        height={700}
-                        onLoad={() => setLoading(false)} // Hide loader on successful load
-                        onError={() => setLoading(false)} // Hide loader on error
-                        className={`${loading ? 'hidden' : 'block'}`} // Hide image if loading
-                    />
-                </figure>
+                                        {loading && (
+                                            <div className="flex justify-center items-center w-full h-full absolute top-0 left-0">
+                                                <ScaleLoader color="#090909" />
+                                            </div>
+                                        )}
+                                        <Image
+                                            src={product.images[0]}
+                                            alt={product.productName}
+                                            width={500}
+                                            height={700}
+                                            onLoad={() => setLoading(false)} // Hide loader on successful load
+                                            onError={() => setLoading(false)} // Hide loader on error
+                                            className={`${loading ? 'hidden' : 'block'}`} // Hide image if loading
+                                        />
+                                    </figure>
                                     <div className="pt-1 lg:px-6 px-2">
                                         <h2 className="md:text-[18px] text-[14px] font-bold text-center">
                                             {product.productName.length > 22
@@ -324,7 +339,7 @@ const Page = () => {
                             </div>
 
                             {/* Sub-Category */}
-                            <div>
+                            {/* <div>
                                 <h1 className="mt-4 text-gray-400">Sub-Category</h1>
                                 <hr className="border-2" />
                                 <hr className="border-2 border-orange-300 max-w-[60%] mt-[-3px]" />
@@ -345,7 +360,7 @@ const Page = () => {
                                         </div>
                                     ))}
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </ul>
                 </div>

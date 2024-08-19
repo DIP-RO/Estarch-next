@@ -47,7 +47,6 @@ const ProductDetails = () => {
         console.error("Error fetching product details:", error);
       }
     };
-
     if (id) {
       fetchProduct();
     }
@@ -118,6 +117,10 @@ const ProductDetails = () => {
       setWarning(true)
     }
   };
+
+console.log("product:",product);
+
+
   return (
     <div className="container mx-auto p-4">
       <div className="breadcrumbs text-xs md:my-6 my-3 md:pl-8 pl-2">
@@ -129,7 +132,10 @@ const ProductDetails = () => {
             <Link className="uppercase" href={`/${product.selectedType}`}>{product.selectedType}</Link>
           </li>
           <li>
-            <Link href={`/${product.selectedType}/${product.selectedCategory}`} className="uppercase ">{product.selectedSubCategory}</Link>
+            <Link href={`/${product.selectedType}/${product.selectedCategory}`} className="uppercase ">{product.selectedCategoryName}</Link>
+          </li>
+          <li>
+            <Link href={`/${product.selectedType}/${product.selectedCategory}/${product.selectedSubCategory}`} className="uppercase ">{product.selectedSubCategory}</Link>
           </li>
           <li>
             <Link href={`/product/${id}`} className="uppercase font-bold">{product.productName}</Link>
@@ -183,7 +189,7 @@ const ProductDetails = () => {
                 
                 <button
                    key={size.size}
-                   className={`border px-3 ${size.openingStock <= 0 ? 'btn-disabled': ''}  btn btn-sm   mr-2 ${selectedSize === size.size ? 'bg-gray-500 text-white' : ''}`}
+                   className={`border px-3 ${size.openingStock <= 0 ? 'btn-disabled': ''}  btn btn-sm   mr-2 ${selectedSize === size.size ? 'bg-black text-white' : ''}`}
                    onClick={() => { handleSizeClick(size.size), setWarning(false) }} 
                 >
                   {size.size}
