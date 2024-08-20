@@ -204,7 +204,7 @@ export default function NavBar() {
           </div>}
       </div>
       <div className="relative md:mx-12">
-        <div className=" relative mt-4  grid md:grid-cols-3 lg:grid-cols-3 grid-cols-1 px-2 pt-[72px] lg:pt-4 bg-base-100 border-b-2 lg:border-0  pb-2 lg:pb-0  ">
+        <div className=" relative md:mt-4 mt-0  grid md:grid-cols-3 lg:grid-cols-3 grid-cols-1 px-2 pt-[72px] lg:pt-4 bg-base-100 border-b-2 lg:border-0 lg:pb-0 pb-2  ">
           {/* <Link href={'/new-arrival'} className='absolute left-[41%] top-[62%] lg:left-[47%] lg:top-[27%]  bg-yellow-300  px-2 text-[10px] lg:text-xs text-center rounded-sm' >New</Link> */}
 
           <div className='grid grid-cols-2 gap-5 '>
@@ -214,12 +214,12 @@ export default function NavBar() {
 
             </div>
           </div>
-          <div className="flex gap-4 justify-center items-center overflow-x-auto whitespace-nowrap px-2 scrollbar-hide h-[60px]">
+          <div className="flex gap-4 justify-center md:items-center items-end overflow-x-auto whitespace-nowrap px-2 scrollbar-hide md:h-[60px] h-full">
             <Link href="/">
               <button className="uppercase whitespace-nowrap text-sm md:text-[16px]">HOME</button>
             </Link>
          
-            <Link href="/new-arrival" className='relative -top-[10px]'>
+            <Link href="/new-arrival" className='relative md:-top-[10px] top-0'>
               <button className="uppercase whitespace-nowrap text-sm md:text-[16px]"><span className='lg:text-[13px] absolute bg-yellow-300 px-1 rounded-sm text-[10px]'>New</span><br /> Arrivals</button>
             </Link>
             {

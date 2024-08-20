@@ -352,10 +352,10 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-      <div className="lg:flex  lg:items-center lg:justify-center  mt-10">
+      <div className="text-center  mt-0">
         <h1 className="text center">Related Products</h1>
       </div>
-      <div className="lg:mx-20 grid grid-cols-1 lg:grid-cols-2">
+      <div className="lg:mx-20 grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
         {product?.relatedProducts.map((relatedProduct) => (
           <ProductCard key={relatedProduct?._id} product={relatedProduct?.product} />
         ))}
