@@ -14,8 +14,8 @@ import { FiMinus } from "react-icons/fi";
 
 function Hambarger() {
     const [categories, setCategories] = useState({});
-    const [openTypes, setOpenTypes] = useState([]); // Array to track open types
-    const [openCategories, setOpenCategories] = useState([]); // Array to track open categories
+    const [openTypes, setOpenTypes] = useState([]); 
+    const [openCategories, setOpenCategories] = useState([]); 
     const isOpen = useSelector((state) => state.slide.isOpen);
     const dispatch = useDispatch();
 
@@ -35,6 +35,10 @@ function Hambarger() {
                 }, {});
 
                 setCategories(groupedCategories);
+                
+                // Automatically open all types initially
+                setOpenTypes(Object.keys(groupedCategories));
+
                 console.log(groupedCategories);
 
             } catch (error) {
@@ -111,7 +115,6 @@ function Hambarger() {
                                     {categories[typeName].map((category) => (
                                         <div key={category._id}>
                                             <li
-                                                onClick={() => handleCategoryToggle(category._id)}
                                                 className="flex items-center justify-between cursor-pointer"
                                             >
                                                 <Link href={`/${typeName.toLowerCase()}/${category.name}`}>
@@ -122,7 +125,7 @@ function Hambarger() {
                                                    className={`transition-transform duration-300 ${openCategories.includes(category._id) ? 'rotate-180' : ''
                                                        }`}
                                                >
-                                                   {openCategories.includes(category._id) ? <FiMinus /> : <GoPlus />}
+                                                   {openCategories.includes(category._id) ? <FiMinus onClick={() => handleCategoryToggle(category._id)}/> : <GoPlus onClick={() => handleCategoryToggle(category._id)}/>}
                                                </span> : null
                                                 }
                                             </li>

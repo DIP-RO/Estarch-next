@@ -32,16 +32,19 @@ const ProductModal = () => {
   const quantity = 1;
   const handleAddToCart = () => {
     if (selectedSize) {
+      setWarning(false)
       dispatch(addToCart({
-        id: selectedProduct._id,
+        id: selectedProduct?._id,
         product: {
-          title: selectedProduct.productName,
-          price: selectedProduct.salePrice,
-          colors: [{ images: [{ url: selectedProduct?.images[0] }] }],
-          stock: { quantity: 10 },
+          sku: selectedProduct?.SKU,
+          discount: selectedProduct?.discount?.amount,
+          title: selectedProduct?.productName,
+          price: selectedProduct?.salePrice,
+          colors: [{ images: [{ url:selectedProduct?.images[0] }] }],
+          stock: { quantity: 10 }, 
         },
         quantity,
-        color: 'Blue', // Add actual color if available
+        color: 'Blue', 
         size: selectedSize,
       }));
       dispatch(closeProductModal())
@@ -71,14 +74,14 @@ console.log(selectedProduct?.charts);
       {/* Mobile Modal */}
       <div className={`fixed lg:hidden md:hidden inset-0 bg-black bg-opacity-50  flex items-center justify-center z-[100] w-full h-screen`}>
 
-        <div onClick={() => {dispatch(closeProductModal()), setSelectedSize(null)}} className={` fixed bottom-0 p-6 rounded-lg shadow-lg max-w-md h-screen w-full`}
+        <div onClick={() => { setSelectedSize(null) , dispatch(closeProductModal())}} className={` fixed bottom-0 p-6 rounded-lg shadow-lg max-w-md h-screen w-full`}
         ></div>
 
         <div
           className={`fixed bottom-0 bg-white p-6 rounded-lg shadow-lg max-w-md w-full transform transition-all duration-300 ${isAnimating ? 'translate-y-0' : 'translate-y-full'}`}
         >
           <button
-            onClick={() => {dispatch(closeProductModal()), setSelectedSize(null)}}
+            onClick={() => { setSelectedSize(null) , dispatch(closeProductModal())}}
             className="absolute top-4 right-4 text-gray-800 hover:text-gray-500 text-4xl"
           >
             &times;
@@ -135,10 +138,10 @@ console.log(selectedProduct?.charts);
 
       {/* Desktop Modal */}
       <div className="fixed inset-0 bg-black bg-opacity-50 md:flex lg:flex  justify-center z-[99999] hidden">
-        <div onClick={() => {dispatch(closeProductModal()), setSelectedSize(null)}} className={`rounded-lg w-11/12 md:w-2/3 lg:w-full p-6 absolute h-screen`}></div>
+        <div onClick={() => { setSelectedSize(null) , dispatch(closeProductModal())}} className={`rounded-lg w-11/12 md:w-2/3 lg:w-full p-6 absolute h-screen`}></div>
         <div className={`bg-white rounded-lg w-11/12 md:w-2/3 lg:w-1/2 p-6 relative h-fit mt-5 transform transition-all duration-300 ${isAnimating ? 'translate-y-0' : '-translate-y-full'}`}>
           <button
-            onClick={() => {dispatch(closeProductModal()), setSelectedSize(null)}}
+            onClick={() => { setSelectedSize(null) , dispatch(closeProductModal())}}
             className="absolute top-4 right-4 text-gray-800 hover:text-gray-500 text-4xl"
           >
             &times;

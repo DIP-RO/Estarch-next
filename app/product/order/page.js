@@ -48,10 +48,21 @@ export default function Checkout() {
     }, 0);
   };
 
-  const calculateTotal = () => {
-    const subtotal = calculateSubtotal();
-    return subtotal + (shippingCharge || 0);
+  const discount = () => {
+    return cartItems.reduce((acc, item) => {
+      const itemTotal = (item.product.discount) * item.quantity;
+      return acc + itemTotal;
+    }, 0);
   };
+
+
+  const calculateTotal = () => {
+    if (typeof window === 'undefined') {
+      return calculateSubtotal() + (shippingCharge || 0);
+    }
+    return calculateSubtotal() + (shippingCharge || 0);
+  };
+  
 
 
   const handleChange = (e) => {
@@ -84,10 +95,11 @@ export default function Checkout() {
       deliveryCharge: shippingCharge,
       address: formData.address,
       area: formData.area,
+      discount: discount(),
       orderNotes: formData.orderNotes,
       cartItems: cartItems.map(item => ({
         productId: item.id,
-        discountAmount: item.product.discount *item.quantity,
+        discountAmount: item.product.discount,
         title: item.product.title,
         quantity: item.quantity,
         price: item.product.price,
@@ -220,18 +232,18 @@ export default function Checkout() {
           <h2 className="text-2xl font-bold mb-4 bg-gray-200 p-2 rounded text-center">Your order</h2>
           <div className="mb-4">
             {cartItems.map(item => (
-              <div key={item.id} className="flex flex-row justify-between items-center">
+              <div key={item.id} className="flex flex-row mt-2 justify-between items-center">
                 <div className='flex gap-2 items-center'>
                   <Image
                     className=' object-cover'
                     src={item?.product?.colors[0]?.images[0]?.url}
                     alt=""
-                    width={56} // Width in pixels
-                    height={56} // Height in pixels
+                    width={60} // Width in pixels
+                    height={60} // Height in pixels
                   />
                   <div className='flex flex-col'>
                     <p className='block whitespace-nowrap overflow-hidden text-ellipsis'>{item.product.title} - {item.quantity} pcs</p>
-                    <p className='block whitespace-nowrap overflow-hidden text-ellipsis'>SKU: {item.product.sku}</p>
+                    <p className='block whitespace-nowrap text-xs overflow-hidden text-ellipsis'>SKU: {item.product.sku}</p>
                     <span>
                       {item.size && (
                         <p className="text-sm">Your Size: {item.size}</p>
@@ -239,33 +251,20 @@ export default function Checkout() {
                     </span>
                     <div className='flex items-center gap-2 mt-1'>
                       <span>Qty:</span>
-                      <button onClick={() => handleDecrease(item.id)} className="bg-gray-300  w-6 h-6 flex items-center justify-center">-</button>
+                      <button onClick={() => handleDecrease(item.id)} className="bg-gray-300  w-5 h-5 flex items-center justify-center">-</button>
                       <span>{item.quantity}</span>
-                      <button onClick={() => handleIncrease(item.id)} className="bg-gray-300  w-6 h-6 flex items-center justify-center">+</button>
+                      <button onClick={() => handleIncrease(item.id)} className="bg-gray-300  w-5 h-5 flex items-center justify-center">+</button>
                     </div>
                   </div>
                 </div>
-                <div className='lg:ml-60 md:ml-60 ml-20'>
-                <p className="text-base lg:text-xl lg:font-semibold">
-                    <span className="text-red-600 line-through" style={{ fontSize: "0.8em" }}>
-                      ৳ {(item.product.price + item.product.discount)*item.quantity}
-                    </span>
-                    <span className="ml-2">৳ {(item.product.price)*item.quantity}</span>
-                  </p>
-                  {item.product.discount > 0 && (
-                    <h1 className="mt-1 text-sm text-red-500">
-                      Discount: -TK {item.product.discount *item.quantity} 
-                    </h1>
-                  )}
-                  <div className='flex justify-end'>
+                <div className='lg:ml-80 flex flex-col items-end'>
+                  <span className=''>৳ {item.product.price * item.quantity}</span>
                   <button onClick={() => handleRemoveItem(item.id)} className=" flex items-center justify-center underline">Remove</button>
-                  </div>
                 </div>
-
                 <hr className='col-span-2 my-2' />
               </div>
             ))}
-            <div className="flex justify-between ">
+            <div className="flex justify-between   mt-5">
               <span>Subtotal</span>
               <span className="text-red-700">৳ {calculateSubtotal().toFixed(2)}</span>
             </div>
@@ -275,7 +274,6 @@ export default function Checkout() {
                 <span>৳ {shippingCharge}</span>
               </div>
             )}
-
           </div>
           <div className="flex justify-between font-bold text-xl">
             <span>Total</span>
