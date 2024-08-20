@@ -210,7 +210,7 @@ export default function NavBar() {
           <div className='grid grid-cols-2 gap-5 '>
             <div className='hidden lg:block md:block'>
               <input value={productValue}
-                onChange={(e) => setProductValue(e.target.value)} type="text" placeholder="Product Name Or SKU" className="input input-bordered w-full mt-4  " />
+                onChange={(e) => setProductValue(e.target.value)} type="text" placeholder="Product Name Or SKU" className="input input-bordered w-72 mt-4  " />
 
             </div>
           </div>
@@ -240,7 +240,7 @@ export default function NavBar() {
         </div>
       </div>
       {productValue && (
-        <div className=" ml-14 absolute w-56 hidden lg:block md:block bg-white border  border-gray-300 rounded shadow-md z-[100000]">
+        <div className=" ml-14 absolute w-72 hidden lg:block md:block bg-white border  border-gray-300 rounded shadow-md z-[100000]">
           {filteredProduct.length > 0 ? (
             filteredProduct.map((product, index) => (
               <div
@@ -248,7 +248,7 @@ export default function NavBar() {
                 onClick={() => clickProduct(product)}
                 className="flex items-center gap-2 cursor-pointer p-2 hover:bg-gray-200 text-black"
               >
-                <Image src={product.images[0]} alt='' width={20} height={20} /><span>{product.productName}</span>
+                <Image src={product.images[0]} alt='' width={20} height={20} /><span>{product.productName}</span><span>({product.SKU})</span>
               </div>
             ))
           ) : (
@@ -258,16 +258,16 @@ export default function NavBar() {
       )}
       {isSearchOpen && (
         <div className="grid grid-cols-2 relative gap-5">
-          <div className='relative left-[40%]'>
+          <div className='relative left-[25%]'>
             <input
               value={productValue}
               onChange={(e) => setProductValue(e.target.value)}
               type="text"
               placeholder="Product Name Or SKU"
-              className="input input-bordered mt-3 md:hidden grid"
+              className="input input-bordered mt-3 md:hidden grid w-72"
             />
             {productValue && (
-              <div className="w-56 mt-1 bg-white border absolute z-[1000000] border-gray-300 rounded shadow-md">
+              <div className="w-72 mt-1 bg-white border absolute z-[1000000] border-gray-300 rounded shadow-md md:hidden">
                 {filteredProduct.length > 0 ? (
                   filteredProduct.map((product, index) => (
                     <div
@@ -276,7 +276,7 @@ export default function NavBar() {
                       className="flex items-center gap-2 cursor-pointer p-2 hover:bg-gray-200 text-black"
                     >
                       <Image src={product.images[0]} alt={product.productName} width={20} height={20} />
-                      <span>{product.productName}</span>
+                      <span>{product.productName}</span><span>({product?.SKU})</span>
                     </div>
                   ))
                 ) : (
