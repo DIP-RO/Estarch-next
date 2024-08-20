@@ -27,7 +27,9 @@ const Page = () => {
     const { category } = useParams();
     const {catName} = useParams();
 
-    console.log(subcategories);
+    const decodeCategoryName = decodeURIComponent(catName)
+
+    console.log(decodeCategoryName);
 
     const allRanges = [
         { min: 100, max: 300 },
@@ -162,7 +164,7 @@ const Page = () => {
                             <Link className="uppercase" href={`/${category}`}>{category}</Link>
                         </li>
                         <li>
-                            <Link href={`/${category}/${categoryName}`} className="uppercase font-bold">{categoryName}</Link>
+                            <Link href={`/${category}/${decodeCategoryName}`} className="uppercase font-bold">{decodeCategoryName}</Link>
                         </li>
                     </ul>
                 </div>
