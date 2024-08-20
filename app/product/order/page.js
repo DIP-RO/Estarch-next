@@ -39,11 +39,13 @@ export default function Checkout() {
     } else {
       setShippingCharge(null);
     }
-    
-  };
 
+  };
   const calculateSubtotal = () => {
-    return cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+    return cartItems.reduce((acc, item) => {
+      const itemTotal = (item.product.price) * item.quantity;
+      return acc + itemTotal;
+    }, 0);
   };
 
   const calculateTotal = () => {
@@ -51,11 +53,11 @@ export default function Checkout() {
     return subtotal + (shippingCharge || 0);
   };
 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
 
 
   const handleDecrease = (id) => {
@@ -85,6 +87,7 @@ export default function Checkout() {
       orderNotes: formData.orderNotes,
       cartItems: cartItems.map(item => ({
         productId: item.id,
+        discountAmount: item.product.discount *item.quantity,
         title: item.product.title,
         quantity: item.quantity,
         price: item.product.price,
@@ -146,7 +149,7 @@ export default function Checkout() {
                     value={formData.phone}
                     onChange={handleChange}
                     required className="grow" placeholder="Your Phone Number" />
-                    
+
                 </label>
               </div>
               <div className="mb-4">
@@ -190,7 +193,7 @@ export default function Checkout() {
                 <label className="block text-sm font-bold mb-2">Payment Method:</label>
                 <div className="mb-2">
                   <label className="inline-flex items-center">
-                    <input className='radio checked:bg-red-500'defaultChecked  type="radio" name="paymentMethod" value="Cash on Delivery" onChange={handleChange} required />
+                    <input className='radio checked:bg-red-500' defaultChecked type="radio" name="paymentMethod" value="Cash on Delivery" onChange={handleChange} required />
                     <div className='flex items-center gap-3 ml-2'>
                       <span>Cash on delivery</span>
                       <Image src={cod} alt='Cash on delivery' width={80} height={40} />
@@ -228,6 +231,7 @@ export default function Checkout() {
                   />
                   <div className='flex flex-col'>
                     <p className='block whitespace-nowrap overflow-hidden text-ellipsis'>{item.product.title} - {item.quantity} pcs</p>
+                    <p className='block whitespace-nowrap overflow-hidden text-ellipsis'>SKU: {item.product.sku}</p>
                     <span>
                       {item.size && (
                         <p className="text-sm">Your Size: {item.size}</p>
@@ -241,10 +245,23 @@ export default function Checkout() {
                     </div>
                   </div>
                 </div>
-                <div className='lg:ml-80 '>
-                  <span className=''>৳ {item.product.price * item.quantity}</span>
+                <div className='lg:ml-60 md:ml-60 ml-20'>
+                <p className="text-base lg:text-xl lg:font-semibold">
+                    <span className="text-red-600 line-through" style={{ fontSize: "0.8em" }}>
+                      ৳ {(item.product.price + item.product.discount)*item.quantity}
+                    </span>
+                    <span className="ml-2">৳ {(item.product.price)*item.quantity}</span>
+                  </p>
+                  {item.product.discount > 0 && (
+                    <h1 className="mt-1 text-sm text-red-500">
+                      Discount: -TK {item.product.discount *item.quantity} 
+                    </h1>
+                  )}
+                  <div className='flex justify-end'>
                   <button onClick={() => handleRemoveItem(item.id)} className=" flex items-center justify-center underline">Remove</button>
+                  </div>
                 </div>
+
                 <hr className='col-span-2 my-2' />
               </div>
             ))}
@@ -258,6 +275,7 @@ export default function Checkout() {
                 <span>৳ {shippingCharge}</span>
               </div>
             )}
+
           </div>
           <div className="flex justify-between font-bold text-xl">
             <span>Total</span>

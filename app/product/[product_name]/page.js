@@ -57,6 +57,8 @@ const ProductDetails = () => {
       dispatch(addToCart({
         id: product?._id,
         product: {
+          sku: product?.SKU,
+          discount: product?.discount?.amount,
           title: product?.productName,
           price: product?.salePrice,
           colors: [{ images: [{ url: mainImage }] }],
