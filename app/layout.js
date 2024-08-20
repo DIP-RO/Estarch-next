@@ -6,7 +6,7 @@ import Providers from "./providers";
 import SlideCard from "@/components/SlideCard/SlideCard";
 import Size from "@/components/Size/Size";
 import Hambarger from "@/components/Hambarger/Hambarger";
-
+import { GoogleTagManager } from '@next/third-parties/google'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,15 +18,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme='light'>
+      <GoogleTagManager gtmId="GTM-WKPLL9WN" />
       <body className={`${inter.className} bg-base-100`}>
         <Providers>
           <NavBar />
-          <Hambarger/>
-          <SlideCard/>
-          <Size/>
+          <Hambarger />
+          <SlideCard />
+          <Size />
           {children}
           <Footer />
         </Providers>
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WKPLL9WN"
+          height="0" width="0" style={{display:"none",visibility:"hidden"}}></iframe></noscript>
       </body>
     </html>
   );
