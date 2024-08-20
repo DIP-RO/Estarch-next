@@ -203,29 +203,33 @@ export default function NavBar() {
             </div>
           </div>}
       </div>
-      <div className="relative mx-12">
-        <div className="grid md:grid-cols-3 lg:grid-cols-3 grid-cols-1 px-2 pt-[88px] lg:pt-5 bg-base-100 border-b-2 lg:border-0  pb-2 lg:pb-0 ">
-          <Link href={'/new-arrival'} className='absolute left-[41%] top-[62%] lg:left-[47%] lg:top-[27%]  bg-yellow-300  px-2 text-[10px] lg:text-xs text-center rounded-sm' >New</Link>
+      <div className="relative md:mx-12">
+        <div className=" relative mt-4  grid md:grid-cols-3 lg:grid-cols-3 grid-cols-1 px-2 pt-[72px] lg:pt-4 bg-base-100 border-b-2 lg:border-0  pb-2 lg:pb-0  ">
+          {/* <Link href={'/new-arrival'} className='absolute left-[41%] top-[62%] lg:left-[47%] lg:top-[27%]  bg-yellow-300  px-2 text-[10px] lg:text-xs text-center rounded-sm' >New</Link> */}
 
           <div className='grid grid-cols-2 gap-5 '>
             <div className='hidden lg:block md:block'>
               <input value={productValue}
-                onChange={(e) => setProductValue(e.target.value)} type="text" placeholder="Product Name Or SKU" className="input input-bordered w-72 mt-4  " />
+                onChange={(e) => setProductValue(e.target.value)} type="text" placeholder="Product Name Or SKU" className="input input-bordered w-72  " />
 
             </div>
           </div>
-          <div className="flex gap-4 justify-center items-center overflow-x-auto whitespace-nowrap px-2 scrollbar-hide">
-            <a href="/">
+          <div className="flex gap-4 justify-center items-center overflow-x-auto whitespace-nowrap px-2 scrollbar-hide h-[60px]">
+            <Link href="/">
               <button className="uppercase whitespace-nowrap text-sm md:text-[16px]">HOME</button>
-            </a>
-            <a href="/new-arrival" className='relative z-[9999]'>
-              <button className="uppercase whitespace-nowrap text-sm md:text-[16px]"> Arrivals</button>
-            </a>
+            </Link>
+         
+            <Link href="/new-arrival" className='relative -top-[10px]'>
+              <button className="uppercase whitespace-nowrap text-sm md:text-[16px]"><span className='lg:text-[13px] absolute bg-yellow-300 px-1 rounded-sm text-[10px]'>New</span><br /> Arrivals</button>
+            </Link>
             {
               types.map(t =>
-                <Link key={t._id} className='text uppercase text-sm md:text-[16px]' href={`/${t.name}`}>{t.name}</Link>
+                <Link href={`/${t.name}`} className=''>
+                  <button className="uppercase whitespace-nowrap text-sm md:text-[16px]">{t.name}</button>
+                </Link>
               )
             }
+
           </div>
           <div className="lg:flex md:flex justify-end items-center hidden">
             <div className="relative " onClick={() => dispatch(openCardSlide())}>
