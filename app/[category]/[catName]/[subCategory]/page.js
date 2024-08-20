@@ -28,6 +28,7 @@ const Page = () => {
     const { category } = useParams();
     const { subCategory } = useParams();
     const decodedSubcategory = decodeURIComponent(subCategory); // "Knit Denim"
+    const decodedCategory = decodeURIComponent(catName); // "Knit Denim"
 
     // Step 2: Wrap the decoded string in an array
     const arraySubcategory = [decodedSubcategory]; // ["Knit Denim"]
@@ -170,7 +171,7 @@ const Page = () => {
                             <Link className="uppercase" href={`/${category}`}>{category}</Link>
                         </li>
                         <li>
-                            <Link href={`/${category}/${categoryName}`} className="uppercase">{categoryName}</Link>
+                            <Link href={`/${category}/${decodedCategory}`} className="uppercase">{decodedCategory}</Link>
                         </li>
                         <li>
                             <Link href={`/${category}/${categoryName}/${decodedSubcategory}`} className="uppercase font-bold">{decodedSubcategory}</Link>
