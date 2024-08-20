@@ -84,7 +84,7 @@ export default function NavBar() {
   }, [])
 
   const clickProduct = (p) => {
-    router.push(`/product/${p._id}`)
+    router.push(`/product/${p.productName}`)
     setProductValue('')
   }
 
