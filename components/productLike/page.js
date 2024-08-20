@@ -11,15 +11,15 @@ const ProductCard = (product) => {
     setSelectedSize(e.target.value);
   };
 
-  console.log(product);
+  console.log("heeeeeee",product.product);
   const handleAddToCart = () => {
       dispatch(openCardSlide())
       const quantity = 1;
       dispatch(addToCart({
         id: product.product._id,
         product: {
-          sku: product?.SKU,
-          discount: product?.discount?.amount,
+          sku: product?.product.SKU,
+          discount: product?.product.discount?.amount,
           title: product.product.productName,
           price: product.product?.salePrice,
           colors: [{ images: [{ url: product.product.images[0] }] }],
