@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,14 +29,19 @@ const ProductDetails = () => {
   const [activeTab, setActiveTab] = useState('description');
 
   const { product_name } = useParams();
+  const searchParams = useSearchParams();
+  const sku = searchParams.get("sku")
+
+  
+
   const router = useRouter();
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/api/products/products/product-details/${encodeURIComponent(product_name)}`);
+        const response = await axios.get(`${baseUrl}/api/products/products/product-details/${encodeURIComponent(product_name)}/${sku}`);
         setProduct(response.data);
         setMainImage(response.data?.images[0]);
-        console.log(response.data);
+  
 
         // if (response.data.selectedSizes.length > 0) {
         //   setSelectedSize(response.data.selectedSizes[0]);
@@ -114,7 +119,6 @@ const ProductDetails = () => {
     }
   };
 
-  console.log("product:", product);
 
 
   return (

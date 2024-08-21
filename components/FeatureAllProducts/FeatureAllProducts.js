@@ -202,7 +202,7 @@ const FeatureAllProducts = () => {
                                 key={product._id}
                                 className="card card-compact bg-base-200 shadow-lg rounded-none h-[350px] md:h-[500px] relative"
                             >
-                                <Link href={`/product/${product?.productName}`}>
+                                <Link href={`/product/${product?.productName}?sku=${product?.SKU}`}>
                                 <figure>
                                     <Image src={product.images[0]} alt={product.productName} width={500}
                                         height={700} />

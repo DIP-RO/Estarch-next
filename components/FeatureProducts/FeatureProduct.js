@@ -71,7 +71,7 @@ export default function FeatureProduct() {
         <Slider {...settings}>
           {products.map(product => (
             <div key={product._id} className="card card-compact bg-base-100 w-96 shadow-md rounded-none h-[350px] md:h-full relative ">
-              <Link href={`/product/${product?.productName}`}>
+              <Link href={`/product/${product?.productName}?sku=${product?.SKU}`}>
                 <figure className='relative'>
                   <Image src={product.images[0]} width={500} height={0} alt={product.productName} />
                 </figure>

@@ -75,7 +75,7 @@ export default function NewArrival() {
         <Slider {...settings}>
           {products.map(product => (
             <div key={product?._id} className="card bg-base-100 w-96 shadow-md rounded-none">
-              <Link href={`/product/${product.productName}`}>
+              <Link href={`/product/${product?.productName}?sku=${product?.SKU}`}>
                 <div>
                   <figure className='relative'>
                     <Image src={product.images[0]} width={500} height={0} alt={product.productName} />

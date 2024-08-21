@@ -200,10 +200,10 @@ const NewArrivalAllProducts = () => {
                             <div
                                 key={product._id}
                                 className="card card-compact bg-base-200 shadow-lg rounded-none h-[350px] md:h-full relative"
-                            ><Link href={`/product/${product?.productName}`}>
+                            ><Link href={`/product/${product?.productName}?sku=${product?.SKU}`}>
                                     <figure>
-                                        <Image src={product.images[0]} alt={product.productName} width={500}
-                                            height={700} />
+                                        <img src={product.images[0]} alt={product.productName}
+                                            />
                                     </figure>
                                     <div className="pt-1 lg:px-6 px-2">
                                         <h2 className="md:text-[18px] text-[14px] font-bold text-center">

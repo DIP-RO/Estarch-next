@@ -36,7 +36,7 @@ export default function RelatedProductsSinglePage() {
             <div
               key={product?._id}
               className="card card-compact bg-base-200 shadow-lg rounded-none h-[350px] md:h-full relative"
-            ><a href={`/product/${product?.productName}`}>
+            ><Link href={`/product/${product?.productName}?sku=${product?.SKU}`}>
                 <figure>
                   <Image src={product?.images[0]} alt={product?.productName} width={500}
                     height={700} />
@@ -69,7 +69,7 @@ export default function RelatedProductsSinglePage() {
                     )}
                   </div>
                 </div>
-              </a>
+              </Link>
               <div className='text-center shadow-lg absolute w-full bottom-0 md:relative '>
 
               <button onClick={() => {dispatch(openProductModal(product))}} className=" bg-[#1E201E] text-white w-full md:py-2 py-1">BUY NOW</button>

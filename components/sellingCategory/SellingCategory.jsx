@@ -55,7 +55,7 @@ const SellingCategory = () => {
                         spaceBetween: 50,
                     },
                 }}
-                modules={[FreeMode, Navigation, Autoplay]}
+                modules={[FreeMode, Navigation,Autoplay]}
                 className="mySwiper"
             >
                 {loading ? (
@@ -70,11 +70,16 @@ const SellingCategory = () => {
                         <SwiperSlide key={cat._id}>
                             <Link href={`${cat.type.name}/${cat.name}`}>
                                 <div className='relative text-center rounded-md bg-cover bg-center w-[162px] lg:w-[302px] h-[100px] lg:h-[180px]' style={{ backgroundImage: `url(${cat.image})` }}>
-                                    <button className='relative text-[8px] md:text-sm top-14 lg:top-32 px-3 cursor-pointer text-white rounded-lg py-1 bg-[#00000058] z-20 border-2'>{cat.name}</button>
-                                    <div className="bg-[#1111112f] z-10 w-full h-full rounded-md">
+                                    {/* Overlay div */}
+                                    <div className="absolute inset-0 bg-[#1111112f] z-10 rounded-md">
                                         {/* This div is used for an overlay on the background image */}
                                     </div>
+                                    {/* Button on top of the overlay */}
+                                    <button className='relative text-[8px] md:text-sm top-14 lg:top-32 px-3 cursor-pointer text-white rounded-lg py-1 bg-[#00000058] z-20 border-2'>
+                                        {cat.name}
+                                    </button>
                                 </div>
+
                             </Link>
                         </SwiperSlide>
                     ))

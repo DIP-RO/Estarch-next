@@ -229,7 +229,7 @@ const Page = () => {
                             <div
                                 key={product._id}
                                 className="card card-compact bg-base-200 shadow-lg rounded-none h-[350px] md:h-full relative"
-                            ><Link href={`/product/${product.productName}`}>
+                            ><Link href={`/product/${product?.productName}?sku=${product?.SKU}`}>
                                     <figure className="relative">
                                         {loading && (
                                             <div className="flex justify-center items-center w-full h-full absolute top-0 left-0">
