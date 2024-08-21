@@ -224,7 +224,7 @@ export default function NavBar() {
             </Link>
             {
               types.map(t =>
-                <Link href={`/${t.name}`} className=''>
+                <Link key={t._id} href={`/${t.name}`} className=''>
                   <button className="uppercase whitespace-nowrap text-sm md:text-[16px]">{t.name}</button>
                 </Link>
               )
