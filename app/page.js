@@ -92,7 +92,7 @@ export default function Home() {
   // }, [dispatch]);
 
   return (
-    <main className="overflow-x-hidden">
+    <main className="overflow-x-hidden min-h-screen">
       <HeaderBanner />
       <div className="hidden md:grid">
         <ServiceMoto />

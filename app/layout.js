@@ -25,11 +25,13 @@ export default function RootLayout({ children }) {
           <Hambarger />
           <SlideCard />
           <Size />
-          {children}
+          <div className="min-h-screen">
+            {children}
+          </div>
           <Footer />
         </Providers>
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WKPLL9WN"
-          height="0" width="0" style={{display:"none",visibility:"hidden"}}></iframe></noscript>
+          height="0" width="0" style={{ display: "none", visibility: "hidden" }}></iframe></noscript>
       </body>
     </html>
   );

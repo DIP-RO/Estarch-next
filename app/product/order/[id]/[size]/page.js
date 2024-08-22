@@ -2,15 +2,17 @@
 import { useState, useEffect, useContext } from 'react';
 import Image from 'next/image';
 import { FaPhoneAlt } from "react-icons/fa";
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import axios from 'axios';
 import baseUrl from '@/components/services/baseUrl';
 import cod from '../../../../../public/images/cash-on-delivery-icon.png';
 import { AuthContext } from '@/components/context/AuthProvider';
 
 export default function Checkout() {
+    const newQuantity = useSearchParams()
+    const q = newQuantity.get('q')
     const [product, setProduct] = useState(null);
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(q);
     const { id, size } = useParams();
     const router = useRouter();
     const { authUser } = useContext(AuthContext);
@@ -25,6 +27,8 @@ export default function Checkout() {
         orderNotes: '',
         paymentMethod: ''
     });
+
+
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -96,7 +100,7 @@ export default function Checkout() {
             deliveryCharge: shippingCharge,
             address: formData.address,
             area: formData.area,
-            discount:discount,
+            discount: discount,
             orderNotes: formData.orderNotes,
             cartItems: [{
                 productId: product._id,
@@ -256,7 +260,7 @@ export default function Checkout() {
                     </form>
                 </div>
 
-                <div className="w-full md:w-1/2 rounded-md mt-4 md:mt-0 p-4 lg:px-16 py-8 border shadow-lg">
+                {/* <div className="w-full md:w-1/2 rounded-md mt-4 md:mt-0 p-4 lg:px-16 py-8 border shadow-lg">
                     <h2 className="text-xl md:text-2xl font-bold mb-4 bg-gray-200 p-2 rounded text-center">Your order</h2>
                     {product && (
                         <>
@@ -336,7 +340,68 @@ export default function Checkout() {
                             </div>
                         </>
                     )}
-                </div>
+                </div> */}
+
+                {product && (
+                    <div className="md:w-1/2 rounded-md mt-4 md:mt-0 p-4 lg:px-16 py-8 border shadow-lg">
+                        <p className='text-center py-2 bg-blue-400 text-white text-xl'>Your Order</p>
+                        <div className='mt-4'>
+                
+                                <div>
+                                    <div className='grid grid-cols-4 lg:grid-cols-6 '>
+                                        <p className='block mb-2 font-bold whitespace-nowrap overflow-hidden text-ellipsis col-span-4 lg:col-span-6'> {product.productName} - 1 pcs</p>
+                                        <div className=''>
+                                            <Image
+                                                className=' object-cover'
+                                                src={product?.images[0]}
+                                                alt={product.productName}
+                                                width={70} // Width in pixels
+                                                height={70} // Height in pixels
+                                            />
+                                        </div>
+                                        <div className='col-span-2'>
+                                            <p className='block whitespace-nowrap text-xs lg:text-lg overflow-hidden text-ellipsis'>SKU: <span className='font-semibold'>{product.SKU}</span></p>
+                                            <span>
+                                                {size && (
+                                                    <p className="text-sm lg:text-lg">Your Size: <span className='font-semibold'>{size}</span></p>
+                                                )}
+                                            </span>
+                                            <div className='flex items-center gap-2 mt-1'>
+                                                <span>Qty:</span>
+                                                <button onClick={handleDecrease} className="bg-gray-300  w-5 h-5 flex items-center justify-center">-</button>
+                                                <span>{quantity}</span>
+                                                <button onClick={ handleIncrease} className="bg-gray-300  w-5 h-5 flex items-center justify-center">+</button>
+                                            </div>
+                                        </div>
+                                        <div className='lg:col-span-3 place-self-end text-end'>
+                                            <p className='line-through text-red-500'>৳ {product.salePrice + product?.discount?.amount}</p>
+                                            <span className=''>৳ {product.salePrice}</span>
+                                            <button onClick={ handleRemoveItem} className=" flex items-center justify-center underline">Remove</button>
+                                        </div>
+                                    </div>
+                                    <hr className='mt-2 mb-4' />
+                                </div>
+                          
+                            <div className='flex justify-between mt-4'>
+                                <p className='text-lg '>SubTotal</p>
+                                <p className='text-lg text-red-500'>৳ {(product.salePrice * quantity).toFixed(2)}</p>
+                            </div>
+                            {shippingCharge !== null && (
+                                <div className="flex justify-between">
+                                    <span>Shipping Charge</span>
+                                    <span>৳ {shippingCharge}</span>
+                                </div>
+                            )}
+                            <hr className='my-1' />
+                            <div className='flex justify-between'>
+                                <p className='text-xl font-bold'>Total</p>
+                                <p className='text-xl text-red-500 font-bold'>৳ {calculateTotal().toFixed(2)}</p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+
 
             </div>
         </div>

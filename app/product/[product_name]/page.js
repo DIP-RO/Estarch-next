@@ -50,10 +50,10 @@ const ProductDetails = () => {
         console.error("Error fetching product details:", error);
       }
     };
-    if (product_name) {
+    if (sku) {
       fetchProduct();
     }
-  }, [product_name]);
+  }, [sku]);
 
   const handleAddToCart = () => {
     if (selectedSize) {
@@ -79,7 +79,7 @@ const ProductDetails = () => {
   };
   const buyNowButton = () => {
     if (selectedSize) {
-      router.push(`/product/order/${product?._id}/${selectedSize}`);
+      router.push(`/product/order/${product?._id}/${selectedSize}?q=${quantity}`);
     } else {
       setWarning(true)
     }
