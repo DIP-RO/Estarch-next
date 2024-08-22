@@ -109,7 +109,7 @@ export default function Checkout() {
       totalAmount: calculateTotal() - (shippingCharge || 0),
       grandTotal: calculateTotal(),
       orderStatus: 'new',
-      userId: userId || 'guest',
+      userId: userId,
     };
 
 
@@ -228,58 +228,7 @@ export default function Checkout() {
           </form>
         </div>
 
-        {/* <div className="md:w-1/2 rounded-md mt-4 md:mt-0 p-4 lg:px-16 py-8 border shadow-lg">
-          <h2 className="text-2xl font-bold mb-4 bg-gray-200 p-2 rounded text-center">Your order</h2>
-          <div className="mb-4">
-            {cartItems.map(item => (
-              <div key={item.id} className="flex flex-row mt-2 justify-between items-center">
-                <div className='flex gap-2 items-center'>
-                  <Image
-                    className=' object-cover'
-                    src={item?.product?.colors[0]?.images[0]?.url}
-                    alt=""
-                    width={60} // Width in pixels
-                    height={60} // Height in pixels
-                  />
-                  <div className='flex flex-col'>
-                    <p className='block whitespace-nowrap overflow-hidden text-ellipsis'>{item.product.title} - {item.quantity} pcs</p>
-                    <p className='block whitespace-nowrap text-xs overflow-hidden text-ellipsis'>SKU: {item.product.sku}</p>
-                    <span>
-                      {item.size && (
-                        <p className="text-sm">Your Size: {item.size}</p>
-                      )}
-                    </span>
-                    <div className='flex items-center gap-2 mt-1'>
-                      <span>Qty:</span>
-                      <button onClick={() => handleDecrease(item.id)} className="bg-gray-300  w-5 h-5 flex items-center justify-center">-</button>
-                      <span>{item.quantity}</span>
-                      <button onClick={() => handleIncrease(item.id)} className="bg-gray-300  w-5 h-5 flex items-center justify-center">+</button>
-                    </div>
-                  </div>
-                </div>
-                <div className='lg:ml-80 flex flex-col items-end'>
-                  <span className=''>৳ {item.product.price * item.quantity}</span>
-                  <button onClick={() => handleRemoveItem(item.id)} className=" flex items-center justify-center underline">Remove</button>
-                </div>
-                <hr className='col-span-2 my-2' />
-              </div>
-            ))}
-            <div className="flex justify-between   mt-5">
-              <span>Subtotal</span>
-              <span className="text-red-700">৳ {calculateSubtotal().toFixed(2)}</span>
-            </div>
-            {shippingCharge !== null && (
-              <div className="flex justify-between">
-                <span>Shipping Charge</span>
-                <span>৳ {shippingCharge}</span>
-              </div>
-            )}
-          </div>
-          <div className="flex justify-between font-bold text-xl">
-            <span>Total</span>
-            <span className="text-red-700">৳ {calculateTotal().toFixed(2)}</span>
-          </div>
-        </div> */}
+    
         <div className="md:w-1/2 rounded-md mt-4 md:mt-0 p-4 lg:px-16 py-8 border shadow-lg">
           <p className='text-center py-2 bg-blue-400 text-white text-xl'>Your Order</p>
           <div className='mt-4'>

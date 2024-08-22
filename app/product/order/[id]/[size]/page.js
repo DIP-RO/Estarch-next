@@ -65,10 +65,7 @@ export default function Checkout() {
         return subtotal + (shippingCharge || 0);
     };
     const discount = () => {
-        return cartItems.reduce((acc, item) => {
-            const itemTotal = (item.product.discount) * item.quantity;
-            return acc + itemTotal;
-        }, 0);
+        return product.discount.amount * quantity
     };
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -82,7 +79,7 @@ export default function Checkout() {
     };
 
     const handleIncrease = () => {
-        setQuantity(quantity + 1);
+        setQuantity(parseInt(quantity) + 1);
     };
 
     const handleRemoveItem = () => {
@@ -93,6 +90,8 @@ export default function Checkout() {
         e.preventDefault();
         if (!product) return;
 
+        console.log(discount());
+
         const orderData = {
             serialId: 'E-commerce',
             name: formData.name,
@@ -100,7 +99,7 @@ export default function Checkout() {
             deliveryCharge: shippingCharge,
             address: formData.address,
             area: formData.area,
-            discount: discount,
+            discount: discount(),
             orderNotes: formData.orderNotes,
             cartItems: [{
                 productId: product._id,
